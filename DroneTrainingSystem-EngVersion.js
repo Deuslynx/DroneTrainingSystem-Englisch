@@ -3846,7 +3846,7 @@ class RequireActivityinfo {
         this.FocusGroupNames = FocusGroupNames;
         this.ActivityNames = ActivityNames;
         this.param = param;
-        this.timeLimitUnitl = Date.now() + timeLimit;
+        this.timeLimitUntil = Date.now() + timeLimit;
         this.target = count;
         this.progress = 0;
         this.completed = false;
@@ -3872,7 +3872,7 @@ class RequireActivityinfo {
     }
     static CheckAllActivityIncomplete() {
         for (var info of RequireActivityinfo.RequireActivity) {
-            if (Date.now() > info.timeLimitUnitl && info.progress < info.target) {
+            if (Date.now() > info.timeLimitUntil && info.progress < info.target) {
                 SendMessageToSelf("Action not completed within the time limit - executing punishment");
                 DoPunishment(2, 3);
                 info.completed = true;
@@ -3892,7 +3892,7 @@ class RequireActivityinfo {
 class RequirePoseinfo {
     constructor(poseNameArray,timeLimit, calltrainingProcess) {
         this.poseNameArray = poseNameArray;
-        this.timeLimitUnitl = Date.now() + timeLimit;
+        this.timeLimitUntil = Date.now() + timeLimit;
         this.completed = false;
         this.calltrainingProcess = calltrainingProcess;
     }
@@ -3917,7 +3917,7 @@ class RequirePoseinfo {
                     trainingProcess += 1;
                 }
             }
-            else if (Date.now() > reqPose.timeLimitUnitl) {
+            else if (Date.now() > reqPose.timeLimitUntil) {
                 SendMessageToSelf("Action not completed within the time limit - executing punishment");
                 DoPunishment(2, 3);
                 reqPose.completed = true;
@@ -5142,6 +5142,8 @@ const Cat = {
 function CatEnter() {
     SendMessageToSelf(`This is a cat`, "OperRoom");
 }
+
+// WIP
 const DancerRoom = {
     Areas: [
         { leftUp: { X: 14, Y: 18 }, rightDown: { X: 18, Y: 19 } },
@@ -5425,7 +5427,6 @@ const EducationRoom = {
 }
 function EducationRoomEnter(nowInZone) {
     SendMessageToSelf(`Entered education room, ${styleButton("Start education", StartEducation)}`, "EducationRoom");
-
 }
 function EducationRoomLeave(pverInZone) {
     ClearTagMessage("EducationRoom");
