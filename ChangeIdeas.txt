@@ -1,0 +1,3 @@
+- adjust drone suit for male characters
+- drone cleaning work mission
+- operator -> drone charging mission
