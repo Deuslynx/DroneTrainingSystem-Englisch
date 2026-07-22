@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name DroneTrainingSystem English
+// @name DroneTrainingSystem English (LSCG + Legacy Compatible)
 // @namespace local
-// @version 1.6.20260722
-// @description Local pinned English display translation of DroneTrainingSystem for Bondage Club. No remote loader.
+// @version 1.6.20260722-lscg
+// @description English DroneTrainingSystem with LSCG ModSDK hooks and legacy DTS migration. No remote loader.
 // @author Original from zajucd; Further developed by DeusLynx (full English version)
 // @license MIT
 // @include /^https:\/\/(www\.)?bondageprojects\.elementfx\.com\/R\d+\/(BondageClub|\d+)\/(\d+\.html)?$/
@@ -11,9 +11,17 @@
 // @grant none
 // @run-at document-end
 // ==/UserScript==
+
+(function DTSLSCGBackwardCompatibleScope() {
 // This is an English version. It does not auto-load remote code.
 // Compatibility: Englisch hidden DTS protocol keys, command keys, stored data keys, voice triggers and room-wide action text.
 // English translated version. Only works in englisch DTS rooms or others using this englisch version.
+
+var script_version = "1.6.20260722"
+const DTS_SETTINGS_KEY = "DTSbyDeusLynx";
+const DTS_LEGACY_SETTINGS_KEYS = ["DTSbyZajucd"];
+const DTS_LOADER_FLAG = "DTSbyDeusLynx";
+const DTS_LEGACY_LOADER_FLAG = "DTSbyZajucd";
 
 // ----- Begin pinned main script -----
 // DTS Base Plugins
@@ -25,8 +33,9 @@ var showChangeLog = false;
 var initComplete = false;
 var changeLog =
     `Update Log
-——————V1.5b—————— DeusLynx extension starting here
+——————V1.6—————— DeusLynx extension starting here
 1. Translated everything into English for better development - does only work in englisch DTS rooms now.
+2. Fixed LSCG compatibility.
 ——————V1.5—————— All from zajucd until this point
 1. Fixed an issue where the Operator could not interact with objects in the warehouse area.
 2. Added a Drone standby area on the southeast side of the facility.
@@ -1005,6 +1014,17 @@ var vibeModeStrings = {
     "2": "High",
     "3": "Maximum",
 }
+
+// v1.5 used the misspelled protocol field "recive". Send and accept both so
+// v1.5 and new clients can still discover each other in the same room.
+function DTSHeartBeatPayload(requestResponse, isDrone) {
+    return {
+        receive: requestResponse,
+        recive: requestResponse,
+        isDrone: isDrone
+    };
+}
+
 const MsgCmds = {
     HeartBeatPack: {
         Command: (sender, param) => {
@@ -1012,8 +1032,8 @@ const MsgCmds = {
             if (param.isDrone != undefined) {
                 charaterInstalledScript_isDrone[sender.MemberNumber] = param.isDrone;
             }
-            if (param.receive) {
-                SendDTSMsg(sender, new MsgInfo("HeartBeatPack", { receive: false, isDrone : PlayerDroneInfo().isDrone }));
+            if (param.receive || param.recive) {
+                SendDTSMsg(sender, new MsgInfo("HeartBeatPack", DTSHeartBeatPayload(false, PlayerDroneInfo().isDrone)));
             }
         }
     },
@@ -1381,79 +1401,117 @@ function sleep(time) {
 //#endregion
 
 var hookMap = new Map();
+var dtsModApi = null;
+var dtsModApiAttempted = false;
 /**
- * Hooks a specified function in place; supports using `beforeFn` to cancel the original function's execution and return a result.
- * @param {string} funcName     - Function name
- * @param {Object|null} context - The object on which the function is called; if null, the global object is used.
- * @param {Function} beforeFn   - Pre-hook: arguments (...args)
- *  If a value other than `undefined` is returned, the original function is skipped, and that return value is passed to `afterFn` as `result`.
- * @param {Function} afterFn    - Post-hook: Parameters (currentResult, ...args); must return the final result.
- * @returns {Function}          - The new function after replacement
+ * Use the shared Bondage Club ModSDK when it is available (for example through
+ * LSCG). DTS keeps its legacy hook wrapper as a fallback when running alone.
  */
+function DTSGetModApi() {
+    if (dtsModApi) return dtsModApi;
+    if (dtsModApiAttempted) return null;
 
-function InstallHook(funcName, context, beforeFn, afterFn, tag = "") {
-    // Determine the context object
-    const ctx = context != null ? context : (typeof globalThis !== 'undefined' ? globalThis : (typeof window !== 'undefined' ? window : global));
+    const sdk = globalThis.bcModSdk;
+    if (!sdk || typeof sdk.registerMod !== "function") return null;
+    dtsModApiAttempted = true;
 
-    const originalFn = ctx[funcName];
-    if (typeof originalFn !== 'function') {
-        throw new Error(`[installHook] ${funcName} is not a function and cannot be hooked.`);
+    try {
+        dtsModApi = sdk.registerMod({
+            name: "DTS",
+            fullName: "Drone Training System English",
+            version: "1.6.20260722"
+        });
+        console.log("DTS: shared ModSDK hooks enabled (LSCG compatible).");
     }
-    if (!hookMap[funcName]) {
-        hookMap[funcName] = {
-            beforeFnList :{},
+    catch (error) {
+        console.warn("DTS: ModSDK registration failed; using legacy hooks.", error);
+        dtsModApi = null;
+    }
+    return dtsModApi;
+}
+
+function DTSHookTarget(funcName, context) {
+    if (context === Player) return `Player.${funcName}`;
+    if (context == null || context === globalThis || context === window) return funcName;
+    return null;
+}
+
+function DTSInstallLegacyHook(funcName, context, beforeFn, afterFn, tag = "") {
+    const ctx = context != null ? context : globalThis;
+    const hookKey = context === Player ? `Player.${funcName}` : funcName;
+    let entry = hookMap.get(hookKey);
+
+    if (!entry) {
+        if (typeof ctx[funcName] !== "function") {
+            throw new Error(`[DTS] Cannot hook non-function ${hookKey}.`);
+        }
+        entry = {
             originalFn: ctx[funcName],
-            afterFnList: {},
-        }
+            beforeFnList: {},
+            afterFnList: {}
+        };
+        hookMap.set(hookKey, entry);
     }
-    if (typeof beforeFn === 'function') {
-        var name = ""
-        if (beforeFn.name) {
-            name = beforeFn.name;
-        }
-        hookMap[funcName].beforeFnList[name + tag] = beforeFn;
+
+    if (typeof beforeFn === "function") {
+        entry.beforeFnList[(beforeFn.name || "before") + tag] = beforeFn;
     }
-    if (typeof afterFn === 'function') {
-        var name = ""
-        if (afterFn.name) {
-            name = afterFn.name;
-        }
-        hookMap[funcName].afterFnList[afterFn.name + tag] = afterFn;
+    if (typeof afterFn === "function") {
+        entry.afterFnList[(afterFn.name || "after") + tag] = afterFn;
     }
-    // Create a wrapper function
+
     const hookedFn = function (...args) {
         let result;
         let skipOriginal = false;
 
-        // Execute pre-hook
-        var beforeResult = undefined;
-        for (var [key, before] of Object.entries(hookMap[funcName].beforeFnList) ) {
-            beforeResult = before.apply(this, args);
+        for (const before of Object.values(entry.beforeFnList)) {
+            const beforeResult = before.apply(this, args);
             if (beforeResult !== undefined) {
                 result = beforeResult;
                 skipOriginal = true;
             }
         }
-
-        // If not skipped, execute the original function
-        if (!skipOriginal) {
-            result = hookMap[funcName].originalFn.apply(this, args);
-        }
-        // Execute post-hook, allowing modification of the final result
-        for (var [key, after] of Object.entries(hookMap[funcName].afterFnList)) {
+        if (!skipOriginal) result = entry.originalFn.apply(this, args);
+        for (const after of Object.values(entry.afterFnList)) {
             result = after.call(this, result, ...args);
         }
         return result;
     };
 
-    // In-place replacement
     ctx[funcName] = hookedFn;
-    // Tampermonkey can wrap @grant none scripts, so DTS-local functions may not be the same binding as window[name].
-    // Keep only the original facility hook targets synchronized with their local bindings.
-    if (funcName === "PlayerMoved") PlayerMoved = hookedFn;
-    if (funcName === "DoPer10Sec") DoPer10Sec = hookedFn;
-    if (funcName === "ChargeComplete") ChargeComplete = hookedFn;
     return hookedFn;
+}
+
+/**
+ * Register shared game hooks in ModSDK's chain so LSCG and DTS cannot replace
+ * each other based on load order. Priority 0 leaves LSCG's higher-priority
+ * state and interaction hooks in their expected order.
+ */
+function InstallHook(funcName, context, beforeFn, afterFn, tag = "") {
+    const modApi = DTSGetModApi();
+    const target = DTSHookTarget(funcName, context);
+
+    if (modApi && target && typeof modApi.hookFunction === "function") {
+        return modApi.hookFunction(target, 0, function (args, next) {
+            const thisArg = context != null ? context : (this ?? globalThis);
+            let result;
+            let skipOriginal = false;
+
+            if (typeof beforeFn === "function") {
+                const beforeResult = beforeFn.apply(thisArg, args);
+                if (beforeResult !== undefined) {
+                    result = beforeResult;
+                    skipOriginal = true;
+                }
+            }
+            if (!skipOriginal) result = next(args);
+            if (typeof afterFn === "function") {
+                result = afterFn.call(thisArg, result, ...args);
+            }
+            return result;
+        });
+    }
+    return DTSInstallLegacyHook(funcName, context, beforeFn, afterFn, tag);
 }
 
 function DoHook(arg, next, funcBefore, funcAfter) {
@@ -1853,12 +1911,11 @@ function DoSetBodyOrBindStatus(type, part, level, sender) {
 }
 
 function ChatRoomMapViewUpdatePlayerFlagAfter(result, UpdateTimeOffset) {
-    if (PlayerMoved) {
-        PlayerMoved();
-    }
+    DTSPlayerMoved();
+    PlayerMovedFaci();
 }
 // Power consumption after moving
-function PlayerMoved() {
+function DTSPlayerMoved() {
     if (CheckPlayerDroneInfoExistAndIsDrone() == false) return;
     var pdi = PlayerDroneInfo();
     pdi.battery -= pdi.moveBatteryCost;
@@ -1988,7 +2045,7 @@ function ShowPlayerEnterHelp() {
         SendMessageToSelf(changeLog);
     }
     SendMessageToSelf(`Link to Drone Training System established. ${styleButton("Show status", ShowStatus)} ${styleButton("Available Functions", ShowActionButtons)}`, "", true)
-    SendDTSMsg(null, new MsgInfo("HeartBeatPack", { receive: true, isDrone : PlayerDroneInfo().isDrone }));
+    SendDTSMsg(null, new MsgInfo("HeartBeatPack", DTSHeartBeatPayload(true, PlayerDroneInfo().isDrone)));
     showedEnterHelp = true;
 
     var pdi = PlayerDroneInfo();
@@ -2123,8 +2180,8 @@ function DoPer10Sec() {
     if (CheckPlayerDroneInfoExistAndIsDrone()) {
         RefreshPlayerEffect();
     }
-    ServerPlayerExtensionSettingsSync("DTSbyDeusLynx");
-    SendDTSMsg(null, new MsgInfo("HeartBeatPack", { receive: true, isDrone : PlayerDroneInfo().isDrone }));
+    DTSSyncSettings();
+    SendDTSMsg(null, new MsgInfo("HeartBeatPack", DTSHeartBeatPayload(true, PlayerDroneInfo().isDrone)));
     var pdi = PlayerDroneInfo();
     if (pdi.modifys["education2"]) {
         var name = `Drone${Player.MemberNumber}`;
@@ -2133,6 +2190,7 @@ function DoPer10Sec() {
             ServerAccountUpdate.QueueData({ Nickname: name });
         }
     }
+    CheckSleepUntil();
 }
 function DoPerMin() {
     var pdi = PlayerDroneInfo();
@@ -3052,7 +3110,7 @@ async function StartDrone() {
     RefreshPlayerEffect();
 
     PlayerDroneInfo().isDrone = true;
-    SendDTSMsg(sender, new MsgInfo("HeartBeatPack", { receive: false, isDrone: PlayerDroneInfo().isDrone }));
+    SendDTSMsg(sender, new MsgInfo("HeartBeatPack", DTSHeartBeatPayload(false, PlayerDroneInfo().isDrone)));
 }
 
 function SetToOwner(target, isUndo) {
@@ -3179,17 +3237,52 @@ function MovePlayer(Pos, triggerPlayerMoved = false) {
     Player.MapData.Pos = Object.assign({}, Pos);
     ServerSend("ChatRoomCharacterMapDataUpdate", { Pos: Object.assign({}, Pos) });
     if (triggerPlayerMoved) {
-        if (PlayerMoved) {
-            PlayerMoved();
-        }
+        DTSPlayerMoved();
+        PlayerMovedFaci();
     }
     else {
         pverPos = Object.assign({}, Player.MapData.Pos);
     }
 }
+
+function DTSCloneSettings(settings) {
+    try {
+        if (typeof structuredClone === "function") return structuredClone(settings);
+        return JSON.parse(JSON.stringify(settings));
+    }
+    catch (error) {
+        console.warn("DTS: legacy settings could only be shallow-copied.", error);
+        return Object.assign({}, settings);
+    }
+}
+
+/**
+ * One-way migration from the original DTS storage key. The old key is kept
+ * untouched as a backup; all future version writes use DTSbyDeusLynx.
+ */
+function DTSMigrateLegacySettings() {
+    if (!Player.ExtensionSettings) Player.ExtensionSettings = {};
+    if (Player.ExtensionSettings[DTS_SETTINGS_KEY]) return false;
+
+    for (const legacyKey of DTS_LEGACY_SETTINGS_KEYS) {
+        const legacySettings = Player.ExtensionSettings[legacyKey];
+        if (!legacySettings) continue;
+
+        Player.ExtensionSettings[DTS_SETTINGS_KEY] = DTSCloneSettings(legacySettings);
+        ServerPlayerExtensionSettingsSync(DTS_SETTINGS_KEY);
+        console.log(`DTS: migrated legacy settings from ${legacyKey}.`);
+        return true;
+    }
+    return false;
+}
+
+function DTSSyncSettings() {
+    ServerPlayerExtensionSettingsSync(DTS_SETTINGS_KEY);
+}
+
 class DroneInfo {
     constructor() {
-        this.scriptVersion = 1.6;
+        this.scriptVersion = Number(script_version.split(".").slice(0, 2).join("."));
         this.MemberNumber = Player.MemberNumber;
         this.isDrone = false;
         this.isOwner = false;
@@ -3256,14 +3349,15 @@ class DroneInfo {
         this.sleepUntil = null;
     }
     FromPlayerSetting() {
-        if (Player.ExtensionSettings["DTSbyDeusLynx"] != undefined) {
-            return Player.ExtensionSettings["DTSbyDeusLynx"];
+        DTSMigrateLegacySettings();
+        if (Player.ExtensionSettings[DTS_SETTINGS_KEY] != undefined) {
+            return Player.ExtensionSettings[DTS_SETTINGS_KEY];
         }
         return new DroneInfo();
     }
     SaveToPlayerSetting() {
-        Player.ExtensionSettings["DTSbyDeusLynx"] = this;
-        ServerPlayerExtensionSettingsSync("DTSbyDeusLynx");
+        Player.ExtensionSettings[DTS_SETTINGS_KEY] = this;
+        DTSSyncSettings();
     }
 }
 class MissionInfo {
@@ -3837,19 +3931,21 @@ class RequirePoseinfo {
 }
 var _PlayerDroneInfo = null;
 function PlayerDroneInfo() {
-    if (!Player.ExtensionSettings["DTSbyDeusLynx"]) {
-        Player.ExtensionSettings["DTSbyDeusLynx"] = new DroneInfo();
-        _PlayerDroneInfo = Player.ExtensionSettings["DTSbyDeusLynx"];
-        ServerPlayerExtensionSettingsSync("DTSbyDeusLynx");
+    DTSMigrateLegacySettings();
+    if (!Player.ExtensionSettings[DTS_SETTINGS_KEY]) {
+        Player.ExtensionSettings[DTS_SETTINGS_KEY] = new DroneInfo();
+        _PlayerDroneInfo = Player.ExtensionSettings[DTS_SETTINGS_KEY];
+        DTSSyncSettings();
     }
-    else if (Player.ExtensionSettings["DTSbyDeusLynx"].scriptVersion < new DroneInfo().scriptVersion) {
-        addMissingProperties(Player.ExtensionSettings["DTSbyDeusLynx"], new DroneInfo());
+    else if (!Number.isFinite(Number(Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion)) ||
+        Number(Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion) < new DroneInfo().scriptVersion) {
+        addMissingProperties(Player.ExtensionSettings[DTS_SETTINGS_KEY], new DroneInfo());
         showChangeLog = true;
-        Player.ExtensionSettings["DTSbyDeusLynx"].scriptVersion = new DroneInfo().scriptVersion;
-        _PlayerDroneInfo = Player.ExtensionSettings["DTSbyDeusLynx"];
-        ServerPlayerExtensionSettingsSync("DTSbyDeusLynx");
+        Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion = new DroneInfo().scriptVersion;
+        _PlayerDroneInfo = Player.ExtensionSettings[DTS_SETTINGS_KEY];
+        DTSSyncSettings();
     }
-    return Player.ExtensionSettings["DTSbyDeusLynx"];
+    return Player.ExtensionSettings[DTS_SETTINGS_KEY];
 }
 
 function addMissingProperties(target, source) {
@@ -4125,14 +4221,35 @@ function styleProgressBar(message, completionMessage, duration = 3000, onComplet
 
     return html;
 }
+async function DTSWaitForLSCGModSdk() {
+    if (globalThis.bcModSdk?.registerMod) return;
+
+    // Let other document-end userscripts append their loader first.
+    await sleep(250);
+    const lscgIsLoading = Boolean(
+        globalThis.LSCG_VERSION ||
+        Player?.LSCG ||
+        Array.from(document.scripts).some(script => /littlesera\.github\.io\/LSCG\//i.test(script.src))
+    );
+    if (!lscgIsLoading) return;
+
+    const deadline = Date.now() + 10000;
+    while (!globalThis.bcModSdk?.registerMod && Date.now() < deadline) {
+        await sleep(50);
+    }
+}
+
 async function WaitEnable() {
-    if (!window.DTSbyDeusLynx) {
+    // Treat the original loader flag as an alias so old and new DTS versions
+    // cannot accidentally initialize together on the same page.
+    if (!window[DTS_LOADER_FLAG] && !window[DTS_LEGACY_LOADER_FLAG]) {
         console.log(`Loading complete`);
-        window.DTSbyDeusLynx = true;
+        window[DTS_LOADER_FLAG] = true;
+        window[DTS_LEGACY_LOADER_FLAG] = true;
         await waitFor(() => typeof window.Player?.MemberNumber === "number");
+        await DTSWaitForLSCGModSdk();
         Init();
     }
-
 }
 async function waitFor(func, cancelFunc = () => false) {
     while (!func()) {
@@ -4145,13 +4262,11 @@ async function waitFor(func, cancelFunc = () => false) {
     return true;
 }
 WaitEnable();
+
 // ---- Begin pinned facility extension ----
 // Bridge for userscript managers that wrap @grant none scripts: the original remote page scripts exposed these callbacks on window.
 (function DTSExposeFacilityCallbacks() {
     const callbacks = {
-        PlayerMoved: typeof PlayerMoved === "function" ? PlayerMoved : undefined,
-        DoPer10Sec: typeof DoPer10Sec === "function" ? DoPer10Sec : undefined,
-        ChargeComplete: typeof ChargeComplete === "function" ? ChargeComplete : undefined,
         StockRoomEnter: typeof StockRoomEnter === "function" ? StockRoomEnter : undefined,
         StockRoomLeave: typeof StockRoomLeave === "function" ? StockRoomLeave : undefined,
         ElevatorEnter: typeof ElevatorEnter === "function" ? ElevatorEnter : undefined,
@@ -4440,7 +4555,7 @@ function SleepEnterZoneDoSleep() {
         await sleep(2000);
         MovePlayer(RandomPosOfArea(SleepRoom.Areas[0]), true);
         pdi.sleepUntil = Date.now() + (index + 1) * 6 * 3600 * 1000;
-        ServerPlayerExtensionSettingsSync("DTSbyDeusLynx");
+        DTSSyncSettings();
     }, index)}`, "SleepEnterZone");
 }
 const SleepRoom = {
@@ -5513,6 +5628,7 @@ function ChargeComplete() {
     var pdi = PlayerDroneInfo();
     pdi.battery = pdi.batteryMax;
     RemoveRestrainByOneAssetGroup(Player, "ItemDevices");
+    MissionInfo.ProgressAdd("Charge");
 }
 
 
@@ -5526,9 +5642,6 @@ var map = {
 
 async function ExpendInit() {
     await waitFor(() => initComplete == true);
-    InstallHook("PlayerMoved", null, null, PlayerMovedFaci);
-    InstallHook("ChargeComplete", null, null, function MissionInfoProgressAddChargeComplete() { MissionInfo.ProgressAdd("Charge"); });
-    InstallHook("DoPer10Sec", null, null, CheckSleepUntil);
     //InitMap();
 }
 
@@ -5601,3 +5714,4 @@ async function CheckSleepUntil() {
 }
 
 ExpendInit();
+})();
