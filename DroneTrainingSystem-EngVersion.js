@@ -11,10 +11,9 @@
 // @grant none
 // @run-at document-end
 // ==/UserScript==
-// This is a local pinned English translation. It does not auto-load remote code.
-// Pinned source snapshot: retrieved 2026-06-14T17:11:56Z.
-// Compatibility: hidden DTS protocol keys, command keys, stored data keys, Englisch voice triggers, and room-wide action text are retained.
-// English translated version. Only works in englisch DTS rooms.
+// This is an English version. It does not auto-load remote code.
+// Compatibility: Englisch hidden DTS protocol keys, command keys, stored data keys, voice triggers and room-wide action text.
+// English translated version. Only works in englisch DTS rooms or others using this englisch version.
 
 // ----- Begin pinned main script -----
 // DTS Base Plugins
