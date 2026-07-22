@@ -2332,56 +2332,56 @@ function ShowStatus(info = null) {
         var exString = GetExString(info);
         ShowString =
             `——————Basic Info——————
-Drone ID:${info.MemberNumber}
-Drone model:${info.type}V${info.level}
-quota points:${info.coin}
-Remaining battery:${info.battery}/${info.batteryMax}
-Operator ID:${info.ownerId == -1 ? 'No Operator' : info.ownerId}
-System version:${info.scriptVersion}${sleepString}
+Drone ID: ${info.MemberNumber}
+Drone model: ${info.type}V${info.level}
+quota points: ${info.coin}
+Remaining battery: ${info.battery}/${info.batteryMax}
+Operator ID: ${info.ownerId == -1 ? 'No Operator' : info.ownerId}
+System version: ${info.scriptVersion}${sleepString}
 ——————Physiology——————
-Heart rate:${bpm}BPM
-Temperature:${temp}℃
-Arousal state:${(breathing === "Action" || breathing === "High") ? "Aroused" : "Not aroused"}
-Current arousal:${progress}%
-Pleasure device:${bindLevelStrings[info.bodyStatus.body]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 3) : ""}
-Orgasm limit:${bindLevelStrings[info.bindStatus.body]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 3) : ""}
+Heart rate: ${bpm}BPM
+Temperature: ${temp}℃
+Arousal state: ${(breathing === "Action" || breathing === "High") ? "Aroused" : "Not aroused"}
+Current arousal: ${progress}%
+Pleasure device: ${bindLevelStrings[info.bodyStatus.body]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 3) : ""}
+Orgasm limit: ${bindLevelStrings[info.bindStatus.body]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 3) : ""}
 ——————Device Info——————
-Eye restraint:${bindLevelStrings[info.bindStatus.eyes]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 0) : ""}
-Ear restraint:${bindLevelStrings[info.bindStatus.ears]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 1) : ""}
-Mouth restraint:${bindLevelStrings[info.bindStatus.mouth]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 2) : ""}
-Hand restraint:${bindLevelStrings[info.bindStatus.hands]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 4) : ""}
-Leg/foot restraint:${bindLevelStrings[info.bindStatus.legs]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 5) : ""}
+Eye restraint: ${bindLevelStrings[info.bindStatus.eyes]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 0) : ""}
+Ear restraint: ${bindLevelStrings[info.bindStatus.ears]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 1) : ""}
+Mouth restraint: ${bindLevelStrings[info.bindStatus.mouth]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 2) : ""}
+Hand restraint: ${bindLevelStrings[info.bindStatus.hands]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 4) : ""}
+Leg/foot restraint: ${bindLevelStrings[info.bindStatus.legs]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 5) : ""}
 ——————Function Info——————
-Eye function:${bodyLevelStrings[info.bodyStatus.eyes]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 0) : ""}
-Ear function:${bodyLevelStrings[info.bodyStatus.ears]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 1) : ""}
-Mouth function:${bodyLevelStrings[info.bodyStatus.mouth]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 2) : ""}
-Hand function:${bodyLevelStrings[info.bodyStatus.hands]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 4) : ""}
-Leg/foot function:${bodyLevelStrings[info.bodyStatus.legs]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 5) : ""}
+Eye function: ${bodyLevelStrings[info.bodyStatus.eyes]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 0) : ""}
+Ear function: ${bodyLevelStrings[info.bodyStatus.ears]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 1) : ""}
+Mouth function: ${bodyLevelStrings[info.bodyStatus.mouth]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 2) : ""}
+Hand function: ${bodyLevelStrings[info.bodyStatus.hands]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 4) : ""}
+Leg/foot function: ${bodyLevelStrings[info.bodyStatus.legs]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 5) : ""}
 ——————Available Programs——————${exString}
 ${styleButton("Available actions", ShowActionButtons, info)}`
     }
     else if (info.isOwner) {
         ShowString =
             `——————Basic Info——————
-Operator ID:${info.MemberNumber}
-Operator permission level:${info.level}
-quota points:${info.coin}
-System version:${info.scriptVersion}
+Operator ID: ${info.MemberNumber}
+Operator permission level: ${info.level}
+quota points: ${info.coin}
+System version: ${info.scriptVersion}
 ——————Physiology——————
-Heart rate:${bpm}BPM
-Temperature:${temp}℃
+Heart rate: ${bpm}BPM
+Temperature: ${temp}℃
 ————————————————
 ${styleButton("Available actions", ShowActionButtons, info)}`
     }
     else {
         ShowString =
             `——————Basic Info——————
-Visitor ID:${info.MemberNumber}
-quota points:${info.coin}
-System version:${info.scriptVersion}
+Visitor ID: ${info.MemberNumber}
+quota points: ${info.coin}
+System version: ${info.scriptVersion}
 ——————Physiology——————
-Heart rate:${bpm}BPM
-Temperature:${temp}℃
+Heart rate: ${bpm}BPM
+Temperature: ${temp}℃
 ————————————————
 ${styleButton("Available actions", ShowActionButtons, info)}`
     }
@@ -2421,31 +2421,31 @@ function GetStatusAndVoiceCmdString() {
         progress = char.ArousalSettings.Progress
     }
     return `——————Basic Info——————
-Drone ID:${info.MemberNumber}
-Drone model:${info.type}V${info.level}
-quota points:${info.coin}
-Remaining battery:${info.battery}/${info.batteryMax}
-Operator ID:${info.ownerId == -1 ? 'No Operator' : info.ownerId}
-System version:${info.scriptVersion}
+Drone ID: ${info.MemberNumber}
+Drone model: ${info.type}V${info.level}
+quota points: ${info.coin}
+Remaining battery: ${info.battery}/${info.batteryMax}
+Operator ID: ${info.ownerId == -1 ? 'No Operator' : info.ownerId}
+System version: ${info.scriptVersion}
 ——————Physiology——————
-Heart rate:${bpm}BPM
-Temperature:${temp}℃
-Arousal state:${(breathing === "Action" || breathing === "High") ? "Aroused" : "Not aroused"}
-Current arousal:${progress}%
-Pleasure device:${bindLevelStrings[info.bodyStatus.body]}
-Orgasm limit:${bodyLevelStrings[info.bindStatus.body]}
+Heart rate: ${bpm}BPM
+Temperature: ${temp}℃
+Arousal state: ${(breathing === "Action" || breathing === "High") ? "Aroused" : "Not aroused"}
+Current arousal: ${progress}%
+Pleasure device: ${bindLevelStrings[info.bodyStatus.body]}
+Orgasm limit: ${bodyLevelStrings[info.bindStatus.body]}
 ——————Device Info——————
-Eye restraint:${bindLevelStrings[info.bindStatus.eyes]}
-Ear restraint:${bindLevelStrings[info.bindStatus.ears]}
-Mouth restraint:${bindLevelStrings[info.bindStatus.mouth]}
-Hand restraint:${bindLevelStrings[info.bindStatus.hands]}
-Leg/foot restraint:${bindLevelStrings[info.bindStatus.legs]}
+Eye restraint: ${bindLevelStrings[info.bindStatus.eyes]}
+Ear restraint: ${bindLevelStrings[info.bindStatus.ears]}
+Mouth restraint: ${bindLevelStrings[info.bindStatus.mouth]}
+Hand restraint: ${bindLevelStrings[info.bindStatus.hands]}
+Leg/foot restraint: ${bindLevelStrings[info.bindStatus.legs]}
 ——————Function Info——————
-Eye function:${bodyLevelStrings[info.bodyStatus.eyes]}
-Ear function:${bodyLevelStrings[info.bodyStatus.ears]}
-Mouth function:${bodyLevelStrings[info.bodyStatus.mouth]}
-Hand function:${bodyLevelStrings[info.bodyStatus.hands]}
-Leg/foot function:${bodyLevelStrings[info.bodyStatus.legs]}
+Eye function: ${bodyLevelStrings[info.bodyStatus.eyes]}
+Ear function: ${bodyLevelStrings[info.bodyStatus.ears]}
+Mouth function: ${bodyLevelStrings[info.bodyStatus.mouth]}
+Hand function: ${bodyLevelStrings[info.bodyStatus.hands]}
+Leg/foot function: ${bodyLevelStrings[info.bodyStatus.legs]}
 ——————Voice commands——————
 Drone${info.MemberNumber} show status
 Drone${info.MemberNumber} (eyes|ears|mouth|arms|legs) restraint set to (off|on|maximum)

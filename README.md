@@ -22,7 +22,6 @@ If you just want to have a look inside for now, then register as an Operator (ca
 - Drone Dormancy Area (southeast side of the facility):  Drones can enter sleep mode here to gain quota points. The available sleep durations from top to bottom are 6, 12, 18, and 24 hours.
 - Charging Stations (around the facility):  Drones can recharge here. If battery power is completely depleted, they cannot perform any activities and must wait for assistance.
 
-
 ## Improvements
 If you have ideas for improvements or just general vague ideas for Drone training/operating, send a mail to subdeuslynx@gmail.com, open a new issue or write a direct message to the RoomTester acc if it's at the front desk of the facility.
 
