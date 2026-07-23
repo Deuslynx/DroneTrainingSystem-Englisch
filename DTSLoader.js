@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         DroneTrainingSystem Loader
 // @namespace    https://github.com/Deuslynx/DroneTrainingSystem-Englisch
-// @version      0.1
+// @version      1.6
 // @description  Remote loader for the DroneTraining addon for Bondage Club.
 // @author       DeusLynx
 // @homepageURL  https://github.com/Deuslynx/DroneTrainingSystem-Englisch
@@ -22,7 +22,7 @@
 // Old loader by zajucd
 (async function () {
     "use strict";
-    const version = "0.2.0";
+    const version = "1.6";
     if (typeof DTSbyDeusLynx === "undefined") {
         const src = `https://deuslynx.github.io/DroneTrainingSystem-Englisch/DroneTrainingSystem-EngVersion.js?v=${version}`;
         const script = document.createElement("script");
@@ -37,7 +37,7 @@
 (() => {
     "use strict";
 
-    const version = "0.2.0";
+    const version = "1.6";
     const pageUrl = "https://deuslynx.github.io/DroneTrainingSystem-Englisch/DroneTrainingSystem-EngVersion.js";
     const fallbackUrls = [
         `${pageUrl}?v=${version}`,
