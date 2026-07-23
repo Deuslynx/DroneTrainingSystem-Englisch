@@ -1810,10 +1810,10 @@ function DoVoiceCommand(ChatRoomCharacter, msg) {
         // deploy charging crank
         case 1: {
             if (pdi.battery >= pdi.batteryMax * 0.3) {
-                SendActionText(`${ChatRoomCharacter.Name}弹出无人机${pdi.MemberNumber}下体的电源接口内藏的手摇曲柄，由于无人机${target.MemberNumber}已有一定电量，所以曲柄反而自行旋转消耗了大量电量`);
+                SendActionText(`${Player.Name} pops out the hand crank concealed within the power port at the crotch of Drone ${target.MemberNumber}. Since Drone ${target.MemberNumber} already held a certain amount of charge, the crank spins on its own, rapidly draining a large amount of power.`);
             }
             else {
-                SendActionText(`${ChatRoomCharacter.Name}弹出无人机${pdi.MemberNumber}下体的电源接口内藏的手摇曲柄并猛烈转动，动能转化为电能经由阴道流至子宫内的电源，动能与电能让她的机体猛烈颤抖`);
+                SendActionText(`${Player.Name} pops out the hand crank concealed within the power port at the crotch of Drone ${target.MemberNumber} and turns it vigorously. The kinetic energy converts into electrical energy, flowing through the vaginal canal to the power source inside the womb, while the kinetic and electrical energy cause her body to tremble violently.`);
             }
             diff = Math.floor(pdi.batteryMax * 0.3) - pdi.battery;
             SendDTSMsg(pdi, new MsgInfo("BatteryCharge", diff));
@@ -2517,7 +2517,6 @@ Drone${info.MemberNumber} deploy charging crank
 Note: If the Drone cannot receive voice commands due to hearing limitations (such as ear-related restrictions or battery levels below 20%), you can try sending *command content or (command content) to bypass these limitations.
 ——————Available Programs——————${exString}
 `
-
 }
 
 function ShowActionButtons(info = null) {
@@ -2810,7 +2809,7 @@ function TakeMission(missionStr = null) {
 
 function SetDisplayTalk(info) {
     SendDTSMsg(info, new MsgInfo("SetDisplayTalk", !info.disPlayTalk));
-    SendMessageToSelf("Command sent: target Drone display screen set to" + (info.disPlayTalk ? "Off" : "On"));
+    SendMessageToSelf("Command sent: target Drone display screen set to " + (info.disPlayTalk ? "Off" : "On"));
 }
 
 function ShowVoiceCommand(info = null) {
@@ -2831,12 +2830,7 @@ Drone${info.MemberNumber} deploy charging crank
 Note: If the Drone cannot receive voice commands due to hearing limitations (such as ear-related restrictions or battery levels below 20%), you can try sending *command content or (command content) to bypass these limitations.`)
 }
 
-/**
- * type: 0 for average charge level, 1 for fully charged, 2 for 20% charge.
- * @param {any} target
- * @param {any} type
- * @returns
- */
+// type: 0 for average charge level, 1 for fully charged, 2 for 20% charge.
 function DoBatteryHelp(target, type) {
     var char = ChatRoomCharacter.find(c => c.MemberNumber === target.MemberNumber);
     if (!char) {
@@ -2844,7 +2838,7 @@ function DoBatteryHelp(target, type) {
         return;
     }
     if (ChatRoomIsViewActive("Map") && !ChatRoomMapViewCharacterOnInteractionRange(char)) {
-        SendMessageToSelf("Target is too far away");
+        SendMessageToSelf("Target is too far away!");
         return;
     }
     var diff = 0;
@@ -5647,9 +5641,11 @@ async function ExpendInit() {
 }
 
 async function InitMapFaci() {
-    ChatRoomData.Name = "DroneFacility";
+    ChatRoomData.Name = "DroneFacility 2.0";
     // TODO: insert download link
-    ChatRoomData.desc = "[Script] Drone Training Facility — Requires a script/plugin; download here: ";
+    ChatRoomData.desc = `In development... testing and gathering ideas for the mod.
+All info on github: tinyurl.com/DroneTrainingSystem
+If something isn't clear just ask RoomTester or someone who has the mod already~`;
     ChatRoomData.Limit = 20;
     ChatRoomData.Access = ['All'];
     ChatRoomData.Visibility = ['All'];
