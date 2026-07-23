@@ -6,13 +6,11 @@
 
 2. Create a new script and choose **one** of the following methods:
 
-> [!TIP]
 > **Option 1 – Automatic Updates**
 > 
 > Paste the code from the DTSLoader.js file into the new script.
 > (Note: This will automatically use the newest version by loading code from this repository.)
 
-> [!NOTE]
 > **Option 2 – Manual Updates**
 >
 > Paste the code from the DroneTrainingSystem-EngVersion.js file into the new script.
