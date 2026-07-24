@@ -24,39 +24,39 @@
 	var DTS_LOADER_FLAG = "DTSbyDeusLynx";
 	var DTS_LEGACY_LOADER_FLAG = "DTSbyZajucd";
 	var changeLog = `Update Log
-------V1.6------ DeusLynx extension starting here
+——————V1.6—————— DeusLynx extension starting here
 1. Translated everything into English for better development - does only work in englisch DTS rooms now.
 2. Fixed LSCG compatibility.
-------V1.5------ All from zajucd until this point
+——————V1.5—————— All from zajucd until this point
 1. Fixed an issue where the Operator could not interact with objects in the warehouse area.
 2. Added a Drone standby area on the southeast side of the facility.
 3. Fixed an issue where the buyback price of certain items exceeded their selling price.
-------V1.4------
+——————V1.4——————
 1. Fixed an issue where a failed orgasm attempt was incorrectly registered as a successful orgasm.
 2. Added a "Call for Rescue" function to escape situations where the player might get stuck (e.g., due to disconnection).
-------V1.3------
+——————V1.3——————
 1. Fixed an issue where certain items were not consumed after use.
-------V1.2------
+——————V1.2——————
 1. Fixed an issue preventing the completion of basic training.
 2. Added missing text for the "spanking" and "head-patting" tasks.
 3. Added bonus effects granted upon completing basic and advanced education.
 4. Silently adjusted the battery charge gained when nearby players reach orgasm (does not affect charge gained during one's own orgasm).
 5. Added a modification option to reduce the frequency of messages displayed on the screen.
-------V1.1------
+——————V1.1——————
 1. Fixed text errors occurring when punishments were triggered.
 2. Fixed an issue where the daily reward cap for processing debris was missing.
 3. Refined some text related to training and education.
 4. Added a display for available programs in the Drone status info, showing effects gained from education and training.
 5. Fixed logic errors regarding gaining control, manually charging the Drone, and initiating training.
-------V1.0------
+——————V1.0——————
 1. Added quest and item systems.
 2. Added a training facility map.
-------V0.2------
+——————V0.2——————
 1. Added voice command functionality to facilitate player interaction without plugins.
 2. Added the registration process for becoming a Drone.
 3. Fixed several bugs.
 4. The item layering for the smooth latex mask would reset whenever item settings were modified.
-------V0.1------
+——————V0.1——————
 1. Completed core functionality
 `;
 	var bindLevelStrings = ["Off", "On", "Maximum"];
