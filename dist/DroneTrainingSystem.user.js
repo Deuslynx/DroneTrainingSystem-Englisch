@@ -1334,7 +1334,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			SendMessageToSelf("Hypnosis device deployed. Starting hypnosis...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
-			SendMessageToSelf("Hypnosis Device Unit\u2014Complete. Activate hypnosis...", "EducationRoomClear");
+			SendMessageToSelf("Hypnosis Device Unit—Complete. Activate hypnosis...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
 			SendMessageToSelf("Hypnosis phase complete! Initiating sleep...", "EducationRoomClear");
@@ -1349,7 +1349,6 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			SendMessageToSelf("....., ..., ...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
-			SendMessageToSelf("\u6211\u2014\u8EAB\u4EFD\u2014\uFF0C\u2014\u4EBA\u2014\uFF0C\u4EBA\u2014\u2014", "EducationRoomClear");
 			SendMessageToSelf("My Identity..., human..., fading...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
@@ -1400,7 +1399,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			SendMessageToSelf("Hypnosis device deployed. Starting hypnosis...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
-			SendMessageToSelf("Hypnosis Device Unit\u2014Complete. Activate hypnosis...", "EducationRoomClear");
+			SendMessageToSelf("Hypnosis Device Unit—Complete. Activate hypnosis...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
 			SendMessageToSelf("Hypnosis phase complete. Initiating sleep...", "EducationRoomClear");
@@ -1462,7 +1461,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			SendMessageToSelf(`${text1}${styleButton(text2, () => {
 				toNext = true;
 				choiced = true;
-			})}\uFF0C${styleButton(text3, () => {
+			})}, ${styleButton(text3, () => {
 				DoPunishment(2, 3);
 				choiced = true;
 			})}`, "EducationRoomClear");
@@ -1570,8 +1569,8 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 	];
 	var map = {
 		"Type": "Always",
-		"Tiles": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B2\u04B2\u04B2\u04B4\u04B4\u04B2\u04B2\u04B2\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\xACyyyyy\u04B4\u04B4\u04B4\u04B3\u04B3\u04B3\u04B4\u04B4\u04B4yyyy\u0442yyy\u04B4\u04B4\xAA\xAA\xAA\u04B4\u04B4\xAA\xAA\xAA\u0442yyyyyyyyyyyy\u04B4\u04B4\u04B3\xAB\xAB\xAB\u04B3\u04B4\u0442yyyy\u0442yyy\u04B4\u04B4\xAA\xAA\xAA\u04B4\u04B4\xAA\xAA\xAA\u0442yyyyyyyyyyyy\u04B4\u04B4\xAB\u04B3\xAB\u04B3\xAB\u04B4\u041Ayyyy\u0442yyy\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u0442yyyyyyyyyyyy\u04B4\u04B4\xAB\xAB\xAB\xAB\xAB\u04B4\u04B4yyyy\u0442yyyyyyyyyyyyy\u0442yyyyyyyyyyyy\u04B4\u04B4\xAB\u04B3\xAB\u04B3\xAB\xC7\xC7yyyy\u0442yyyyyyyyyyyyy\u0442yyyyyyyyyyyy\u04B4\u04B4\u04B3\xAB\xAB\xAB\u04B4\u04B4\u0442yyyy\u0442yyyyyyyyyyyyy\u0442yyyyyy\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B3\xAB\u04B3yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\u04B3\xAB\u04B3\xAB\xAC\xAByyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\xAB\xAC\xAB\u04B2\u04B2\u04B4\u04B4\u04B4\u04B2\u04B2\u04B4yyy\u04B4\u0410\u0410\u0410\u0410\u04B4\u0410\u0410\u0410\u0410\u04B4\u0410\u0410\u0410\u0410\u0410\u0410\u04B4yyy\u04B4\u04B3\u04B3\u04B3\u04B4\u04B3\u04B3\u04B3\xAA\xAA\u04B4\u04B4\u04B4\xAA\xAA\u04B4yyy\u04B4\u04B4\u04B4\u04B4yyy\u04B4\xAB\xAB\xAB\u04B4\xAB\xAB\xAB\xAA\xAA\u04B4\u04B4\u04B4\xAA\xAA\u04B4yyy\u04B4\u04B4\u04B4\u04B4yyy\u04B4\xAB\xAC\xAB\u04B4\xAB\xAC\xAB\xAC\xAC\xAC\xAC\xAC\xAC\xAC\u04B4yyy\u04B4\u04B4\u04B4\u04B4yyy\u04B4\xAB\xAB\xAB\u04B4\xAB\xAB\xAB\u04B2\u04B2\u04B4\xAC\u04B4\u04B4\u04B4\u04B4yyy\u04B4\u04B4\u04B4\u04B4yyy\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\xAA\xAA\u04B4\xAC\xAC\xAC\xAC\u04B4yyy\u04B4\u04B4\u04B4\u04B4yyy\u04B4yyyyyyy\xAA\xAA\u04B4\xAC\xAC\xAC\xAC\u04B4yyy\u04B4\u04B4\u04B4\u042E\u042E\u042E\u042E\u042E\u04B4\u04B4\u04B4\u04B4\u04B4\u04B3\u04B3\u04B3\u04B3\u04B4yyy\u04B4yyyyyyy\xAC\xAC\xAC\xAC\xAC\xAC\xAC\xC7yyy\u04B4x\u042E\xAC\xAC\xAC\u042Exxx\u04B3\xAB\xAB\xAB\u04B4yyy\xC7yyyyyyy\u04B2\u04B2\u04B4\xAC\u04B4\u04B2\u04B2\u04B4yyy\u04B4x\u042E\u042Exxx\u04B3\xAB\xAB\u04B3\u04B3\u04B4yyy\u04B4\u04B3\xAC\u04B3\xAC\u04B3\xAC\u04B3\xAA\xAA\u04B4\xAC\u04B4\xAA\xAA\u04B4yyy\u04B4xxxxxxxxxxx\u04B3\xAB\xAB\xAB\u04B4yyy\u04B4\u04B4\u04B3\u04B4\u04B3\u04B4\u04B3\u04B4\xAA\xAA\u04B4\xAC\u04B4\xAA\xAA\u04B4yyy\u04B4xxxxxxxxxxx\u04B3\xAB\xAB\u04B3\u04B3\u04B4yyy\u04B4\u04B4\xAB\u04B4\xAB\u04B4\xAB\u04B4\xAC\xAC\xAC\xAC\xAC\xAC\xAC\u04B4yyy\u04B4xxxxxxxxxxx\u04B3\xAB\xAB\xAB\u04B4yyy\u04B4\u04B4\xAB\u04B4\xAB\u04B4\xAB\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4yyy\u04B4xxxxxxxxxxx\u04B3\xAB\xAB\u04B3\u04B3\u04B4yyy\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B3\xAB\u04B3yyyyyyyy\u04B4xxxxxxxxxxx\u04B3\xAB\xAB\xAB\u04B4yyyyyyyy\u04B3\xAB\u04B3\xAB\xAC\xAByyyyyyyy\u04B4xxxxxxxxxxx\u04B3\xAB\xAB\u04B3\u04B3\u04B4yyyyyyyy\xAB\xAC\xAB\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4yyyy\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4yyyy\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4yyyyyy\u04B4yyyyyyyyyyyyyyyyyyyyyyyyyy\u04B4yyyyyyyyyyyy\u04B4yyyyyyyyyyyyyyyyyyyyyyyyyy\u04B4yyyyyyyyyyyy\u04B4\u04B3\xAB\u04B3yyyyyyy\u04B3\xAB\u04B3yyyyyyyyy\u04B3\u04B3\u04B3\u04B3\u04B4yyyyyyyyyyyy\u04B4\xAB\xAC\xAByyyyyyy\xAB\xAC\xAByyyyyyyyy\u04B3\xAB\xAB\xAB\u04B4yyyyyyyyyyyy\u04B4\u04B3\xAB\u04B3yyyyyyy\u04B3\xAB\u04B3yyyyyyyyy\u04B3\xAB\xAB\xAB\u04B4yyyyyyyyyyyy\u04B4yyyyyyyyyyyyyyyyyyyyyy\xC7\xAB\xAB\xAB\u04B4yyyyyy\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u042E\u042E\u042E\u042E\u042E\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4y\u04B4\u04B4\u04B4\u04B4\u04B4\u04B4\u04B3\u04B3\u04B3\u04B3\u04B3\u04B3\xE6\xE6\xEB\xEB\xEB\xF0\xEB\xEB\xEB\xE6\xE6\u04B4xxxxx\u04B4\u04B2\u04B2\u04B2\u04B2\u04B3\u04B3\u04B3\u04B3\u04B4\u04B4\u04B4\u04B4\u04B2\u04B2\u04B2\u04B4\xAB\xAB\xAB\xAB\xAB\xAB\xE6\xE6\xEB\xEB\xEB\xF0\xEB\xEB\xEB\xE6\xE6\u04B4xxxxx\u04B4\xAA\xAA\xAA\u04B2\xAB\xAB\xAB\u04B3\xAC\xAC\xAC\u04B4\xAA\xAA\xAA\u04B4\xAB\xAB\xAB\xAB\xAB\xAB\xE6\xE6\xEB\xEB\xEB\xEB\xEB\xEB\xEB\xE6\xE6\u04B4xxxxx\u04B4\xAA\xAA\xAA\u04B2\xAB\xAB\xAB\u04B3\xAC\xAC\xAC\u04B2\xAA\xAA\xAA\u04B4\xAB\xAB\xAB\xAB\xAB\xAB\xE6\xE6\xEB\xEB\xEB\xF0\xEB\xEB\xEB\xE6\xE6\xC7xxxxx\xC7\xAA\xAA\xAA\u04B2\xAB\xAB\xAB\u04B3\xAC\xAC\xAC\xC7\xAA\xAA\xAA\u04B4\xAB\xAB\xAB\xAB\xAB\xAB\xE6\xE6\xEB\xEB\xEB\xF0\xEB\xEB\xEB\xE6\xE6\u04B4xxxxx\u04B4\u04B2\u04B2\u04B2\u04B3\u04B3\u04B3\u04B3\u04B3\u04B3\u04B3\u04B3\u04B4\u04B2\u04B2\u04B2\u04B4\xAB\xAB\xAB\xAB\xAB\xAB\xE6\xE6\xEB\xEB\xEB\xEB\xEB\xEB\xEB\xE6\xE6\u04B4\u042E\u042E\u042E\u042E\u042E\u04B4yy\u04B1\xAB\u04B3\xAB\u04B3\xAB\u04B3\xAB\u04B3yyyy\u04B4\xAB\xAB\xAB\xAB\xAB\xAB",
-		"Objects": "\u04B4\u04C4\u04C3\u04B6\u04B1\u04B3\u04B9ddddddddddddddddddddddddddddddddddddddddddddddddddd\u0CE5ddddddd\u0CE6\u0CE7ddd\u0CE6\u0CE7ddddddd\u0182\u0182\u0182\u0182\u0182\u04B1ddddddddd\u0448\u0448\u0448dd\u0140dddd\u0448dddd\u0448ddd\u04B4\u0182\u0182\u0182\u0182\u0182ddddddddddddddddddddd\u0438dddddddddddddddddd\u0182\u0182\u0182\u0182\u0182\u04B2ddddddddd\u017E\u017Fdddd\u0180\u0181ddd\u0CE5\u0FB4ddd\u0CE5\u0FB4d\u04B5\u0182\u0182\u0182\u0182\u0182dddddddddd\u0448dd\u0FB4\u0FB4ddddddddddddddddddddddddd\u0182\u0182\u0182\u0182\u0182\u04B3dddddddddddddddddddddddddddd\u04B6\u0182\u0182\u0182\u0182\u0182ddddddddddddddd\u0140ddddddddddddddddddddddddddddd\u0FB4ddddddddddd\u0FB4ddd\u0FB4dddddddddddd\u0FB4ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\u0CE6\u0CE7ddd\u0CE6\u0CE7dddddd\u0BEAddddd\u0BEAddddd\u0BEAdddddddd\u0CE5ddd\u0CE5d\u017E\u017Fddd\u017E\u017Fddddd\u0448\u017Cddddd\u017C\u0448d\u0448d\u0832\u017Cddddddd\u0438d\u0448d\u0438d\u0448dddddddddddddd\u02D0\u02D0d\u02D0\u02D0ddddddd\u02D0\u02D0ddddddddddddddddddddddddddd\u03FCd\u03FCddddddddd\u03FCdddddddddddd\u0CE6\u0CE7ddd\u0CE5dddddd\u0816\u0816ddddd\u0816\u0816d\u0816\u0816dd\u02DA\u02DAdddddd\u0FB4ddd\u0FB4d\u017E\u017Fddddddddddddd\u0140d\u0140ddddddddd\u0140ddddddddddddddddddd\u0FB4dddd\u0FB6ddddddd\u0FB6d\u0FB6ddddddddd\u0FB4ddddddddddddddddddd\u0457d\u0442d\u0442d\u0442d\u0458d\u0459d\u0456\u045Cdddddddddddddd\u0CE6\u0CE7ddd\u0CE6\u0CE7ddddddd\u0816\u0816\u0816\u0816\u0816ddddddddddddddddddddd\u017E\u017Fddd\u017E\u017Fdddddd\u0448ddddd\u0140dddd\u0457\u0458dddddddd\u0FB4d\u0FB4d\u0FB4dddddddddddddddd\u02E4\u02E4\u02E4d\u017Cddddddddddddddddddddddddddddddddddd\u02C6\u02C6\u02C6dddddd\u0457\u045Edddddddd\u0448d\u0448d\u0448ddddddddddddddddddddddddddddddddddddddddddddddddddddddd\u0182\u0182ddddd\u032Adddd\u0458\u045Adddddddddddddddddddddddddd\u017E\u017Fddddddddddddddddddddddddddddddd\u0FB4ddddddddddddddd\u0FB6\u0F90\u0FB5d\u0FB8ddddddddd\u0FB4ddddd\u0182\u0182\u0182\u0182\u0182\u04B7dddddddddddddddddddddddddddd\u04BA\u0182\u0182\u0182\u0182\u0182dddddddddddddddddddddddddddddddddddddddd\u0182\u0182\u0182\u0182\u0182\u04B8dddddddddddddddddddddddddddd\u04BB\u0182\u0182\u0182\u0182\u0182dddddddddddddddddddddddddddddddddddddddd\u0182\u0182\u0182\u0182\u0182\u04B9ddddddddddddddddddddddd\u0FB8dddd\u04BC\u0182\u0182\u0182\u0182\u0182dddddddddddddddddddddddddddddddddddddddd\u0CCBddddddddd\u0CCBdddddddddddddddddddddddddddddnsddddddddddd\u0438ddddddddddddd\u0FB4dddddd\u0448\u0448\u0448\u0448\u0448\u0448dddddddddddd\u0180\u0181dddddddddddddddddddd\u0448\u0448\u0448\u0448\u0448\u0448ddddddddddd\u0FB4ddddd\u0FB7ddddddddddd\u0F90\u0FB5dddd\u0448\u0448\u0448\u0448\u0448\u0448dddddddddddddddddddddddddddddddddd\u0448\u0448\u0448\u0448\u0448\u0448dddddddddddd\u0832d\u0832d\u0832ddddddddddddddddd\u0448\u0448\u0448\u0448\u0448\u0448dddddddddddddddddddddddddddddddddd\u0448\u0448\u0448\u0448\u0448\u0448"
+		"Tiles": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҲҲҲҴҴҲҲҲҴҴҴҴҴҴҴ¬yyyyyҴҴҴҳҳҳҴҴҴyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴҳ«««ҳҴтyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ҴКyyyyтyyyҴҴҴҴҴҴҴҴҴҴтyyyyyyyyyyyyҴҴ«««««ҴҴyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ÇÇyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴҳ«««ҴҴтyyyyтyyyyyyyyyyyyyтyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҳ«ҳ«¬«yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy«¬«ҲҲҴҴҴҲҲҴyyyҴААААҴААААҴААААААҴyyyҴҳҳҳҴҳҳҳªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«««Ҵ«««ªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«¬«Ҵ«¬«¬¬¬¬¬¬¬ҴyyyҴҴҴҴyyyҴ«««Ҵ«««ҲҲҴ¬ҴҴҴҴyyyҴҴҴҴyyyҴҴҴҴҴҴҴҴªªҴ¬¬¬¬ҴyyyҴҴҴҴyyyҴyyyyyyyªªҴ¬¬¬¬ҴyyyҴҴҴЮЮЮЮЮҴҴҴҴҴҳҳҳҳҴyyyҴyyyyyyy¬¬¬¬¬¬¬ÇyyyҴxЮ¬¬¬Юxxxҳ«««ҴyyyÇyyyyyyyҲҲҴ¬ҴҲҲҴyyyҴxЮЮxxxҳ««ҳҳҴyyyҴҳ¬ҳ¬ҳ¬ҳªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴҳҴҳҴҳҴªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴ«Ҵ«Ҵ«Ҵ¬¬¬¬¬¬¬ҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴ«Ҵ«Ҵ«ҴҴҴҴҴҴҴҴҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyҴxxxxxxxxxxxҳ«««Ҵyyyyyyyyҳ«ҳ«¬«yyyyyyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyyyyyy«¬«ҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳҳҳҳҴyyyyyyyyyyyyҴ«¬«yyyyyyy«¬«yyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyÇ«««ҴyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴЮЮЮЮЮҴҴҴҴҴҴҴҴҴҴyҴҴҴҴҴҴҳҳҳҳҳҳææëëëðëëëææҴxxxxxҴҲҲҲҲҳҳҳҳҴҴҴҴҲҲҲҴ««««««ææëëëðëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҴªªªҴ««««««ææëëëëëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҲªªªҴ««««««ææëëëðëëëææÇxxxxxÇªªªҲ«««ҳ¬¬¬ÇªªªҴ««««««ææëëëðëëëææҴxxxxxҴҲҲҲҳҳҳҳҳҳҳҳҴҲҲҲҴ««««««ææëëëëëëëææҴЮЮЮЮЮҴyyұ«ҳ«ҳ«ҳ«ҳyyyyҴ««««««",
+		"Objects": "ҴӄӃҶұҳҹddddddddddddddddddddddddddddddddddddddddddddddddddd೥ddddddd೦೧ddd೦೧dddddddƂƂƂƂƂұdddddddddшшшddŀddddшddddшdddҴƂƂƂƂƂdddddddddddddddddddddиddddddddddddddddddƂƂƂƂƂҲdddddddddžſddddƀƁddd೥ྴddd೥ྴdҵƂƂƂƂƂddddddddddшddྴྴdddddddddddddddddddddddddƂƂƂƂƂҳddddddddddddddddddddddddddddҶƂƂƂƂƂdddddddddddddddŀdddddddddddddddddddddddddddddྴdddddddddddྴdddྴddddddddddddྴddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd೦೧ddd೦೧dddddd௪ddddd௪ddddd௪dddddddd೥ddd೥džſdddžſdddddшżdddddżшdшd࠲żdddddddиdшdиdшddddddddddddddːːdːːdddddddːːdddddddddddddddddddddddddddϼdϼdddddddddϼdddddddddddd೦೧ddd೥ddddddࠖࠖdddddࠖࠖdࠖࠖdd˚˚ddddddྴdddྴdžſdddddddddddddŀdŀdddddddddŀdddddddddddddddddddྴddddྶdddddddྶdྶdddddddddྴdddddddddddddddddddїdтdтdтdјdљdіќdddddddddddddd೦೧ddd೦೧dddddddࠖࠖࠖࠖࠖdddddddddddddddddddddžſdddžſddddddшdddddŀddddїјddddddddྴdྴdྴddddddddddddddddˤˤˤdżdddddddddddddddddddddddddddddddddddˆˆˆddddddїўddddddddшdшdшdddddddddddddddddddddddddddddddddddddddddddddddddddddddƂƂddddd̪ddddјњddddddddddddddddddddddddddžſdddddddddddddddddddddddddddddddྴdddddddddddddddྶྐྵdྸdddddddddྴdddddƂƂƂƂƂҷddddddddddddddddddddddddddddҺƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddƂƂƂƂƂҸddddddddddddddddddddddddddddһƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddƂƂƂƂƂҹdddddddddddddddddddddddྸddddҼƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddೋdddddddddೋdddddddddddddddddddddddddddddnsdddddddddddиdddddddddddddྴddddddшшшшшшddddddddddddƀƁddddddddddddddddddddшшшшшшdddddddddddྴdddddྷdddddddddddྐྵddddшшшшшшddddddddddddddddddddddddddddddddddшшшшшшdddddddddddd࠲d࠲d࠲dddddddddddddddddшшшшшшddddddddddddddddddddddddddddddddddшшшшшш"
 	};
 	async function ExpendInit() {
 		await waitFor(() => initComplete == true);
@@ -1594,7 +1593,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		MovePlayer({ X: 1, Y: 37 });
 	}
 	async function PlayerMovedFaci() {
-		if (ChatRoomData.MapData.Objects.startsWith("\u04B4\u04C4\u04C3\u04B6\u04B1\u04B3\u04B9") == false) return;
+		if (ChatRoomData.MapData.Objects.startsWith("ҴӄӃҶұҳҹ") == false) return;
 		var pdi = PlayerDroneInfo();
 		Player.MapData.PrivateState.HasKeyBronze = true;
 		Player.MapData.PrivateState.HasKeyGold = pdi.isOwner;
@@ -1622,7 +1621,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		setPverPos(Object.assign({}, Player.MapData.Pos));
 	}
 	async function CheckSleepUntil() {
-		if (ChatRoomData.MapData.Objects.startsWith("\u04B4\u04C4\u04C3\u04B6\u04B1\u04B3\u04B9") == false) return;
+		if (ChatRoomData.MapData.Objects.startsWith("ҴӄӃҶұҳҹ") == false) return;
 		var pdi = PlayerDroneInfo();
 		if (pdi.sleepUntil == null) return;
 		if (pdi.sleepUntil < Date.now()) {
@@ -2247,54 +2246,54 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		var ShowString = "";
 		if (info.isDrone) {
 			var exString = GetExString(info);
-			ShowString = `\u2014\u2014\u2014\u2014\u2014\u2014Basic Info\u2014\u2014\u2014\u2014\u2014\u2014
+			ShowString = `——————Basic Info——————
 Drone ID: ${info.MemberNumber}
 Drone model: ${info.type}V${info.level}
 quota points: ${info.coin}
 Remaining battery: ${info.battery}/${info.batteryMax}
 Operator ID: ${info.ownerId == -1 ? "No Operator" : info.ownerId}
 System version: ${info.scriptVersion}${sleepString}
-\u2014\u2014\u2014\u2014\u2014\u2014Physiology\u2014\u2014\u2014\u2014\u2014\u2014
+——————Physiology——————
 Heart rate: ${bpm}BPM
-Temperature: ${temp}\u2103
+Temperature: ${temp}℃
 Arousal state: ${breathing === "Action" || breathing === "High" ? "Aroused" : "Not aroused"}
 Current arousal: ${progress}%
 Pleasure device: ${bindLevelStrings[info.bodyStatus.body]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 3) : ""}
 Orgasm limit: ${bindLevelStrings[info.bindStatus.body]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 3) : ""}
-\u2014\u2014\u2014\u2014\u2014\u2014Device Info\u2014\u2014\u2014\u2014\u2014\u2014
+——————Device Info——————
 Eye restraint: ${bindLevelStrings[info.bindStatus.eyes]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 0) : ""}
 Ear restraint: ${bindLevelStrings[info.bindStatus.ears]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 1) : ""}
 Mouth restraint: ${bindLevelStrings[info.bindStatus.mouth]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 2) : ""}
 Hand restraint: ${bindLevelStrings[info.bindStatus.hands]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 4) : ""}
 Leg/foot restraint: ${bindLevelStrings[info.bindStatus.legs]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 0, 5) : ""}
-\u2014\u2014\u2014\u2014\u2014\u2014Function Info\u2014\u2014\u2014\u2014\u2014\u2014
+——————Function Info——————
 Eye function: ${bodyLevelStrings[info.bodyStatus.eyes]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 0) : ""}
 Ear function: ${bodyLevelStrings[info.bodyStatus.ears]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 1) : ""}
 Mouth function: ${bodyLevelStrings[info.bodyStatus.mouth]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 2) : ""}
 Hand function: ${bodyLevelStrings[info.bodyStatus.hands]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 4) : ""}
 Leg/foot function: ${bodyLevelStrings[info.bodyStatus.legs]} ${playerIsOwner ? styleButton("Adjust", SetStatusHint, info, 1, 5) : ""}
-\u2014\u2014\u2014\u2014\u2014\u2014Available Programs\u2014\u2014\u2014\u2014\u2014\u2014${exString}
+——————Available Programs——————${exString}
 ${styleButton("Available actions", ShowActionButtons, info)}`;
 		} else if (info.isOwner) {
-			ShowString = `\u2014\u2014\u2014\u2014\u2014\u2014Basic Info\u2014\u2014\u2014\u2014\u2014\u2014
+			ShowString = `——————Basic Info——————
 Operator ID: ${info.MemberNumber}
 Operator permission level: ${info.level}
 quota points: ${info.coin}
 System version: ${info.scriptVersion}
-\u2014\u2014\u2014\u2014\u2014\u2014Physiology\u2014\u2014\u2014\u2014\u2014\u2014
+——————Physiology——————
 Heart rate: ${bpm}BPM
-Temperature: ${temp}\u2103
-\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014
+Temperature: ${temp}℃
+————————————————
 ${styleButton("Available actions", ShowActionButtons, info)}`;
 		} else {
-			ShowString = `\u2014\u2014\u2014\u2014\u2014\u2014Basic Info\u2014\u2014\u2014\u2014\u2014\u2014
+			ShowString = `——————Basic Info——————
 Visitor ID: ${info.MemberNumber}
 quota points: ${info.coin}
 System version: ${info.scriptVersion}
-\u2014\u2014\u2014\u2014\u2014\u2014Physiology\u2014\u2014\u2014\u2014\u2014\u2014
+——————Physiology——————
 Heart rate: ${bpm}BPM
-Temperature: ${temp}\u2103
-\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014
+Temperature: ${temp}℃
+————————————————
 ${styleButton("Available actions", ShowActionButtons, info)}`;
 		}
 		SendMessageToSelf(ShowString, "status");
@@ -2337,33 +2336,33 @@ Guilt program: Failing to resist orgasm raises a random restraint by 1`;
 			temp += char.ArousalSettings.Progress / 100 * 3;
 			progress = char.ArousalSettings.Progress;
 		}
-		return `\u2014\u2014\u2014\u2014\u2014\u2014Basic Info\u2014\u2014\u2014\u2014\u2014\u2014
+		return `——————Basic Info——————
 Drone ID: ${info.MemberNumber}
 Drone model: ${info.type}V${info.level}
 quota points: ${info.coin}
 Remaining battery: ${info.battery}/${info.batteryMax}
 Operator ID: ${info.ownerId == -1 ? "No Operator" : info.ownerId}
 System version: ${info.scriptVersion}
-\u2014\u2014\u2014\u2014\u2014\u2014Physiology\u2014\u2014\u2014\u2014\u2014\u2014
+——————Physiology——————
 Heart rate: ${bpm}BPM
-Temperature: ${temp}\u2103
+Temperature: ${temp}℃
 Arousal state: ${breathing === "Action" || breathing === "High" ? "Aroused" : "Not aroused"}
 Current arousal: ${progress}%
 Pleasure device: ${bindLevelStrings[info.bodyStatus.body]}
 Orgasm limit: ${bodyLevelStrings[info.bindStatus.body]}
-\u2014\u2014\u2014\u2014\u2014\u2014Device Info\u2014\u2014\u2014\u2014\u2014\u2014
+——————Device Info——————
 Eye restraint: ${bindLevelStrings[info.bindStatus.eyes]}
 Ear restraint: ${bindLevelStrings[info.bindStatus.ears]}
 Mouth restraint: ${bindLevelStrings[info.bindStatus.mouth]}
 Hand restraint: ${bindLevelStrings[info.bindStatus.hands]}
 Leg/foot restraint: ${bindLevelStrings[info.bindStatus.legs]}
-\u2014\u2014\u2014\u2014\u2014\u2014Function Info\u2014\u2014\u2014\u2014\u2014\u2014
+——————Function Info——————
 Eye function: ${bodyLevelStrings[info.bodyStatus.eyes]}
 Ear function: ${bodyLevelStrings[info.bodyStatus.ears]}
 Mouth function: ${bodyLevelStrings[info.bodyStatus.mouth]}
 Hand function: ${bodyLevelStrings[info.bodyStatus.hands]}
 Leg/foot function: ${bodyLevelStrings[info.bodyStatus.legs]}
-\u2014\u2014\u2014\u2014\u2014\u2014Voice commands\u2014\u2014\u2014\u2014\u2014\u2014
+——————Voice commands——————
 Drone${info.MemberNumber} show status
 Drone${info.MemberNumber} (eyes|ears|mouth|arms|legs) restraint set to (off|on|maximum)
 Drone${info.MemberNumber} (eyes|ears|mouth|arms|legs) function set to (available|restricted|offline)
@@ -2374,7 +2373,7 @@ Drone${info.MemberNumber} orgasm reward
 Drone${info.MemberNumber} shock punishment
 Drone${info.MemberNumber} deploy charging crank
 Note: If the Drone cannot receive voice commands due to hearing limitations (such as ear-related restrictions or battery levels below 20%), you can try sending *command content or (command content) to bypass these limitations.
-\u2014\u2014\u2014\u2014\u2014\u2014Available Programs\u2014\u2014\u2014\u2014\u2014\u2014${exString}
+——————Available Programs——————${exString}
 `;
 	}
 	function ShowActionButtons(info = null) {
@@ -2551,7 +2550,7 @@ Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 		SendMessageToSelf("Mission assignment command sent!");
 	}
 	async function GoToFacility() {
-		if (ChatRoomData?.MapData?.Objects?.startsWith("\u04B4\u04C4\u04C3\u04B6\u04B1\u04B3\u04B9") && ChatRoomData?.Name?.startsWith("DroneFacility")) {
+		if (ChatRoomData?.MapData?.Objects?.startsWith("ҴӄӃҶұҳҹ") && ChatRoomData?.Name?.startsWith("DroneFacility")) {
 			SendMessageToSelf(`Already in the training facility. No movement needed.`);
 			return;
 		}
@@ -2601,7 +2600,7 @@ Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 			await sleep(1e3);
 			await RefreshBinds(true);
 			await sleep(1e3);
-			if (ChatRoomData?.MapData?.Objects?.startsWith("\u04B4\u04C4\u04C3\u04B6\u04B1\u04B3\u04B9")) {
+			if (ChatRoomData?.MapData?.Objects?.startsWith("ҴӄӃҶұҳҹ")) {
 				MovePlayer({ X: 1, Y: 37 });
 			}
 			pdi.coin -= price;
@@ -2655,7 +2654,7 @@ Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 			info = { MemberNumber: "(Target ID)" };
 		}
 		SendMessageToSelf(`
-\u2014\u2014\u2014\u2014\u2014\u2014Voice commands\u2014\u2014\u2014\u2014\u2014\u2014
+——————Voice commands——————
 Drone${info.MemberNumber} Show status
 Drone${info.MemberNumber} (eyes|ears|mouth|arms|legs) restraint set to (off|on|maximum)
 Drone${info.MemberNumber} (eyes|ears|mouth|arms|legs) function set to (available|restricted|offline)
@@ -4316,7 +4315,7 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 	}
 	function ChatRoomPlayerIsAdminBefore() {
 		if (CheckPlayerDroneInfoExistAndIsDrone() == false) return;
-		if (ChatRoomData?.MapData?.Objects?.startsWith("\u04B4\u04C4\u04C3\u04B6\u04B1\u04B3\u04B9") && ChatRoomData?.Name?.startsWith("DroneFacility")) return false;
+		if (ChatRoomData?.MapData?.Objects?.startsWith("ҴӄӃҶұҳҹ") && ChatRoomData?.Name?.startsWith("DroneFacility")) return false;
 	}
 	function ServerShowBeepBefore(message, duration, options, title) {
 		if (PlayerDroneInfo() === void 0) return;
@@ -4520,7 +4519,7 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 	align-items: baseline;
 	gap: 0.4em;
 	line-height: 1.5;
-'><span style="font-size: 1.2vw;">\u25A0</span><span style="
+'><span style="font-size: 1.2vw;">■</span><span style="
 	font-size: 1.6vw;
 	white-space: pre-wrap;
 	flex: 1;
@@ -4606,7 +4605,7 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 				onmousedown="this.style.background='rgba(0, 255, 0, 0.2)';"
 				onmouseup="this.style.background='rgba(0, 255, 0, 0.1)'; this.style.borderColor='#00FF00';"
 		>
-				<span>\u25B8</span>${safeText}
+				<span>▸</span>${safeText}
 		</button>`;
 	}
 	var _textProgressManager = {

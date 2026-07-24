@@ -65,6 +65,7 @@ const options = {
     minify: false,
     sourcemap: false,
     legalComments: "none",
+    charset: "utf8",
     banner: { js: banner },
     logLevel: "info",
 };
