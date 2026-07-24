@@ -1,0 +1,13 @@
+{
+  "name": "dts-bundle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bundles the DroneTrainingSystem ES modules into a single userscript file.",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}
