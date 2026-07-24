@@ -1,15 +1,16 @@
+// #region constants.js
 // ==UserScript==
-// @name         DroneTrainingSystem English (LSCG + Legacy Compatible)
-// @namespace    local
-// @version      1.6.20260722-lscg
-// @description  English DroneTrainingSystem with LSCG ModSDK hooks and legacy DTS migration. No remote loader.
-// @author       Original from zajucd; Further developed by DeusLynx (full English version)
-// @match        https://bondageprojects.elementfx.com/*
-// @match        https://www.bondageprojects.elementfx.com/*
-// @match        https://bondage-europe.com/*
-// @match        https://www.bondage-europe.com/*
-// @grant        none
-// @run-at       document-end
+// @name DroneTrainingSystem English (LSCG + Legacy Compatible)
+// @namespace local
+// @version 1.6.20260722-lscg
+// @description English DroneTrainingSystem with LSCG ModSDK hooks and legacy DTS migration. No remote loader.
+// @author Original from zajucd; Further developed by DeusLynx (full English version)
+// @license MIT
+// @include /^https:\/\/(www\.)?bondageprojects\.elementfx\.com\/R\d+\/(BondageClub|\d+)\/(\d+\.html)?$/
+// @include /^https:\/\/(www\.)?bondage-europe\.com\/R\d+\/(BondageClub|\d+)\/(\d+\.html)?$/
+// @include /^https:\/\/(www\.)?bondageprojects\.com\/R\d+\/$/
+// @grant none
+// @run-at document-end
 // ==/UserScript==
 
 (() => {
@@ -74,6 +75,8 @@
 		["ItemBoots", "ItemFeet", "ItemLegs"]
 	];
 	var ArousalDisplayStrings = ["Orgasm limit", "Pleasure device"];
+// #endregion
+// #region state.js
 
 	// src/state.js
 	var timeEventInterval = -1;
@@ -123,6 +126,8 @@
 	function setPverPos(v) {
 		pverPos = v;
 	}
+// #endregion
+// #region rooms.js
 
 	// src/rooms.js
 	var MissionInfo = class _MissionInfo {
@@ -1637,6 +1642,8 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 			MovePlayer(RandomPosOfArea(SleepRoom.Areas[0]), true);
 		}
 	}
+// #endregion
+// #region items.js
 
 	// src/items.js
 	var ItemInfo = class _ItemInfo {
@@ -1924,6 +1931,8 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		{ item: "DisplayTalkItem", price: 5 },
 		{ item: "PrivateRoomItem", price: 5 }
 	];
+// #endregion
+// #region commands.js
 
 	// src/commands.js
 	function DTSHeartBeatPayload(requestResponse, isDrone) {
@@ -2746,6 +2755,8 @@ Note: If the Drone cannot receive voice commands due to hearing limitations (suc
 			pdi.lastLoginDate = date;
 		}
 	}
+// #endregion
+// #region drone.js
 
 	// src/drone.js
 	var Crate = {
@@ -3855,6 +3866,8 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 		SendDTSMsg(info, new MsgInfo("SetStatus", [type, part, level]));
 		SendMessageToSelf("Set command sent");
 	}
+// #endregion
+// #region hooks.js
 
 	// src/hooks.js
 	var hookMap = /* @__PURE__ */ new Map();
@@ -4336,6 +4349,8 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 			ShowPlayerEnterHelp();
 		}
 	}
+// #endregion
+// #region utils.js
 
 	// src/utils.js
 	function sleep(time) {
@@ -4713,6 +4728,8 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 		}, 0);
 		return html;
 	}
+// #endregion
+// #region main.js
 
 	// src/main.js
 	function Init() {
@@ -4883,4 +4900,8 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 	})();
 	WaitEnable();
 	ExpendInit();
+// #endregion
 })();
+// #region undefined
+
+// #endregion
