@@ -6,29 +6,30 @@
 
 2. Choose **one** of the following methods:
 
-> **Option 1 – Automatic Updates**
-> 
+> **Option 1 – Automatic Updates**<br>
 > Install the [DTS_Loader](https://deuslynx.github.io/DroneTrainingSystem-Englisch/DTSLoader.user.js)
 > (Note: This will automatically use the newest version of the DTS by loading the script from the dist folder in this repository.)
 
-> **Option 2 – Manual Updates**
->
+> **Option 2 – Manual Updates**<br>
 > Install [DTS-UserScript](https://deuslynx.github.io/DroneTrainingSystem-Englisch/dist/DroneTrainingSystem.user.js)
 > (Note: With this you will have to manually update if there is a new version.)
 
-> **Option 3 – One Off Version**
->
+> **Option 3 – One Off Version**<br>
 > Install [Static-DTS-UserScript](https://deuslynx.github.io/DroneTrainingSystem-Englisch/DroneTrainingSystem-EngVer.user.js)
 > (Note: This version is the translation of the original that won't get any updates.)
+
+> **Info**<br>
+> If you use another method than tampermonkey and only need the code: [raw_DTScode](https://deuslynx.github.io/DroneTrainingSystem-Englisch/dist/DroneTrainingSystem.iife.js).
 
 3. Make sure the userscript addon and the newly created script are both activated in the Bondage Club tab.
 4. Reload the page.
 
-> [!NOTE]
-> 
+If everything is working properly you should be able to see black areas with green text in a room chat.
+If you just want to have a look around the facility for now, then register as an Operator (you can deregister later). Becoming a Drone is meant to be a permanent decision (even though there are ways around that).
 
-If everything is working properly you should be able to see black areas with green text in the chat.
-If you just want to have a look around for now, then register as an Operator (you can deregister later). Becoming a Drone is meant to be a permanent decision (even though there are ways around that).
+> **Info**<br>
+> If something isn't working the next time, please visit here again... something may have changed since the project is still in development.<br>
+> If you use 
 
 ## Current Features
 - Elevator (map entrance or south side of the facility):  Accessible after registering as either a drone or an operator.
@@ -64,14 +65,5 @@ Tampermonkey metadata block prepended as a banner.
 npm install
 npm run build          
 npm run watch               # rebuild on every save while editing
-```
-
-## Folder layout
-```
-dts-build/
-  package.json
-  build.js       <- build script
-  src/           <- all modules
-  dist/          <- created files goes here
 ```
 
