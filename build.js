@@ -1,36 +1,31 @@
 // build.js
 // Step 1: Bundles src/main.js (and everything it imports) into a single userscript file at dist/DroneTrainingSystem.iife.js
 //         metadata block prepended and // #region / // #endregion markers wrapped around each original source file's contribution
-// Step 2: copies that finished file's contents verbatim into dist/DroneTrainingSystem.user.js. 
-// 
-// Usage:
-//   npm install
-//   npm run build
-//   (or: node build.js  /  node build.js --watch)
+// Step 2: copies that finished file's contents verbatim into dist/DroneTrainingSystem.user.js.
 
 const esbuild = require("esbuild");
 const path = require("path");
 const fs = require("fs");
 
 const banner = `// ==UserScript==
-// @name DroneTrainingSystem English (LSCG + Legacy Compatible)
-// @namespace local
-// @version 1.6.20260722-lscg
-// @description English DroneTrainingSystem with LSCG ModSDK hooks and legacy DTS migration. No remote loader.
-// @author Original from zajucd; Further developed by DeusLynx (full English version)
-// @license MIT
-// @include /^https:\\/\\/(www\\.)?bondageprojects\\.elementfx\\.com\\/R\\d+\\/(BondageClub|\\d+)\\/(\\d+\\.html)?$/
-// @include /^https:\\/\\/(www\\.)?bondage-europe\\.com\\/R\\d+\\/(BondageClub|\\d+)\\/(\\d+\\.html)?$/
-// @include /^https:\\/\\/(www\\.)?bondageprojects\\.com\\/R\\d+\\/$/
-// @grant none
-// @run-at document-end
+// @name         DroneTrainingSystem English (LSCG + Legacy Compatible)
+// @namespace    local
+// @version      1.6.20260722-lscg
+// @description  English DroneTrainingSystem with LSCG ModSDK hooks and legacy DTS migration. No remote loader.
+// @author       Original from zajucd; Further developed by DeusLynx (full English version)
+// @match        https://bondageprojects.elementfx.com/*
+// @match        https://www.bondageprojects.elementfx.com/*
+// @match        https://bondage-europe.com/*
+// @match        https://www.bondage-europe.com/*
+// @grant        none
+// @run-at       document-end
 // ==/UserScript==
 `;
 
 const isWatch = process.argv.includes("--watch");
 
-// esbuild always indents its printed output with 2 spaces per level and has no option to change that
-// To get tab indentation instead, post-process the generated file: every 2 leading spaces become one tab
+// esbuild always indents its printed output with 2 spaces per level and has no option to change that.
+// To get tab indentation instead, post-process the generated file: every 2 leading spaces become one tab.
 function convertIndentToTabs(filePath) {
     const contents = fs.readFileSync(filePath, "utf8");
     const converted = contents
@@ -48,10 +43,11 @@ function convertIndentToTabs(filePath) {
 }
 
 // ----- Region markers (// #region file.js ... // #endregion) -----
-// esbuild deletes import/export statements entirely once bundled and any comment "attached" to one of those gets deleted right along with it 
-// So instead have esbuild emit a sourcemap, decode it, and use it to find the exact output-line boundaries
-// (where the "current source file" changes) then insert markers there
-// This is independent of whatever esbuild does or doesn't do with comments
+// esbuild deletes import/export statements entirely once bundled and 
+// any comment "attached" to one of those gets deleted right along with it.
+// So instead have esbuild emit a sourcemap, decode it, and use it to find the exact output-line 
+// boundaries (where the "current source file" changes) then insert markers there.
+// This is independent of whatever esbuild does or doesn't do with comments.
 
 const VLQ_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 const VLQ_LOOKUP = {};
@@ -81,8 +77,8 @@ function decodeVLQSegment(segment) {
     return values;
 }
 
-// Returns an array where index = 0-based generated-line number and value = the basename of the original source file that line came from 
-// (or null for lines with no mapping at all, e.g. banner lines or gaps)
+// Returns an array where index = 0-based generated-line number and 
+// value = the basename of the original source file that line came from (or null for lines with no mapping at all).
 function mapLinesToSourceFiles(map) {
     const sourceNames = map.sources.map((s) => path.basename(s));
     let sourceIndex = 0; // running total across the whole mappings string, not reset per line
@@ -102,8 +98,8 @@ function mapLinesToSourceFiles(map) {
     });
 }
 
-// Attribute each unmapped line to the NEXT mapped source instead of the previous one
-// Only a genuinely trailing run of unmapped lines (nothing mapped after them at all, e.g. the closing `})();` of the IIFE wrapper) stays unattributed
+// Attribute each unmapped line to the NEXT mapped source instead of the previous one.
+// Only a genuinely trailing run of unmapped lines (nothing mapped after them at all) stays unattributed.
 function forwardFillSources(lineSources) {
     const effective = new Array(lineSources.length).fill(null);
     let next = null;
@@ -121,7 +117,7 @@ function insertRegionMarkers(outFilePath, mapFilePath) {
 
     // Drop esbuild's own "//# sourceMappingURL=..." comment - we delete the
     // intermediate .map file right after this runs, so a dangling reference
-    // to it has no use in the shipped bundle
+    // to it has no use in the shipped bundle.
     const lastLine = outLines[outLines.length - 1];
     if (lastLine && lastLine.startsWith("//# sourceMappingURL=")) {
         outLines.pop();
@@ -167,11 +163,8 @@ const options = {
     format: "iife",
     platform: "browser",
     target: "es2020",
-    // The game itself defines Player, ChatRoomData, ServerSend, etc. as
-    // real globals at runtime, so we don't want esbuild to try to
-    // resolve/shim them - just leave every unresolved global reference as-is.
-    // (esbuild does this automatically for bundle+iife; nothing external to
-    // mark since there are no npm dependencies in this project.)
+    // The game itself defines Player, ChatRoomData, ServerSend, etc. as real globals at runtime, 
+    // so we don't want esbuild to try to resolve/shim them - just leave every unresolved global reference as-is.
     minify: false,
     sourcemap: "external", // consumed by insertRegionMarkers(), then deleted
     legalComments: "none",

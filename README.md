@@ -2,26 +2,33 @@
 
 ## Setup
 
-1. Download a userscript addon for your browser - like tampermonkey or violentmonkey (or have another way of running js code for BondageClub).
+1. Download a userscript addon for your browser - eg. tampermonkey (or have another way of running js code for BondageClub).
 
-2. Create a new script and choose **one** of the following methods:
+2. Choose **one** of the following methods:
 
 > **Option 1 – Automatic Updates**
 > 
-> Paste the code from the DTSLoader.js file into the new script.
-> (Note: This will automatically use the newest version by loading code from this repository.)
+> Install the [DTS_Loader](https://deuslynx.github.io/DroneTrainingSystem-Englisch/DTSLoader.user.js)
+> (Note: This will automatically use the newest version of the DTS by loading the script from the dist folder in this repository.)
 
 > **Option 2 – Manual Updates**
 >
-> Paste the code from the DroneTrainingSystem-EngVersion.js file into the new script.
+> Install [DTS-UserScript](https://deuslynx.github.io/DroneTrainingSystem-Englisch/dist/DroneTrainingSystem.user.js)
 > (Note: With this you will have to manually update if there is a new version.)
+
+> **Option 3 – One Off Version**
+>
+> Install [Static-DTS-UserScript](https://deuslynx.github.io/DroneTrainingSystem-Englisch/DroneTrainingSystem-EngVer.user.js)
+> (Note: This version is the translation of the original that won't get any updates.)
 
 3. Make sure the userscript addon and the newly created script are both activated in the Bondage Club tab.
 4. Reload the page.
 
-If everything is working properly you should be able to see black areas with green text in the chat when you caress the neck of someone who has the script (your own works aswell).
+> [!NOTE]
+> 
 
-If you just want to have a look inside for now, then register as an Operator (can deregister later). Becoming a Drone is meant to be a permanent decision (even though there are ways around that).
+If everything is working properly you should be able to see black areas with green text in the chat.
+If you just want to have a look around for now, then register as an Operator (you can deregister later). Becoming a Drone is meant to be a permanent decision (even though there are ways around that).
 
 ## Current Features
 - Elevator (map entrance or south side of the facility):  Accessible after registering as either a drone or an operator.
@@ -56,7 +63,7 @@ Tampermonkey metadata block prepended as a banner.
 ```bash
 npm install
 npm run build          
-npm run watch               # rebuild on every save while you're editing
+npm run watch               # rebuild on every save while editing
 ```
 
 ## Folder layout
@@ -65,6 +72,6 @@ dts-build/
   package.json
   build.js       <- build script
   src/           <- all modules
-  dist/          <- created DroneTrainingSystem.user.js goes here
+  dist/          <- created files goes here
 ```
 
