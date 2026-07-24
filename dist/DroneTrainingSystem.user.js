@@ -1,15 +1,15 @@
 // ==UserScript==
-// @name DroneTrainingSystem English (LSCG + Legacy Compatible)
-// @namespace local
-// @version 1.6.20260722-lscg
-// @description English DroneTrainingSystem with LSCG ModSDK hooks and legacy DTS migration. No remote loader.
-// @author Original from zajucd; Further developed by DeusLynx (full English version)
-// @license MIT
-// @include /^https:\/\/(www\.)?bondageprojects\.elementfx\.com\/R\d+\/(BondageClub|\d+)\/(\d+\.html)?$/
-// @include /^https:\/\/(www\.)?bondage-europe\.com\/R\d+\/(BondageClub|\d+)\/(\d+\.html)?$/
-// @include /^https:\/\/(www\.)?bondageprojects\.com\/R\d+\/$/
-// @grant none
-// @run-at document-end
+// @name         DroneTrainingSystem English (LSCG + Legacy Compatible)
+// @namespace    local
+// @version      1.6.20260722-lscg
+// @description  English DroneTrainingSystem with LSCG ModSDK hooks and legacy DTS migration. No remote loader.
+// @author       Original from zajucd; Further developed by DeusLynx (full English version)
+// @match        https://bondageprojects.elementfx.com/*
+// @match        https://www.bondageprojects.elementfx.com/*
+// @match        https://bondage-europe.com/*
+// @match        https://www.bondage-europe.com/*
+// @grant        none
+// @run-at       document-end
 // ==/UserScript==
 
 (() => {
