@@ -1,4 +1,4 @@
-- fixed OOC messages when display monitor is ON
+- fix OOC messages when display monitor is ON
 - adjust drone suit for male characters
 - drone cleaning work mission
 - operator -> drone charging mission

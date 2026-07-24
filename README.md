@@ -42,3 +42,29 @@ Any idea is appreciated, so don't hesitate to mention yours!
 
 ## Future Plans
 Somewhat loose... maybe extending the map along with some features... but I'll have to see where everything goes~
+
+---
+---
+
+### DTS bundler
+Bundles `src/main.js` and everything it imports (`constants.js`, `state.js`,
+`utils.js`, `drone.js`, `items.js`, `commands.js`, `rooms.js`, `hooks.js`)
+into one plain-JS userscript at `dist/DroneTrainingSystem.user.js`, with the
+Tampermonkey metadata block prepended as a banner.
+
+### Usage
+```bash
+npm install
+npm run build          
+npm run watch               # rebuild on every save while you're editing
+```
+
+## Folder layout
+```
+dts-build/
+  package.json
+  build.js       <- build script
+  src/           <- all modules
+  dist/          <- created DroneTrainingSystem.user.js goes here
+```
+
