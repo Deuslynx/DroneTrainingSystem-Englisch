@@ -1,6 +1,10 @@
-- fix OOC messages when display monitor is ON
-- adjust drone suit for male characters
+Extensions:
 - drone cleaning work mission
 - operator -> drone charging mission
 - slowed leave time under some conditions (or having to solve some solo task before being allowed to leave)
 - extend words changed when display screen is set to ON
+
+Fixes/Adjustments:
+- remove Drone messages and training for Operators
+- fix OOC messages when display monitor is ON
+- adjust drone suit for male characters
