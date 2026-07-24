@@ -5642,7 +5642,6 @@ async function ExpendInit() {
 
 async function InitMapFaci() {
     ChatRoomData.Name = "DroneFacility 2.0";
-    // TODO: insert download link
     ChatRoomData.desc = `In development... testing and gathering ideas for the mod.
 All info on github: tinyurl.com/DroneTrainingSystem
 If something isn't clear just ask RoomTester or someone who has the mod already~`;
