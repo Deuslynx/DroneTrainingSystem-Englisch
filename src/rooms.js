@@ -1178,7 +1178,6 @@ export var educationMenu = [
         SendMessageToSelf("....., ..., ...", "EducationRoomClear");
         await sleep(waitTime);
         ClearTagMessage("EducationRoomClear");
-        SendMessageToSelf("我—身份—，—人—，人——", "EducationRoomClear");
         SendMessageToSelf("My Identity..., human..., fading...", "EducationRoomClear");
         await sleep(waitTime);
         ClearTagMessage("EducationRoomClear");
@@ -1289,7 +1288,7 @@ export async function WaitEducationProcess(text1, text2, text3) {
     while (toNext == false) {
         var choiced = false;
         ClearTagMessage("EducationRoomClear");
-        SendMessageToSelf(`${text1}${styleButton(text2, () => { toNext = true; choiced = true; })}，${styleButton(text3, () => { DoPunishment(2, 3); choiced = true; })}`, "EducationRoomClear");
+        SendMessageToSelf(`${text1}${styleButton(text2, () => { toNext = true; choiced = true; })}, ${styleButton(text3, () => { DoPunishment(2, 3); choiced = true; })}`, "EducationRoomClear");
         await waitFor(() => { return choiced == true; });
         ClearTagMessage("EducationRoomClear");
         await sleep(waitTime);
