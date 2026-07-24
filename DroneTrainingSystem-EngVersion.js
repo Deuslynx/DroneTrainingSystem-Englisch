@@ -1004,7 +1004,7 @@ var bodyPartAssetGroups = [
     ["ItemMouth", "ItemMouth2", "ItemMouth3"],
     ["ItemVulva", "ItemVulvaPiercings", "ItemButt", "ItemPelvis", "ItemNipples", "ItemNipplesPiercings","ItemBreast"],
     ["ItemArms", "ItemHands"],
-    ["ItemBoots", "ItemFeet","ItemLegs"],
+    ["ItemBoots", "ItemFeet", "ItemLegs"],
 ]
 var ArousalDisplayStrings = ["Orgasm limit", "Pleasure device"];
 var vibeModeStrings = {
@@ -1062,7 +1062,7 @@ const MsgCmds = {
         Command: (sender, param) => {
             if (param == null || param.length < 2) {
                 var pdi = PlayerDroneInfo();
-                DoPunishment(pdi.shockLevel, pdi.shoclCount);
+                DoPunishment(pdi.shockLevel, pdi.shockCount);
             }
             else {
                 var power = param[0];
@@ -1827,7 +1827,7 @@ function DoVoiceCommand(ChatRoomCharacter, msg) {
             break;
         // Shock punishment
         case 3: {
-            DoPunishment(pdi.shockLevel, pdi.shoclCount);
+            DoPunishment(pdi.shockLevel, pdi.shockCount);
         }
             break;
         // Set to 
@@ -2125,11 +2125,11 @@ async function DoVibe(power, skipCheck = false) {
         }
     }
     if (itemsCanVibe.length > 0) {
-        SendMessageToSelf(`Vibration device intensity set to ${power}`);
+        SendMessageToSelf(`Vibration device intensity set to ${power}.`);
         RefreshPlayerEffect();
     }
     else {
-        SendMessageToSelf(`No usable vibration device found. Vibe setting failed`);
+        SendMessageToSelf(`No usable vibration device found. Vibe setting failed!`);
     }
 }
 async function DoOrgasm(showText = true) {
@@ -3293,7 +3293,7 @@ class DroneInfo {
         this.orgasmBatteryGet = 100;
 
         this.shockLevel = 1;
-        this.shoclCount = 3;
+        this.shockCount = 3;
 
         this.coin = 0;
         this.ownerId = -1;
