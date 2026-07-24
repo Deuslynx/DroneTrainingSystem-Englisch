@@ -38,10 +38,10 @@
     "use strict";
 
     const version = "1.6";
-    const pageUrl = "https://deuslynx.github.io/DroneTrainingSystem-Englisch/dist/DroneTrainingSystem.user.js";
+    const pageUrl = "https://deuslynx.github.io/DroneTrainingSystem-Englisch/DroneTrainingSystem.iife.js";
     const fallbackUrls = [
         `${pageUrl}?v=${version}`,
-        `https://raw.githubusercontent.com/Deuslynx/DroneTrainingSystem-Englisch/main/dist/DroneTrainingSystem.user.js?v=${version}`,
+        `https://raw.githubusercontent.com/Deuslynx/DroneTrainingSystem-Englisch/main/dist/DroneTrainingSystem.iife.js?v=${version}`,
     ];
 
     const non_buildVersion = [

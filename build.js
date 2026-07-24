@@ -52,7 +52,7 @@ function convertIndentToTabs(filePath) {
 /** @type {import('esbuild').BuildOptions} */
 const options = {
     entryPoints: [path.join(__dirname, "src", "main.js")],
-    outfile: path.join(__dirname, "dist", "DroneTrainingSystem.user.js"),
+    outfile: path.join(__dirname, "dist", "DroneTrainingSystem.iife.js"),
     bundle: true,
     format: "iife",
     platform: "browser",
