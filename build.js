@@ -1,7 +1,8 @@
 // build.js
-// Bundles src/main.js (and everything it imports) into a single userscript file at dist/DroneTrainingSystem.iife.js
-// metadata block prepended and // #region / // #endregion markers wrapped around each original source file's contribution
-//
+// Step 1: Bundles src/main.js (and everything it imports) into a single userscript file at dist/DroneTrainingSystem.iife.js
+//         metadata block prepended and // #region / // #endregion markers wrapped around each original source file's contribution
+// Step 2: copies that finished file's contents verbatim into dist/DroneTrainingSystem.user.js. 
+// 
 // Usage:
 //   npm install
 //   npm run build
@@ -151,10 +152,17 @@ function postProcess(outfile) {
     convertIndentToTabs(outfile);
 }
 
+function publishSecondCopy(iifeFile, userFile) {
+    fs.copyFileSync(iifeFile, userFile);
+}
+
+const iifeOutfile = path.join(__dirname, "dist", "DroneTrainingSystem.iife.js");
+const userOutfile = path.join(__dirname, "dist", "DroneTrainingSystem.user.js");
+
 /** @type {import('esbuild').BuildOptions} */
 const options = {
     entryPoints: [path.join(__dirname, "src", "main.js")],
-    outfile: path.join(__dirname, "dist", "DroneTrainingSystem.iife.js"),
+    outfile: iifeOutfile,
     bundle: true,
     format: "iife",
     platform: "browser",
@@ -174,9 +182,8 @@ const options = {
 
 async function run() {
     if (isWatch) {
-        // In watch mode esbuild rewrites the file on every rebuild, so we
-        // need to re-run post-processing after each rebuild too. The
-        // `onEnd` hook fires after every build (initial + rebuilds).
+        // In watch mode esbuild rewrites the file on every rebuild, so we need to re-run post-processing after each rebuildtoo. 
+        // The `onEnd` hook fires after every build (initial + rebuilds).
         options.plugins = [
             {
                 name: "post-process",
@@ -184,7 +191,8 @@ async function run() {
                     build.onEnd((result) => {
                         if (result.errors.length === 0) {
                             postProcess(options.outfile);
-                            console.log(`Rebuilt ${options.outfile} (regions + tabs applied)`);
+                            publishSecondCopy(iifeOutfile, userOutfile);
+                            console.log(`Rebuilt ${iifeOutfile} -> copied to ${userOutfile}`);
                         }
                     });
                 },
@@ -197,7 +205,8 @@ async function run() {
     else {
         await esbuild.build(options);
         postProcess(options.outfile);
-        console.log(`Built ${options.outfile} (regions + tabs applied)`);
+        publishSecondCopy(iifeOutfile, userOutfile);
+        console.log(`Built ${iifeOutfile} -> copied to ${userOutfile}`);
     }
 }
 
