@@ -1127,7 +1127,13 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		Leave: void 0
 	};
 	function TrainingRoomEnter(nowInZone) {
-		SendMessageToSelf(`Entered training room. Stand on the black tile and ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
+		var pdi = PlayerDroneInfo();
+		if (pdi.isDrone) {
+			SendMessageToSelf(`Entered training room. Stand on the black tile and ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
+		} else {
+			SendMessageToSelf(`In this room Drones receive their training. Training enforces certain behaviors when completed.`, "TrainingRoom");
+			SendMessageToSelf(`Non-Drones may only experience the basic training as a trial: ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
+		}
 	}
 	function TrainingRoomLeave(pverInZone) {
 		if (isTraining) {
@@ -1306,6 +1312,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 				ClearTagMessage("TrainingProc");
 			}
 		}
+		ClearTagMessage("TrainingProc");
 		return true;
 	}
 	async function StartTraining(nowInZone) {
@@ -1317,7 +1324,6 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		var pdi = PlayerDroneInfo();
 		var trainingIndex = pdi.level;
 		if (pdi.isDrone == false) {
-			SendMessageToSelf("Trainee is not a Drone. Running basic training.", "TrainingRoom");
 			trainingIndex = 0;
 		}
 		if (trainingIndex >= trainingMenu.length) {
