@@ -535,7 +535,7 @@
 		var index = Number.parseInt(i);
 		SendMessageToSelf(`About to sleep for ${(index + 1) * 6} hours. Time still counts while offline. ${styleButton("Start sleep", async (index2) => {
 			ClearTagMessage("SleepEnterZone");
-			SendMessageToSelf(`Sleep started. Gained ${(index2 + 1) * 10} quota points`);
+			SendMessageToSelf(`Sleep started. Gained ${(index2 + 1) * 10} quota points.`);
 			var pdi = PlayerDroneInfo();
 			pdi.coin += (index2 + 1) * 10;
 			await sleep(1e3);
@@ -1340,7 +1340,13 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		Leave: void 0
 	};
 	function EducationRoomEnter(nowInZone) {
-		SendMessageToSelf(`Entered education room, ${styleButton("Start education", StartEducation)}`, "EducationRoom");
+		var pdi = PlayerDroneInfo();
+		if (pdi.isDrone) {
+			SendMessageToSelf(`Entered education pot. ${styleButton("Start education", StartEducation)}`, "EducationRoom");
+		} else {
+			SendMessageToSelf(`This is the education pot. It uses hypnosis to make Drones obey.`, "EducationRoom");
+			SendMessageToSelf(`Non-Drones may only experience the basic education as a trial: ${styleButton("Start education", StartEducation)}`, "EducationRoom");
+		}
 	}
 	function EducationRoomLeave(pverInZone) {
 		ClearTagMessage("EducationRoom");
@@ -1352,16 +1358,16 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			WearEquips(Player, [CrateBind]);
 			SendMessageToSelf("Basic education started!", "EducationRoom");
 			await sleep(waitTime);
-			SendMessageToSelf("Hypnosis device deployed. Starting hypnosis...", "EducationRoomClear");
+			SendMessageToSelf("Education pot deployed. Starting education...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
-			SendMessageToSelf("Hypnosis Device Unit—Complete. Activate hypnosis...", "EducationRoomClear");
+			SendMessageToSelf("Hypnosis device deployed. Activate hypnosis...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
-			SendMessageToSelf("Hypnosis phase complete! Initiating sleep...", "EducationRoomClear");
+			SendMessageToSelf("Hypnosis phase startet! Initiating sleep...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
-			SendMessageToSelf("Hypnosis ..., ...", "EducationRoomClear");
+			SendMessageToSelf("Entering hypnotic state...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
 			SendMessageToSelf("........, ....", "EducationRoomClear");
@@ -1373,9 +1379,9 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			SendMessageToSelf("My Identity..., human..., fading...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
-			await WaitEducationProcess("My identity is ", "Drone", "Human");
-			await WaitEducationProcess("My purpose is ", "Obey", "Seek selfhood");
-			await WaitEducationProcess("When my owner pats my head, I should ", "Feel aroused", "Feel nothing");
+			await WaitEducationProcess("My identity is ", "Drone", "human");
+			await WaitEducationProcess("My purpose is to ", "obey", "seek selfhood");
+			await WaitEducationProcess("When my owner pats my head, I should ", "feel aroused", "feel nothing");
 			SendMessageToSelf(`${styleProgressBar("Head being patted", "End", waitTime * 2)}`, "EducationRoomClear");
 			await sleep(waitTime);
 			DoOrgasm();
@@ -1388,15 +1394,15 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			await sleep(waitTime);
 			DoOrgasm();
 			await sleep(15e3);
-			await WaitEducationProcess("This unit's identity is ", "Drone", "Human");
+			await WaitEducationProcess("This unit's identity is ", "Drone", "human");
 			ClearTagMessage("EducationRoomClear");
-			SendMessageToSelf("My Identity..., human..., fading...", "EducationRoomClear");
+			SendMessageToSelf("My Identity ... fading ...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
 			SendMessageToSelf("....., ..., ...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
-			SendMessageToSelf("Hypnosis..., ...", "EducationRoomClear");
+			SendMessageToSelf("Hypnotic spiral...", "EducationRoomClear");
 			await sleep(waitTime);
 			ClearTagMessage("EducationRoomClear");
 			SendMessageToSelf("Process Complete! Installation Successful!", "EducationRoomClear");
@@ -1498,7 +1504,6 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		var pdi = PlayerDroneInfo();
 		var educationIndex = pdi.level;
 		if (pdi.isDrone == false) {
-			SendMessageToSelf("Student is not a Drone. Running basic education.", "EducationRoom");
 			educationIndex = 0;
 		}
 		if (educationIndex >= trainingMenu.length) {
@@ -1523,7 +1528,11 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 	};
 	function ChargeRoomEnter() {
 		var pdi = PlayerDroneInfo();
-		SendMessageToSelf(`On a charging station. ${styleButton(`Start Charging`, ChargeRoomCharge)}`, "ChargeRoom");
+		if (pdi.isDrone) {
+			SendMessageToSelf(`Standing on a charging station. ${styleButton(`Start Charging`, ChargeRoomCharge)}`, "ChargeRoom");
+		} else {
+			SendMessageToSelf(`This is a charging station for Drones.`, "ChargeRoom");
+		}
 	}
 	function ChargeRoomLeave() {
 		ClearTagMessage("ChargeRoom");
@@ -1648,15 +1657,21 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		if (pdi.sleepUntil == null) return;
 		if (pdi.sleepUntil < Date.now()) {
 			pdi.sleepUntil = null;
-			SendMessageToSelf(`Sleep complete; moving to main facility area`);
+			SendMessageToSelf(`Sleep complete! Moving to main facility area...`, "LeavingSleepRoomArea");
 			await sleep(2e3);
 			MovePlayer(RandomPosOfArea(Elevator.Areas[3]));
 			RemoveRestrainByOneAssetGroup(Player, Crate.AssetGroup);
+			ClearTagMessage("LeavingSleepRoomArea");
 			return;
 		}
 		if (IsInZone(Player.MapData.Pos, SleepRoom) === false) {
 			WearEquips(Player, [Crate]);
 			MovePlayer(RandomPosOfArea(SleepRoom.Areas[0]), true);
+			var remaining_time_in_sec = (pdi.sleepUntil - Date.now()) / 1e3;
+			var hour = ath.floor(remaining_time_in_sec / 3600);
+			var min = Math.floor(remaining_time_in_sec % 3600 / 60);
+			var sec = Math.floor(remaining_time_in_sec % 60);
+			SendMessageToSelf(`Still sleeping... remaining time: ${hour}h ${min}min ${sec}s`, "LeavingSleepRoomArea");
 		}
 	}
 // #endregion
