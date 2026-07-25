@@ -4,24 +4,19 @@
 // catalog, mission/activity/pose requirement tracking, and the top-level
 // PlayerMovedFaci/InitMapFaci orchestration.
 
-import { bodyPartDisplayStrings, bodyPartStrings } from "./constants.js";
 import {
-    sleep, waitFor, styleButton, styleProgressBar, SendMessageToSelf, SendActionText,
-    ClearTagMessage, ClearAllMessage, IsInZone, IsInArea, RandomPosOfArea, MovePlayer, GetDistance
+    sleep, waitFor, styleButton, styleProgressBar, SendMessageToSelf, ClearTagMessage, 
+    IsInZone, IsInArea, RandomPosOfArea, MovePlayer,
 } from "./utils.js";
 import {
-    PlayerDroneInfo, CheckPlayerDroneInfoExistAndIsDrone, DoOrgasm, DoPunishment, DoVibe,
-    WearEquips, RemoveRestrainByOneAssetGroup, RemoveRestrainsWithAssetGroup, Crate, CrateBind, OneBar,
-    DTSSyncSettings
+    PlayerDroneInfo, DoOrgasm, DoPunishment, WearEquips, RemoveRestrainByOneAssetGroup, 
+    Crate, CrateBind, OneBar, DTSSyncSettings
 } from "./drone.js";
 import { ItemInfo, allItem } from "./items.js";
 import {
-    trainingProcess, setTrainingProcess, addTrainingProcess,
-    isTraining, setIsTraining, isEducationing, setIsEducationing, pverPos, setPverPos,
-    initComplete
+    trainingProcess, setTrainingProcess, addTrainingProcess, isTraining, setIsTraining, 
+    setIsEducationing, pverPos, setPverPos, initComplete
 } from "./state.js";
-// TakeMission is invoked from WorkInnerRoomEnter below; it's only used
-// inside a function body so this circular import with commands.js is safe.
 import { TakeMission, SendDTSMsg, MsgInfo } from "./commands.js";
 
 // ----- Mission tracking -----
@@ -46,7 +41,6 @@ export class MissionInfo {
             }
         }
     }
-
     static MissionComplete(mission, ...parmas) {
         var pdi = PlayerDroneInfo();
         SendMessageToSelf(`Mission: ${mission.text} complete, reward ${mission.reward} quota points`);
@@ -56,7 +50,6 @@ export class MissionInfo {
         }
         pdi.missions = pdi.missions.filter(mi => mission.id != mi.id);
     }
-
     static StockRoomMission() {
         var from = Math.floor(Math.random() * 60);
         var to = Math.floor(Math.random() * 60);
@@ -67,12 +60,10 @@ export class MissionInfo {
         mission.desc = `Transport the goods from ${String.fromCharCode(65 + Math.floor(from / 5))}${from % 5 + 1} to ${String.fromCharCode(65 + Math.floor(to / 5))}${to % 5 + 1}`;
         return mission;
     }
-
     static StockRoomMissionComplete(mission) {
         var pdi = PlayerDroneInfo();
         pdi.items = pdi.items.filter(item => !(item.name == "StockRoom" && item.index == mission.from));
     }
-
     static OrgasmMission() {
         var mission = new MissionInfo("OrgasmResist", "Orgasm resistance mission", 10);
         mission.target = 3;
@@ -432,6 +423,10 @@ const SleepEnterTiles = {
     ],
     Exclude: [],
 };
+const SleepRoom = {
+    Areas: [{ leftUp: { X: 34, Y: 34 }, rightDown: { X: 39, Y: 39 } }],
+    Exclude: [],
+};
 export function SleepEnterZoneEnter() {
     SendMessageToSelf(`Entered Drone sleep area. On the inner pads you can ${styleButton("Sleep", SleepEnterZoneDoSleep, true)} to gain quota points.`, "SleepEnterZone");
 }
@@ -459,10 +454,6 @@ function SleepEnterZoneDoSleep() {
         DTSSyncSettings();
     }, index)}`, "SleepEnterZone");
 }
-const SleepRoom = {
-    Areas: [{ leftUp: { X: 34, Y: 34 }, rightDown: { X: 39, Y: 39 } }],
-    Exclude: [],
-};
 
 // ----- Modify (upgrade) room -----
 const ModifyRoom = {
@@ -476,137 +467,170 @@ const ModifyInnerRoom = {
     Exclude: [],
 };
 export function ModifyRoomEnter() {
-    SendMessageToSelf(`Entered upgrade workshop, ${styleButton("Show available upgrades", ShowAvailableModify)}`, "ModifyRoom");
+    SendMessageToSelf(`Entered upgrade workshop! ${styleButton("Show available upgrades", ShowAvailableModify)}`, "ModifyRoom");
 }
 export function ModifyRoomLeave() {
     if (IsInZone(Player.MapData.Pos, ModifyInnerRoom) == false) {
         ClearTagMessage("ModifyRoom");
     }
 }
-
 var allModify = {
     eyes1: {
         id: "eyes1", name: "Implant contact-lens display",
-        desc: "Eye function can be set to a restricted mode.", price: 10,
+        desc: "Eye function can be set to a restricted mode.", 
+        price: 10,
         effect: (pdi) => { pdi.bodyStatusMax.eyes = 1; }, front: []
     },
     ears1: {
         id: "ears1", name: "Implant ear-canal filler",
-        desc: "Ear function can be set to a restricted mode.", price: 10,
+        desc: "Ear function can be set to a restricted mode.", 
+        price: 10,
         effect: (pdi) => { pdi.bodyStatusMax.ears = 1; }, front: []
     },
     mouth1: {
         id: "mouth1", name: "Implant jaw-control motor",
-        desc: "Mouth function can be set to a restricted mode.", price: 10,
+        desc: "Mouth function can be set to a restricted mode.", 
+        price: 10,
         effect: (pdi) => { pdi.bodyStatusMax.mouth = 1; }, front: []
     },
     hands1: {
         id: "hands1", name: "Implant shoulder/elbow control motor",
-        desc: "Arm function can be set to a restricted mode.", price: 10,
+        desc: "Arm function can be set to a restricted mode.", 
+        price: 10,
         effect: (pdi) => { pdi.bodyStatusMax.hands = 1; }, front: []
     },
     legs1: {
         id: "legs1", name: "Implant knee/ankle control motor",
-        desc: "Leg function can be set to a restricted mode.", price: 10,
+        desc: "Leg function can be set to a restricted mode.", 
+        price: 10,
         effect: (pdi) => { pdi.bodyStatusMax.legs = 1; }, front: []
     },
     level1: {
         id: "level1", name: "System upgrade to version 1.0",
-        desc: "Flash next system firmware version and unlock more functions", price: 15,
+        desc: "Flash next system firmware version and unlock more functions", 
+        price: 15,
         effect: (pdi) => { pdi.level = 1; },
         front: ["eyes1", "ears1", "mouth1", "hands1", "legs1", "education1", "training1"]
     },
 
     eyes2: {
         id: "eyes2", name: "Replace with artificial electronic eyeballs",
-        desc: "Eye function can be set to offline mode.", price: 20,
-        effect: (pdi) => { pdi.bodyStatusMax.eyes = 2; }, front: ["level1"]
+        desc: "Eye function can be set to offline mode.", 
+        price: 20,
+        effect: (pdi) => { pdi.bodyStatusMax.eyes = 2; }, 
+        front: ["level1"]
     },
     ears2: {
         id: "ears2", name: "Implant cochlear damper",
-        desc: "Ear function can be set to offline mode.", price: 20,
-        effect: (pdi) => { pdi.bodyStatusMax.ears = 2; }, front: ["level1"]
+        desc: "Ear function can be set to offline mode.", 
+        price: 20,
+        effect: (pdi) => { pdi.bodyStatusMax.ears = 2; }, 
+        front: ["level1"]
     },
     mouth2: {
         id: "mouth2", name: "Implant vocal-cord control device",
-        desc: "Mouth function can be set to offline mode.", price: 20,
-        effect: (pdi) => { pdi.bodyStatusMax.mouth = 2; }, front: ["level1"]
+        desc: "Mouth function can be set to offline mode.", 
+        price: 20,
+        effect: (pdi) => { pdi.bodyStatusMax.mouth = 2; }, 
+        front: ["level1"]
     },
     hands2: {
         id: "hands2", name: "Implant hand-control motor",
-        desc: "Arm function can be set to offline mode.", price: 20,
-        effect: (pdi) => { pdi.bodyStatusMax.hands = 2; }, front: ["level1"]
+        desc: "Arm function can be set to offline mode.", 
+        price: 20,
+        effect: (pdi) => { pdi.bodyStatusMax.hands = 2; }, 
+        front: ["level1"]
     },
     legs2: {
         id: "legs2", name: "Implant hip-control motor",
-        desc: "Leg function can be set to offline mode.", price: 20,
-        effect: (pdi) => { pdi.bodyStatusMax.legs = 2; }, front: ["level1"]
+        desc: "Leg function can be set to offline mode.", 
+        price: 20,
+        effect: (pdi) => { pdi.bodyStatusMax.legs = 2; }, 
+        front: ["level1"]
     },
     level2: {
         id: "level2", name: "System upgrade to version 2.0",
-        desc: "Flash next system firmware version and unlock more functions", price: 25,
+        desc: "Flash next system firmware version and unlock more functions", 
+        price: 25,
         effect: (pdi) => { pdi.level = 2; },
         front: ["eyes2", "ears2", "mouth2", "hands2", "legs2", "education2", "training2"]
     },
 
     battery1: {
         id: "battery1", name: "Install extra bladder power supply",
-        desc: "Increase endurance by 50%", price: 20,
+        desc: "Increase endurance by 50%", 
+        price: 20,
         effect: (pdi) => { pdi.batteryMax = 1500; }, front: []
     },
     battery2: {
         id: "battery2", name: "Install extra intestinal power supply",
-        desc: "Increase endurance by 66%", price: 30,
-        effect: (pdi) => { pdi.batteryMax = 2500; }, front: ["level1", "battery1"]
+        desc: "Increase endurance by 66%", 
+        price: 30,
+        effect: (pdi) => { pdi.batteryMax = 2500; }, 
+        front: ["level1", "battery1"]
     },
 
     itemsMax1: {
         id: "itemsMax1", name: "Storage-unit expansion",
-        desc: "Increase item slot limit by one", price: 20,
+        desc: "Increase item slot limit by one", 
+        price: 20,
         effect: (pdi) => { pdi.itemsMax = 4; }, front: []
     },
     itemsMax2: {
         id: "itemsMax2", name: "Advanced storage-unit expansion",
-        desc: "Increase item slot limit by one", price: 30,
-        effect: (pdi) => { pdi.itemsMax = 5; }, front: ["level1", "itemsMax1"],
+        desc: "Increase item slot limit by one", 
+        price: 30,
+        effect: (pdi) => { pdi.itemsMax = 5; }, 
+        front: ["level1", "itemsMax1"],
     },
 
     missionsMax1: {
         id: "missionsMax1", name: "Memory-unit expansion",
-        desc: "Increase mission slot limit and daily mission limit by one", price: 20,
+        desc: "Increase mission slot limit and daily mission limit by one", 
+        price: 20,
         effect: (pdi) => { pdi.missionsMax = 4; }, front: []
     },
     missionsMax2: {
         id: "missionsMax2", name: "Advanced memory-unit expansion",
-        desc: "Increase mission slot limit and daily mission limit by one", price: 30,
-        effect: (pdi) => { pdi.missionsMax = 5; }, front: ["level1", "missionsMax1"]
+        desc: "Increase mission slot limit and daily mission limit by one", 
+        price: 30,
+        effect: (pdi) => { pdi.missionsMax = 5; }, 
+        front: ["level1", "missionsMax1"]
     },
 
     orgasmBatteryGet1: {
         id: "orgasmBatteryGet1", name: "Upgrade orgasm-charging component",
-        desc: "Increase battery gained from orgasm by 100%", price: 20,
+        desc: "Increase battery gained from orgasm by 100%", 
+        price: 20,
         effect: (pdi) => { pdi.orgasmBatteryGet = 200; }, front: []
     },
     orgasmBatteryGet2: {
         id: "orgasmBatteryGet2", name: "Further upgrade orgasm-charging component",
-        desc: "Increase battery gained from orgasm by 50%", price: 30,
-        effect: (pdi) => { pdi.orgasmBatteryGet = 300; }, front: ["level1", "orgasmBatteryGet1"]
+        desc: "Increase battery gained from orgasm by 50%", 
+        price: 30,
+        effect: (pdi) => { pdi.orgasmBatteryGet = 300; }, 
+        front: ["level1", "orgasmBatteryGet1"]
     },
 
     displayTalkCost1: {
         id: "displayTalkCost1", name: "Install high-performance display",
-        desc: "Reduce display screen cost", price: 20,
+        desc: "Reduce display screen cost", 
+        price: 20,
         effect: (pdi) => { pdi.chatBatteryCost = 30; }, front: []
     },
     displayTalkCost2: {
         id: "displayTalkCost2", name: "Install top-tier display",
-        desc: "Further reduce display screen cost", price: 30,
-        effect: (pdi) => { pdi.chatBatteryCost = 15; }, front: ["level1", "displayTalkCost1"]
+        desc: "Further reduce display screen cost", 
+        price: 30,
+        effect: (pdi) => { pdi.chatBatteryCost = 15; }, 
+        front: ["level1", "displayTalkCost1"]
     },
     dontShow: {
         id: "dontShow", name: "Not displayed; for annotation purposes only.",
         desc: "The following can be obtained in the training room: training1, training2, training3, education1, education2, education3.",
-        price: 30, effect: (pdi) => { }, front: ["dontShow"]
+        price: 30, 
+        effect: (pdi) => { }, 
+        front: ["dontShow"]
     }
 };
 
@@ -656,7 +680,6 @@ export function ShowAvailableModify(target = null) {
     }
     SendMessageToSelf(`Available upgrades:${string}`, "ModifyRoom");
 }
-
 function CanModify(mod, target = null) {
     var pdi = null;
     if (target == null) {
@@ -671,7 +694,6 @@ function CanModify(mod, target = null) {
     }
     return true;
 }
-
 const ModifyTile = {
     Areas: [{ X: 10, Y: 5 }],
     Exclude: [],
@@ -727,12 +749,11 @@ const ShopRoom = {
     Leave: undefined
 };
 export function ShopRoomEnter() {
-    SendMessageToSelf(`Entered shop. Move into the inner room to shop`, "ShopRoom");
+    SendMessageToSelf(`Entered shop. Move into the inner room to shop to buy items.`, "ShopRoom");
 }
 export function ShopRoomLeave() {
     ClearTagMessage("ShopRoom");
 }
-
 const ShopInnerRoom = {
     Areas: [
         { leftUp: { X: 25, Y: 2 }, rightDown: { X: 27, Y: 3 } },
@@ -778,13 +799,12 @@ const WorkRoom = {
     Leave: undefined
 };
 export function WorkRoomEnter() {
-    SendMessageToSelf(`Entered office. Move to an inner workstation to work`, "WorkRoom");
+    SendMessageToSelf(`Entered office. Move to an inner workstation to work.`, "WorkRoom");
 }
 export function WorkRoomLeave() {
     ClearTagMessage("WorkRoom");
     ClearTagMessage("WorkRoomWork");
 }
-
 const WorkInnerRoom = {
     Areas: [
         { leftUp: { X: 0, Y: 12 }, rightDown: { X: 1, Y: 13 } },
@@ -861,7 +881,7 @@ const OperRoom = {
     Leave: undefined
 };
 export function OperRoomEnter() {
-    SendMessageToSelf(`Entered Operator lounge`, "OperRoom");
+    SendMessageToSelf(`Entered Operator lounge!`, "OperRoom");
 }
 export function OperRoomLeave() {
     ClearTagMessage("OperRoom");
@@ -910,6 +930,16 @@ export function PrivateRoomEnter() {
         SendMessageToSelf(`Entered private room. ${styleButton("Call Drone to private room", CallDroneToPrivateRoom)}`, "PrivateRoom");
     }
 }
+export function PrivateRoomLeave() {
+    var pdi = PlayerDroneInfo();
+    if (pdi.isDrone) {
+        SendMessageToSelf(`Leaving private room.`, "PrivateRoom");
+    }
+    else {
+        SendMessageToSelf(`Leaving private room. Don't forget to release owner status for the Drone if it only was a one time session!`, "PrivateRoom");
+    }
+    ClearTagMessage("PrivateRoom");
+}
 function CallDroneToPrivateRoom() {
     var input = (document.getElementById("InputChat"));
     input.value = '/DTS findtargetoprivate []';
@@ -934,18 +964,17 @@ const TrainingRoom = {
     Leave: undefined
 };
 export function TrainingRoomEnter(nowInZone) {
-    SendMessageToSelf(`Entered training room. Stand on a black tile and ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
+    SendMessageToSelf(`Entered training room. Stand on the black tile and ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
 }
 export function TrainingRoomLeave(pverInZone) {
     if (isTraining) {
-        SendMessageToSelf("You may not leave the training room before training completes.", "TrainingRoom");
+        SendMessageToSelf("You may not leave the training room before training completes!", "TrainingRoom");
         MovePlayer(TrainingRoomBlackTile.Areas[pverInZone]);
     }
     else {
         ClearTagMessage("TrainingRoom");
     }
 }
-
 var trainingMenu = [
     async () => {
         var pdi = PlayerDroneInfo();
@@ -965,7 +994,7 @@ var trainingMenu = [
                 RequirePoseinfo.RequireDronePose(["Kneel"], 20000, true);
             },
             () => {
-                SendMessageToSelf("Kneeling not detected. Returning to previous step...", "TrainingRoom");
+                SendMessageToSelf("Kneeling not detected! Returning to previous step...", "TrainingRoom");
             },
             1
         );
@@ -985,7 +1014,7 @@ var trainingMenu = [
                 RequirePoseinfo.RequireDronePose(["BaseUpper"], 20000, true);
             },
             () => {
-                SendMessageToSelf("Standing up not detected. Returning to previous step...", "TrainingRoom");
+                SendMessageToSelf("Standing up not detected! Returning to previous step...", "TrainingRoom");
             },
             2
         );
@@ -1006,7 +1035,7 @@ var trainingMenu = [
                 RequireActivityinfo.RequireDroneActivity([], ["Caress"], 0, 20000, 3, true);
             },
             () => {
-                SendMessageToSelf("Self-check not detected. Returning to previous step...", "TrainingRoom");
+                SendMessageToSelf("Self-check not detected! Returning to previous step...", "TrainingRoom");
             },
             1
         );
@@ -1037,7 +1066,7 @@ var trainingMenu = [
                 RequirePoseinfo.RequireDronePose(["BackBoxTie", "BackElbowTouch"], 20000, true);
             },
             () => {
-                SendMessageToSelf("Standby behavior not detected. Returning to previous step...", "TrainingRoom");
+                SendMessageToSelf("Standby behavior not detected! Returning to previous step...", "TrainingRoom");
             },
             2
         );
@@ -1060,7 +1089,7 @@ var trainingMenu = [
                 RequireActivityinfo.RequireDroneActivity(["ItemBoots"], ["Wiggle"], 0, 20000, 1, true);
             },
             () => {
-                SendMessageToSelf("Service behavior not detected. Returning to previous step...", "TrainingRoom");
+                SendMessageToSelf("Service behavior not detected! Returning to previous step...", "TrainingRoom");
             },
             1
         );
@@ -1068,7 +1097,7 @@ var trainingMenu = [
             return;
         }
         await sleep(waitTime);
-        SendMessageToSelf("Service behavior detected. Continuing to next practice", "TrainingRoom");
+        SendMessageToSelf("Service behavior detected! Continuing to next practice...", "TrainingRoom");
         await sleep(waitTime);
         var result = await WaitTrainingProcess(
             () => {
@@ -1076,7 +1105,7 @@ var trainingMenu = [
                 RequireActivityinfo.RequireDroneActivity(["ItemHands"], ["Wiggle"], 0, 20000, 1, true);
             },
             () => {
-                SendMessageToSelf("Service behavior not detected. Returning to previous step...", "TrainingRoom");
+                SendMessageToSelf("Service behavior not detected! Returning to previous step...", "TrainingRoom");
             },
             1
         );
@@ -1087,7 +1116,6 @@ var trainingMenu = [
         pdi.modifys["training2"] = true;
     },
 ];
-
 async function WaitTrainingProcess(DoAtStart, DoAtFail, maxTrainingProcess) {
     var toNext = false;
     var retryCount = 0;
@@ -1108,7 +1136,7 @@ async function WaitTrainingProcess(DoAtStart, DoAtFail, maxTrainingProcess) {
         if (toNext == false) {
             retryCount++;
             if (retryCount >= 3) {
-                SendMessageToSelf("Multiple retries failed; training aborted", "TrainingRoom");
+                SendMessageToSelf("Multiple retries failed... training aborted!", "TrainingRoom");
                 ClearTagMessage("TrainingProc");
                 return false;
             }
@@ -1118,17 +1146,16 @@ async function WaitTrainingProcess(DoAtStart, DoAtFail, maxTrainingProcess) {
     }
     return true;
 }
-
 async function StartTraining(nowInZone) {
     if (IsInArea(Player.MapData.Pos, TrainingRoomBlackTile.Areas[nowInZone]) == false) {
-        SendMessageToSelf("Not on a black tile.", "TrainingRoom");
+        SendMessageToSelf("Not standing on the black tile!", "TrainingRoom");
         return;
     }
     ClearTagMessage("TrainingRoom");
     var pdi = PlayerDroneInfo();
     var trainingIndex = pdi.level;
     if (pdi.isDrone == false) {
-        SendMessageToSelf("Trainee is not a Drone. Running basic training...", "TrainingRoom");
+        SendMessageToSelf("Trainee is not a Drone. Running basic training.", "TrainingRoom");
         trainingIndex = 0;
     }
     if (trainingIndex >= trainingMenu.length) {
@@ -1152,7 +1179,6 @@ export function EducationRoomEnter(nowInZone) {
 export function EducationRoomLeave(pverInZone) {
     ClearTagMessage("EducationRoom");
 }
-
 var educationMenu = [
     async () => {
         var pdi = PlayerDroneInfo();
@@ -1280,7 +1306,6 @@ var educationMenu = [
         pdi.modifys["education2"] = true;
     },
 ];
-
 async function WaitEducationProcess(text1, text2, text3) {
     var toNext = false;
     var choiced = false;
@@ -1294,13 +1319,12 @@ async function WaitEducationProcess(text1, text2, text3) {
         await sleep(waitTime);
     }
 }
-
 async function StartEducation(nowInZone) {
     ClearTagMessage("EducationRoom");
     var pdi = PlayerDroneInfo();
     var educationIndex = pdi.level;
     if (pdi.isDrone == false) {
-        SendMessageToSelf("Student is not a Drone. Running basic education!", "EducationRoom");
+        SendMessageToSelf("Student is not a Drone. Running basic education.", "EducationRoom");
         educationIndex = 0;
     }
     if (educationIndex >= trainingMenu.length) {
@@ -1338,7 +1362,7 @@ export function ChargeRoomLeave() {
 }
 function ChargeRoomCharge() {
     WearEquips(Player, [OneBar]);
-    SendMessageToSelf(styleProgressBar("Charging", "Charge Complete", 60000, ChargeComplete), "ChargeRoom");
+    SendMessageToSelf(styleProgressBar("Charging...", "Charge Complete", 60000, ChargeComplete), "ChargeRoom");
 }
 function ChargeComplete() {
     var pdi = PlayerDroneInfo();
@@ -1347,9 +1371,7 @@ function ChargeComplete() {
     MissionInfo.ProgressAdd("Charge");
 }
 
-// Wire up Enter/Leave handlers now that all the handler functions above
-// have been declared (they're hoisted, so this is just for clarity/parity
-// with the original single-file layout, which assigned these inline).
+// Wire up Enter/Leave handlers now that all the handler functions above have been declared 
 StockRoom.Enter = StockRoomEnter;
 StockRoom.Leave = StockRoomLeave;
 Elevator.Enter = ElevatorEnter;
@@ -1370,6 +1392,7 @@ OperRoom.Enter = OperRoomEnter;
 OperRoom.Leave = OperRoomLeave;
 Cat.Enter = CatEnter;
 PrivateRoom.Enter = PrivateRoomEnter;
+PrivateRoom.Leave = PrivateRoomLeave;
 TrainingRoom.Enter = TrainingRoomEnter;
 TrainingRoom.Leave = TrainingRoomLeave;
 EducationRoom.Enter = EducationRoomEnter;
@@ -1382,7 +1405,6 @@ var AllZoneList = [
     WorkRoom, WorkInnerRoom, OperRoom, Cat, DancerRoom, PrivateRoom, TrainingRoom,
     EducationRoom, ChargeRoom, SleepEnterZone, SleepEnterTiles
 ];
-
 var map = {
     "Type": "Always",
     "Tiles": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҲҲҲҴҴҲҲҲҴҴҴҴҴҴҴ¬yyyyyҴҴҴҳҳҳҴҴҴyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴҳ«««ҳҴтyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ҴКyyyyтyyyҴҴҴҴҴҴҴҴҴҴтyyyyyyyyyyyyҴҴ«««««ҴҴyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ÇÇyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴҳ«««ҴҴтyyyyтyyyyyyyyyyyyyтyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҳ«ҳ«¬«yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy«¬«ҲҲҴҴҴҲҲҴyyyҴААААҴААААҴААААААҴyyyҴҳҳҳҴҳҳҳªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«««Ҵ«««ªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«¬«Ҵ«¬«¬¬¬¬¬¬¬ҴyyyҴҴҴҴyyyҴ«««Ҵ«««ҲҲҴ¬ҴҴҴҴyyyҴҴҴҴyyyҴҴҴҴҴҴҴҴªªҴ¬¬¬¬ҴyyyҴҴҴҴyyyҴyyyyyyyªªҴ¬¬¬¬ҴyyyҴҴҴЮЮЮЮЮҴҴҴҴҴҳҳҳҳҴyyyҴyyyyyyy¬¬¬¬¬¬¬ÇyyyҴxЮ¬¬¬Юxxxҳ«««ҴyyyÇyyyyyyyҲҲҴ¬ҴҲҲҴyyyҴxЮЮxxxҳ««ҳҳҴyyyҴҳ¬ҳ¬ҳ¬ҳªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴҳҴҳҴҳҴªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴ«Ҵ«Ҵ«Ҵ¬¬¬¬¬¬¬ҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴ«Ҵ«Ҵ«ҴҴҴҴҴҴҴҴҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyҴxxxxxxxxxxxҳ«««Ҵyyyyyyyyҳ«ҳ«¬«yyyyyyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyyyyyy«¬«ҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳҳҳҳҴyyyyyyyyyyyyҴ«¬«yyyyyyy«¬«yyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyÇ«««ҴyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴЮЮЮЮЮҴҴҴҴҴҴҴҴҴҴyҴҴҴҴҴҴҳҳҳҳҳҳææëëëðëëëææҴxxxxxҴҲҲҲҲҳҳҳҳҴҴҴҴҲҲҲҴ««««««ææëëëðëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҴªªªҴ««««««ææëëëëëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҲªªªҴ««««««ææëëëðëëëææÇxxxxxÇªªªҲ«««ҳ¬¬¬ÇªªªҴ««««««ææëëëðëëëææҴxxxxxҴҲҲҲҳҳҳҳҳҳҳҳҴҲҲҲҴ««««««ææëëëëëëëææҴЮЮЮЮЮҴyyұ«ҳ«ҳ«ҳ«ҳyyyyҴ««««««",
@@ -1391,9 +1413,7 @@ var map = {
 
 export async function ExpendInit() {
     await waitFor(() => initComplete == true);
-    //InitMap();
 }
-
 export async function InitMapFaci() {
     ChatRoomData.Name = "DroneFacility 2.0";
     ChatRoomData.desc = `In development... testing and gathering ideas for the mod.
@@ -1411,7 +1431,6 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
     }
     MovePlayer({ X: 1, Y: 37 });
 }
-
 export async function PlayerMovedFaci() {
     // Validate whether the map is correct
     if (ChatRoomData.MapData.Objects.startsWith("ҴӄӃҶұҳҹ") == false) return;

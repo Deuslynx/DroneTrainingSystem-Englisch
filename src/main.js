@@ -11,20 +11,18 @@ import {
     CheckPlayerDroneInfoExistAndIsDrone, DTSSyncSettings
 } from "./drone.js";
 import {
-    InstallHook,
-    ChatRoomMessageReceived, ChatRoomMapViewUpdatePlayerFlagAfter, CanWalkAfter, IsMountedAfter,
-    GetBlindLevelAfter, GetDeafLevelAfter, CanInteractAfter, DialogCanUnlockBefore,
+    InstallHook, ChatRoomMessageReceived, ChatRoomMapViewUpdatePlayerFlagAfter, CanWalkAfter, 
+    IsMountedAfter, GetBlindLevelAfter, GetDeafLevelAfter, CanInteractAfter, DialogCanUnlockBefore,
     SpeechTransformDeafenIntensityBefore, ChatRoomSendChatMessageBefore, ChatRoomPlayerIsAdminBefore,
     ServerShowBeepBefore, ChatRoomFirstTimeHelpBefore
 } from "./hooks.js";
 import { CommandInfo, MsgInfo, SendDTSMsg, DTSHeartBeatPayload } from "./commands.js";
 import {
-    RequireActivityinfo, RequirePoseinfo, CheckSleepUntil, ExpendInit,
-    StockRoomEnter, StockRoomLeave, ElevatorEnter, ElevatorLeave,
-    SleepEnterZoneEnter, SleepEnterZoneLeave, ModifyRoomEnter, ModifyRoomLeave, ModifyTileEnter,
-    ShopRoomEnter, ShopRoomLeave, ShopInnerRoomEnter, ShopInnerRoomLeave,
+    RequireActivityinfo, RequirePoseinfo, CheckSleepUntil, ExpendInit, StockRoomEnter, StockRoomLeave, 
+    ElevatorEnter, ElevatorLeave, SleepEnterZoneEnter, SleepEnterZoneLeave, ModifyRoomEnter, 
+    ModifyRoomLeave, ModifyTileEnter, ShopRoomEnter, ShopRoomLeave, ShopInnerRoomEnter, ShopInnerRoomLeave,
     WorkRoomEnter, WorkRoomLeave, WorkInnerRoomEnter, OperRoomEnter, OperRoomLeave, CatEnter,
-    PrivateRoomEnter, TrainingRoomEnter, TrainingRoomLeave,
+    PrivateRoomEnter, PrivateRoomLeave, TrainingRoomEnter, TrainingRoomLeave,
     EducationRoomEnter, EducationRoomLeave, ChargeRoomEnter, ChargeRoomLeave
 } from "./rooms.js";
 
@@ -50,7 +48,6 @@ function Init() {
             Action: function (text) {
                 const command = text.split(" ")[0];
                 const commandText = text.replace('[', "").replace(']', "").split(" ").slice(1);
-
                 CommandInfo.DoCmd(new CommandInfo(command, commandText));
             },
         },
@@ -62,7 +59,7 @@ function Init() {
             }
         }
         catch {
-            // matches original: swallow errors from the per-second tick
+            // swallow errors from the per-second tick
         }
     }, 1000);
     PlayerDroneInfo();
@@ -155,7 +152,6 @@ function DoPerHour() {
 
 async function DTSWaitForLSCGModSdk() {
     if (globalThis.bcModSdk?.registerMod) return;
-
     // Let other document-end userscripts append their loader first.
     await sleep(250);
     const lscgIsLoading = Boolean(
@@ -202,7 +198,7 @@ async function WaitEnable() {
         WorkInnerRoomEnter,
         OperRoomEnter, OperRoomLeave,
         CatEnter,
-        PrivateRoomEnter,
+        PrivateRoomEnter, PrivateRoomLeave,
         TrainingRoomEnter, TrainingRoomLeave,
         EducationRoomEnter, EducationRoomLeave,
         ChargeRoomEnter, ChargeRoomLeave

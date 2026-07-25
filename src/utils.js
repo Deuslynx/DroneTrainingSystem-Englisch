@@ -2,12 +2,7 @@
 // Generic helpers with no dependency on Drone/room/command state:
 // sleeping/waiting, geometry helpers, chat-log rendering (messages,
 // buttons, progress bars).
-//
-// NOTE: MovePlayer has a circular dependency with hooks.js/rooms.js
-// (DTSPlayerMoved / PlayerMovedFaci call geometry helpers from this file,
-// and are themselves called from here). This is safe in ESM because all
-// three are hoisted function declarations - by the time MovePlayer() is
-// actually invoked at runtime, every module has finished evaluating.
+
 import { DTSPlayerMoved } from "./hooks.js";
 import { PlayerMovedFaci } from "./rooms.js";
 import { setPverPos } from "./state.js";
@@ -67,6 +62,7 @@ export function IsInZone(Pos, Zone) {
     }
     return isIn;
 }
+
 export function IsInArea(Pos, Area) {
     var isIn = false;
     if (Area.X != undefined) {
@@ -80,12 +76,15 @@ export function IsInArea(Pos, Area) {
     }
     return isIn;
 }
+
 function IsAtTile(Pos, Tile) {
     return (Pos.X == Tile.X && Pos.Y == Tile.Y);
 }
+
 function IsInLURD(Pos, LURD) {
     return (Pos.X >= LURD.leftUp.X && Pos.Y >= LURD.leftUp.Y && Pos.X <= LURD.rightDown.X && Pos.Y <= LURD.rightDown.Y);
 }
+
 function IsAtTileArray(Pos, Tiles) {
     for (var tile of Tiles) {
         if (IsAtTile(Pos, tile)) {
@@ -94,6 +93,7 @@ function IsAtTileArray(Pos, Tiles) {
     }
     return false;
 }
+
 export function RandomPosOfArea(Area) {
     if (Area.X != undefined) {
         return Object.assign({}, Area);
@@ -108,6 +108,7 @@ export function RandomPosOfArea(Area) {
         return Object.assign({}, Area[Math.floor(Math.random() * Area.length)]);
     }
 }
+
 export function GetDistance(Pos, Pos2) {
     return Math.abs(Pos.X - Pos2.X) + Math.abs(Pos.Y - Pos2.Y);
 }
@@ -172,16 +173,19 @@ export function ClearOldMessage() {
         }
     });
 }
+
 function ClearLastMessage() {
     ClearMessageByFunc((child) => {
         return child?.children[1]?.dataset?.clearatnext == "true";
     });
 }
+
 export function ClearTagMessage(tag) {
     ClearMessageByFunc((child) => {
         return child?.children[1]?.dataset?.cleartag == tag;
     });
 }
+
 export function ClearAllMessage() {
     ClearMessageByFunc((child) => { return true; });
 }
@@ -377,12 +381,9 @@ const _textProgressManager = {
 
 window.addEventListener('beforeunload', () => _textProgressManager.clearAll());
 
-/**
- * Generate a console-style string progress bar
- */
+// Generate a console-style string progress bar
 export function styleProgressBar(message, completionMessage, duration = 3000, onComplete = null, ...onCompleteParams) {
     const progressId = 'txtpb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
-
     const escapeHtml = (text) => {
         const div = document.createElement('div');
         div.textContent = text;
@@ -427,6 +428,5 @@ export function styleProgressBar(message, completionMessage, duration = 3000, on
             );
         }
     }, 0);
-
     return html;
 }
