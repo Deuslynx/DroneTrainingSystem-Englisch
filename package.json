@@ -5,7 +5,9 @@
   "description": "Bundles the DroneTrainingSystem ES modules into a single userscript file.",
   "scripts": {
     "build": "node build.js",
-    "watch": "node build.js --watch"
+    "watch": "node build.js --watch",
+    "build:test": "node build_test.js",
+    "watch:test": "node build_test.js --watch"
   },
   "devDependencies": {
     "esbuild": "^0.24.0"

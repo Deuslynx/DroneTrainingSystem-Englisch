@@ -1,3 +1,5 @@
 package-lock.json
 node_modules/
 mapdata.txt
+build_test.js
+DTSTestLoader.user.js
