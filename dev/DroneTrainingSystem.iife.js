@@ -1668,7 +1668,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 			WearEquips(Player, [Crate]);
 			MovePlayer(RandomPosOfArea(SleepRoom.Areas[0]), true);
 			var remaining_time_in_sec = (pdi.sleepUntil - Date.now()) / 1e3;
-			var hour = ath.floor(remaining_time_in_sec / 3600);
+			var hour = Math.floor(remaining_time_in_sec / 3600);
 			var min = Math.floor(remaining_time_in_sec % 3600 / 60);
 			var sec = Math.floor(remaining_time_in_sec % 60);
 			SendMessageToSelf(`Still sleeping... remaining time: ${hour}h ${min}min ${sec}s`, "LeavingSleepRoomArea");
