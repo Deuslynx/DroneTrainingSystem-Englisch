@@ -1099,16 +1099,16 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 	function PrivateRoomLeave() {
 		var pdi = PlayerDroneInfo();
 		if (pdi.isDrone) {
-			SendMessageToSelf(`Leaving private room.`, "PrivateRoom");
+			SendMessageToSelf(`Leaving private room.`, "OperRoom");
 		} else {
-			SendMessageToSelf(`Leaving private room. Don't forget to release owner status for the Drone if it only was a one time session!`, "PrivateRoom");
+			SendMessageToSelf(`Leaving private room. Don't forget to release owner status for the Drone if it only was a one time session!`, "OperRoom");
 		}
 		ClearTagMessage("PrivateRoom");
 	}
 	function CallDroneToPrivateRoom() {
 		var input = document.getElementById("InputChat");
 		input.value = "/DTS findtargetoprivate []";
-		SendMessageToSelf("Enter the target ID inside the brackets and send the command.");
+		SendMessageToSelf("Enter the target ID inside the brackets and send the command.", "PrivateRoom");
 	}
 	var TrainingRoomBlackTile = {
 		Areas: [
