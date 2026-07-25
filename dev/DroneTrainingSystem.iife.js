@@ -1099,9 +1099,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 	function PrivateRoomLeave() {
 		var pdi = PlayerDroneInfo();
 		if (pdi.isDrone) {
-			SendMessageToSelf(`Leaving private room.`, "PrivateRoom");
-		} else {
-			SendMessageToSelf(`Leaving private room. Don't forget to release owner status for the Drone if it only was a one time session!`);
+			SendMessageToSelf(`Left private room.`, "OperRoom");
 		}
 		ClearTagMessage("PrivateRoom");
 		SendMessageToSelf(`Leaving private room. Don't forget to release owner status for the Drone if it only was a one time session!`, "OperRoom");
