@@ -3,3 +3,4 @@ node_modules/
 mapdata.txt
 build_test.js
 DTSTestLoader.user.js
+dev/
