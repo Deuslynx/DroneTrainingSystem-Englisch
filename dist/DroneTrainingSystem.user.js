@@ -516,6 +516,10 @@
 		],
 		Exclude: []
 	};
+	var SleepRoom = {
+		Areas: [{ leftUp: { X: 34, Y: 34 }, rightDown: { X: 39, Y: 39 } }],
+		Exclude: []
+	};
 	function SleepEnterZoneEnter() {
 		SendMessageToSelf(`Entered Drone sleep area. On the inner pads you can ${styleButton("Sleep", SleepEnterZoneDoSleep, true)} to gain quota points.`, "SleepEnterZone");
 	}
@@ -543,10 +547,6 @@
 			DTSSyncSettings();
 		}, index)}`, "SleepEnterZone");
 	}
-	var SleepRoom = {
-		Areas: [{ leftUp: { X: 34, Y: 34 }, rightDown: { X: 39, Y: 39 } }],
-		Exclude: []
-	};
 	var ModifyRoom = {
 		Areas: [{ leftUp: { X: 15, Y: 2 }, rightDown: { X: 18, Y: 7 } }],
 		Exclude: [],
@@ -558,7 +558,7 @@
 		Exclude: []
 	};
 	function ModifyRoomEnter() {
-		SendMessageToSelf(`Entered upgrade workshop, ${styleButton("Show available upgrades", ShowAvailableModify)}`, "ModifyRoom");
+		SendMessageToSelf(`Entered upgrade workshop! ${styleButton("Show available upgrades", ShowAvailableModify)}`, "ModifyRoom");
 	}
 	function ModifyRoomLeave() {
 		if (IsInZone(Player.MapData.Pos, ModifyInnerRoom) == false) {
@@ -909,7 +909,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		Leave: void 0
 	};
 	function ShopRoomEnter() {
-		SendMessageToSelf(`Entered shop. Move into the inner room to shop`, "ShopRoom");
+		SendMessageToSelf(`Entered shop. Move into the inner room to shop to buy items.`, "ShopRoom");
 	}
 	function ShopRoomLeave() {
 		ClearTagMessage("ShopRoom");
@@ -957,7 +957,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		Leave: void 0
 	};
 	function WorkRoomEnter() {
-		SendMessageToSelf(`Entered office. Move to an inner workstation to work`, "WorkRoom");
+		SendMessageToSelf(`Entered office. Move to an inner workstation to work.`, "WorkRoom");
 	}
 	function WorkRoomLeave() {
 		ClearTagMessage("WorkRoom");
@@ -1053,7 +1053,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		Leave: void 0
 	};
 	function OperRoomEnter() {
-		SendMessageToSelf(`Entered Operator lounge`, "OperRoom");
+		SendMessageToSelf(`Entered Operator lounge!`, "OperRoom");
 	}
 	function OperRoomLeave() {
 		ClearTagMessage("OperRoom");
@@ -1096,6 +1096,15 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			SendMessageToSelf(`Entered private room. ${styleButton("Call Drone to private room", CallDroneToPrivateRoom)}`, "PrivateRoom");
 		}
 	}
+	function PrivateRoomLeave() {
+		var pdi = PlayerDroneInfo();
+		if (pdi.isDrone) {
+			SendMessageToSelf(`Leaving private room.`, "PrivateRoom");
+		} else {
+			SendMessageToSelf(`Leaving private room. Don't forget to release owner status for the Drone if it only was a one time session!`, "PrivateRoom");
+		}
+		ClearTagMessage("PrivateRoom");
+	}
 	function CallDroneToPrivateRoom() {
 		var input = document.getElementById("InputChat");
 		input.value = "/DTS findtargetoprivate []";
@@ -1118,11 +1127,11 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		Leave: void 0
 	};
 	function TrainingRoomEnter(nowInZone) {
-		SendMessageToSelf(`Entered training room. Stand on a black tile and ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
+		SendMessageToSelf(`Entered training room. Stand on the black tile and ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
 	}
 	function TrainingRoomLeave(pverInZone) {
 		if (isTraining) {
-			SendMessageToSelf("You may not leave the training room before training completes.", "TrainingRoom");
+			SendMessageToSelf("You may not leave the training room before training completes!", "TrainingRoom");
 			MovePlayer(TrainingRoomBlackTile.Areas[pverInZone]);
 		} else {
 			ClearTagMessage("TrainingRoom");
@@ -1147,7 +1156,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 					RequirePoseinfo.RequireDronePose(["Kneel"], 2e4, true);
 				},
 				() => {
-					SendMessageToSelf("Kneeling not detected. Returning to previous step...", "TrainingRoom");
+					SendMessageToSelf("Kneeling not detected! Returning to previous step...", "TrainingRoom");
 				},
 				1
 			);
@@ -1167,7 +1176,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 					RequirePoseinfo.RequireDronePose(["BaseUpper"], 2e4, true);
 				},
 				() => {
-					SendMessageToSelf("Standing up not detected. Returning to previous step...", "TrainingRoom");
+					SendMessageToSelf("Standing up not detected! Returning to previous step...", "TrainingRoom");
 				},
 				2
 			);
@@ -1188,7 +1197,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 					RequireActivityinfo.RequireDroneActivity([], ["Caress"], 0, 2e4, 3, true);
 				},
 				() => {
-					SendMessageToSelf("Self-check not detected. Returning to previous step...", "TrainingRoom");
+					SendMessageToSelf("Self-check not detected! Returning to previous step...", "TrainingRoom");
 				},
 				1
 			);
@@ -1219,7 +1228,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 					RequirePoseinfo.RequireDronePose(["BackBoxTie", "BackElbowTouch"], 2e4, true);
 				},
 				() => {
-					SendMessageToSelf("Standby behavior not detected. Returning to previous step...", "TrainingRoom");
+					SendMessageToSelf("Standby behavior not detected! Returning to previous step...", "TrainingRoom");
 				},
 				2
 			);
@@ -1242,7 +1251,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 					RequireActivityinfo.RequireDroneActivity(["ItemBoots"], ["Wiggle"], 0, 2e4, 1, true);
 				},
 				() => {
-					SendMessageToSelf("Service behavior not detected. Returning to previous step...", "TrainingRoom");
+					SendMessageToSelf("Service behavior not detected! Returning to previous step...", "TrainingRoom");
 				},
 				1
 			);
@@ -1250,7 +1259,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 				return;
 			}
 			await sleep(waitTime);
-			SendMessageToSelf("Service behavior detected. Continuing to next practice", "TrainingRoom");
+			SendMessageToSelf("Service behavior detected! Continuing to next practice...", "TrainingRoom");
 			await sleep(waitTime);
 			var result = await WaitTrainingProcess(
 				() => {
@@ -1258,7 +1267,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 					RequireActivityinfo.RequireDroneActivity(["ItemHands"], ["Wiggle"], 0, 2e4, 1, true);
 				},
 				() => {
-					SendMessageToSelf("Service behavior not detected. Returning to previous step...", "TrainingRoom");
+					SendMessageToSelf("Service behavior not detected! Returning to previous step...", "TrainingRoom");
 				},
 				1
 			);
@@ -1289,7 +1298,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			if (toNext == false) {
 				retryCount++;
 				if (retryCount >= 3) {
-					SendMessageToSelf("Multiple retries failed; training aborted", "TrainingRoom");
+					SendMessageToSelf("Multiple retries failed... training aborted!", "TrainingRoom");
 					ClearTagMessage("TrainingProc");
 					return false;
 				}
@@ -1301,14 +1310,14 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 	}
 	async function StartTraining(nowInZone) {
 		if (IsInArea(Player.MapData.Pos, TrainingRoomBlackTile.Areas[nowInZone]) == false) {
-			SendMessageToSelf("Not on a black tile.", "TrainingRoom");
+			SendMessageToSelf("Not standing on the black tile!", "TrainingRoom");
 			return;
 		}
 		ClearTagMessage("TrainingRoom");
 		var pdi = PlayerDroneInfo();
 		var trainingIndex = pdi.level;
 		if (pdi.isDrone == false) {
-			SendMessageToSelf("Trainee is not a Drone. Running basic training...", "TrainingRoom");
+			SendMessageToSelf("Trainee is not a Drone. Running basic training.", "TrainingRoom");
 			trainingIndex = 0;
 		}
 		if (trainingIndex >= trainingMenu.length) {
@@ -1483,7 +1492,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		var pdi = PlayerDroneInfo();
 		var educationIndex = pdi.level;
 		if (pdi.isDrone == false) {
-			SendMessageToSelf("Student is not a Drone. Running basic education!", "EducationRoom");
+			SendMessageToSelf("Student is not a Drone. Running basic education.", "EducationRoom");
 			educationIndex = 0;
 		}
 		if (educationIndex >= trainingMenu.length) {
@@ -1519,7 +1528,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 	}
 	function ChargeRoomCharge() {
 		WearEquips(Player, [OneBar]);
-		SendMessageToSelf(styleProgressBar("Charging", "Charge Complete", 6e4, ChargeComplete), "ChargeRoom");
+		SendMessageToSelf(styleProgressBar("Charging...", "Charge Complete", 6e4, ChargeComplete), "ChargeRoom");
 	}
 	function ChargeComplete() {
 		var pdi = PlayerDroneInfo();
@@ -1547,6 +1556,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 	OperRoom.Leave = OperRoomLeave;
 	Cat.Enter = CatEnter;
 	PrivateRoom.Enter = PrivateRoomEnter;
+	PrivateRoom.Leave = PrivateRoomLeave;
 	TrainingRoom.Enter = TrainingRoomEnter;
 	TrainingRoom.Leave = TrainingRoomLeave;
 	EducationRoom.Enter = EducationRoomEnter;
@@ -1672,18 +1682,18 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		}
 		static BatteryItem() {
 			var item = new _ItemInfo("BatteryItem");
-			item.text = "Disposable power bank: restores 50% Drone battery. Use before battery is depleted!";
+			item.text = "Disposable Power Bank: Restores 50% Drone battery. Use before battery is depleted!";
 			item.use = "BatteryItemUse";
 			return item;
 		}
 		static BatteryItemUse(item) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				SendActionText(`Drone${pdi.MemberNumber} connects the power bank's cable to the power port on its underside. Start charging...`);
+				SendActionText(`Drone${pdi.MemberNumber} connects the power bank's cable to the power port on its underside. Starting to charge...`);
 				SendMessageToSelf(`${styleProgressBar("Charging", "Charging complete", 15e3, () => {
 					var pdi2 = PlayerDroneInfo();
 					ResponseBatteryCharge(pdi2.batteryMax / 2);
-					SendMessageToSelf("Charging complete");
+					SendMessageToSelf("Charging complete!");
 				})}`);
 			} else {
 				ResponseBatteryCharge(pdi.batteryMax / 2);
@@ -1693,7 +1703,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		}
 		static BindStatusDownItem() {
 			var item = new _ItemInfo("BindStatusDownItem");
-			item.text = "Restraint easing chip: lowers one part's restraint level by 1";
+			item.text = "Restraint Easing Chip: Lowers one part's restraint level by 1.";
 			item.param = [
 				{ id: 0, name: bodyPartDisplayStrings[0] },
 				{ id: 1, name: bodyPartDisplayStrings[1] },
@@ -1707,22 +1717,22 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		static BindStatusDownItemUse(item, part) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				SendActionText(`Drone${pdi.MemberNumber} used the restraint-loosening chip to scan the collar and the restraints on the ${bodyPartDisplayStrings[part]} loosened.`);
+				SendActionText(`Drone${pdi.MemberNumber} used the Restraint Easing Chip on the collar and the restraints on the ${bodyPartDisplayStrings[part]} loosened.`);
 				DoSetBodyOrBindStatus(
 					0,
 					part,
 					pdi.bindStatus[bodyPartStrings[part]] == 0 ? 0 : pdi.bindStatus[bodyPartStrings[part]] - 1,
-					{ Name: "Restraint easing chip" }
+					{ Name: "Restraint Easing Chip" }
 				);
 			} else {
-				SendActionText(`${Player.Name} used the Restraint-Loosening Chip on the restraints binding their body and the restraints on the ${bodyPartDisplayStrings[part]} loosened.`);
+				SendActionText(`${Player.Name} used the Restraint Easing Chip and the restraints on the ${bodyPartDisplayStrings[part]} loosened.`);
 				RemoveRestrainsWithAssetGroup(Player, bodyPartAssetGroups[part]);
 			}
 			_ItemInfo.RemoveThis(item);
 		}
 		static BindStatusUpItem() {
 			var item = new _ItemInfo("BindStatusUpItem");
-			item.text = "Restraint tightening chip: raises one part's restraint level by 1";
+			item.text = "Restraint Tightening Chip: Raises one part's restraint level by 1.";
 			item.param = [
 				{ id: 0, name: bodyPartDisplayStrings[0] },
 				{ id: 1, name: bodyPartDisplayStrings[1] },
@@ -1736,22 +1746,22 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		static BindStatusUpItemUse(item, part) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				SendActionText(`Drone${pdi.MemberNumber} used the restraint-tightening chip to scan the collar, and the restraints on the ${bodyPartDisplayStrings[part]} tightened.`);
+				SendActionText(`Drone${pdi.MemberNumber} used the Restraint Tightening Chip on the collar and the restraints on the ${bodyPartDisplayStrings[part]} tightened.`);
 				DoSetBodyOrBindStatus(
 					0,
 					part,
 					pdi.bindStatus[bodyPartStrings[part]] == 2 ? 2 : pdi.bindStatus[bodyPartStrings[part]] + 1,
-					{ Name: "Restraint tightening chip" }
+					{ Name: "Restraint Tightening Chip" }
 				);
 			} else {
 				pdi.coin += 5;
-				SendActionText(`${Player.Name} used a Constriction Chip, but since it cannot be used on non-Drone targets, it was reclaimed for 5 Quota Points.`);
+				SendActionText(`${Player.Name} used a Constriction Chip. But since it cannot be used on non-Drone targets, it was reclaimed for 5 Quota Points.`);
 			}
 			_ItemInfo.RemoveThis(item);
 		}
 		static BodyStatusDownItem() {
 			var item = new _ItemInfo("BodyStatusDownItem");
-			item.text = "Function restoration chip: lowers one part's function restriction by 1";
+			item.text = "Function Restoration Chip: Lowers one part's restraint by 1.";
 			item.param = [
 				{ id: 0, name: bodyPartDisplayStrings[0] },
 				{ id: 1, name: bodyPartDisplayStrings[1] },
@@ -1765,23 +1775,22 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		static BodyStatusDownItemUse(item, part) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				var pdi = PlayerDroneInfo();
-				SendActionText(`Drone ${pdi.MemberNumber} scanned the collar with a function restoration chip, and the functionality of the ${bodyPartDisplayStrings[part]} was restored.`);
+				SendActionText(`Drone${pdi.MemberNumber} used the Function Restoration Chip on the collar and the functionality of the ${bodyPartDisplayStrings[part]} was restored.`);
 				DoSetBodyOrBindStatus(
 					1,
 					part,
 					pdi.bodyStatus[bodyPartStrings[part]] == 0 ? 0 : pdi.bodyStatus[bodyPartStrings[part]] - 1,
-					{ Name: "Function restoration chip" }
+					{ Name: "Function Restoration Chip" }
 				);
 			} else {
-				SendActionText(`${Player.Name} swiped the Function restoration chip over the restraints on their body, and the restraints on the ${bodyPartDisplayStrings[part]} loosened.`);
+				SendActionText(`${Player.Name} used the the Function Restoration Chip on the restraints on their body, and the functionality ${bodyPartDisplayStrings[part]} was restored.`);
 				RemoveRestrainsWithAssetGroup(Player, bodyPartAssetGroups[part]);
 			}
 			_ItemInfo.RemoveThis(item);
 		}
 		static BodyStatusUpItem() {
 			var item = new _ItemInfo("BodyStatusUpItem");
-			item.text = "Function restriction chip: raises one part's function restriction by 1";
+			item.text = "Function Restriction Chip: Raises one part's restriction by 1.";
 			item.param = [
 				{ id: 0, name: bodyPartDisplayStrings[0] },
 				{ id: 1, name: bodyPartDisplayStrings[1] },
@@ -1795,28 +1804,27 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		static BodyStatusUpItemUse(item, part) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				var pdi = PlayerDroneInfo();
 				if (pdi.bodyStatus[bodyPartStrings[part]] == 2 ? 2 : pdi.bodyStatus[bodyPartStrings[part]] + 1 > pdi.bodyStatusMax[bodyPartStrings[part]]) {
 					pdi.coin += 5;
-					SendActionText(`Drone${pdi.MemberNumber} used the Function restriction chip to scan the collar, but the ${bodyPartDisplayStrings[part]} did not accept the function restriction, so the chip was reclaimed for 5 Quota Points.`);
+					SendActionText(`Drone${pdi.MemberNumber} used the Function Restriction Chip on the collar, but the ${bodyPartDisplayStrings[part]} did not accept the function restriction, so the chip was reclaimed for 5 Quota Points.`);
 				} else {
-					SendActionText(`Drone${pdi.MemberNumber} used the Function restriction chip to scan the collar, restricting the function of the ${bodyPartDisplayStrings[part]}.`);
+					SendActionText(`Drone${pdi.MemberNumber} used the Function Restriction Chip on the collar, restricting the function of the ${bodyPartDisplayStrings[part]}.`);
 					DoSetBodyOrBindStatus(
 						1,
 						part,
 						pdi.bindStatus[bodyPartStrings[part]] == 2 ? 2 : pdi.bindStatus[bodyPartStrings[part]] + 1,
-						{ Name: "Function restriction chip" }
+						{ Name: "Function Restriction Chip" }
 					);
 				}
 			} else {
 				pdi.coin += 5;
-				SendActionText(`${Player.Name} used a Function Restriction Chip, but since it cannot be used on non-Drone units, it was reclaimed for 5 Quota Points.`);
+				SendActionText(`${Player.Name} used a Function Restriction Chip. But since it cannot be used on non-Drone targets, it was reclaimed for 5 Quota Points.`);
 			}
 			_ItemInfo.RemoveThis(item);
 		}
 		static VibeItem() {
 			var item = new _ItemInfo("VibeItem");
-			item.text = "Vibration controller: adjusts vibrator intensity";
+			item.text = "Vibration Controller: Adjusts vibrator intensity.";
 			item.param = [
 				{ id: 0, name: "Off" },
 				{ id: 1, name: "Low" },
@@ -1828,23 +1836,17 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		static VibeItemUse(item, level) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				var pdi = PlayerDroneInfo();
-				SendActionText(`Drone${pdi.MemberNumber} used the vibration controller.`);
-				DoSetBodyOrBindStatus(
-					1,
-					3,
-					level,
-					{ Name: "Vibration controller" }
-				);
+				SendActionText(`Drone${pdi.MemberNumber} used the Vibration Controller.`);
+				DoSetBodyOrBindStatus(1, 3, level, { Name: "Vibration Controller" });
 			} else {
 				DoVibe(level * 2, true);
-				SendActionText(`${Player.Name} used the vibration controller.`);
+				SendActionText(`${Player.Name} used the Vibration Controller.`);
 			}
 			_ItemInfo.RemoveThis(item);
 		}
 		static OrgasmLimitItem() {
 			var item = new _ItemInfo("OrgasmLimitItem");
-			item.text = "Orgasm limiter: adjusts orgasm restriction level";
+			item.text = "Orgasm Limiter: Adjusts Orgasm restriction level.";
 			item.param = [
 				{ id: 0, name: "Off" },
 				{ id: 1, name: "Edging" },
@@ -1856,23 +1858,17 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		static OrgasmLimitItemUse(item, level) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				var pdi = PlayerDroneInfo();
-				SendActionText(`Drone${pdi.MemberNumber} used an orgasm limiter.`);
-				DoSetBodyOrBindStatus(
-					1,
-					3,
-					level,
-					{ Name: "Orgasm limiter" }
-				);
+				SendActionText(`Drone${pdi.MemberNumber} used an Orgasm Limiter.`);
+				DoSetBodyOrBindStatus(1, 3, level, { Name: "Orgasm Limiter" });
 			} else {
 				pdi.coin += 5;
-				SendActionText(`${Player.Name} used an Orgasm Limiter. But since it cannot be used on non-drones, it was reclaimed for 5 Quota Points.`);
+				SendActionText(`${Player.Name} used an Orgasm Limiter. But since it cannot be used on non-Drone targets, it was reclaimed for 5 Quota Points.`);
 			}
 			_ItemInfo.RemoveThis(item);
 		}
 		static DisplayTalkItem() {
 			var item = new _ItemInfo("DisplayTalkItem");
-			item.text = "Display switch: toggles speaking through the display";
+			item.text = "Display Switch: Toggles speaking through the display.";
 			item.param = [
 				{ id: 0, name: "Off" },
 				{ id: 1, name: "On" }
@@ -1883,8 +1879,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		static DisplayTalkItemUse(item, level) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				var pdi = PlayerDroneInfo();
-				SendActionText(`Drone${pdi.MemberNumber} used the Display switch`);
+				SendActionText(`Drone${pdi.MemberNumber} used the Display Switch.`);
 				pdi.disPlayTalk = level == 1;
 			} else {
 				pdi.coin += 5;
@@ -1894,7 +1889,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		}
 		static PrivateRoomItem() {
 			var item = new _ItemInfo("PrivateRoomItem");
-			item.text = "Private-room keycard: teleports to a private room and can call a Drone there. Remember the Drone ID first";
+			item.text = "Private-Room Keycard: Teleports to a private room and can call a Drone there. Remember the Drone ID first!";
 			item.param = [
 				{ id: 0, name: "Room 1" },
 				{ id: 1, name: "Room 2" },
@@ -1906,14 +1901,14 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		static PrivateRoomItemUse(item, level) {
 			var pdi = PlayerDroneInfo();
 			if (pdi.isDrone) {
-				SendMessageToSelf("Drones are not allowed to use this item! Executing punishment and confiscating item!");
+				SendMessageToSelf("Drones are not allowed to use the Private-Room Keycard! Executing punishment and confiscating item!");
 				DoPunishment(2, 3);
 				_ItemInfo.RemoveThis(item);
 				return;
 			}
 			for (var charater of ChatRoomCharacter) {
 				if (IsInArea(charater.MapData.Pos, PrivateRoom.Areas[level])) {
-					SendMessageToSelf("Room occupied... can not use!");
+					SendMessageToSelf("Room occupied... cannot use!");
 					return;
 				}
 			}
@@ -4866,6 +4861,7 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 			OperRoomLeave,
 			CatEnter,
 			PrivateRoomEnter,
+			PrivateRoomLeave,
 			TrainingRoomEnter,
 			TrainingRoomLeave,
 			EducationRoomEnter,
