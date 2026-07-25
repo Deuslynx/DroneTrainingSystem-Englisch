@@ -178,7 +178,7 @@ export const MsgCmds = {
     }
 };
 
-export const CommandsAction = {
+const CommandsAction = {
     findtarget: {
         Command: (param) => {
             var mn = parseInt(param[0]);
@@ -245,7 +245,7 @@ export const CommandsAction = {
     }
 };
 
-export const BeepCmds = {
+const BeepCmds = {
     cometoroom: {
         Command: async (senderMn, param, options) => {
             if (options.chatRoomName == undefined || options.chatRoomName == null) return;
@@ -411,7 +411,7 @@ ${styleButton("Available actions", ShowActionButtons, info)}`;
     SendMessageToSelf(ShowString, "status");
 }
 
-export function GetExString(info) {
+function GetExString(info) {
     var exString = ``;
     if (info.modifys["training1"]) {
         exString += `\nObedience command: When an Operator pats the head, switch to obedience pose`;
@@ -515,7 +515,7 @@ export function ShowActionButtons(info = null) {
     SendMessageToSelf(string, "actions");
 }
 
-export function ShowStringsToSelf(index, info) {
+function ShowStringsToSelf(index, info) {
     var pdi = PlayerDroneInfo();
     switch (index) {
         case 0:
@@ -552,7 +552,7 @@ Show this panel again:${styleButton("Run", ShowActionButtons)}`;
     }
 }
 
-export function ShowStringsToOther(index, info) {
+function ShowStringsToOther(index, info) {
     switch (index) {
         case 0: // Drone to Drone
             return `Available actions for this unit:
@@ -603,7 +603,7 @@ Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
     }
 }
 
-export function ShowItemsList() {
+function ShowItemsList() {
     var pdi = PlayerDroneInfo();
     var string = "Item list:";
     for (var item of pdi.items) {
@@ -631,12 +631,12 @@ export function ShowItemsList() {
     SendMessageToSelf(string, "items", false);
 }
 
-export function ShowMissionProcess() {
+function ShowMissionProcess() {
     var pdi = PlayerDroneInfo();
     ShowMissionsString(pdi.missions, "Mission list:");
 }
 
-export function ShowMissionsString(missions, head) {
+function ShowMissionsString(missions, head) {
     var string = head;
     for (var mission of missions) {
         string += "\n";
@@ -648,27 +648,27 @@ export function ShowMissionsString(missions, head) {
     SendMessageToSelf(string, "missions", false);
 }
 
-export function FindPlayerHint() {
+function FindPlayerHint() {
     var input = (document.getElementById("InputChat"));
     input.value = '/DTS findtarget []';
     SendMessageToSelf("Enter the target ID inside the brackets and send the command or touch the target collar (including yourself)");
 }
-export function DoFindTatget(target, param = null) {
+function DoFindTatget(target, param = null) {
     SendDTSMsg(target, new MsgInfo("RequestStatus", param));
 }
 
-export function SendMissionHelp(info) {
+function SendMissionHelp(info) {
     SendDTSMsg(info, new MsgInfo("SendMissionHelp", Object.assign([], PlayerDroneInfo().missions)));
     SendMessageToSelf("Mission help request sent!");
 }
 
 // WIP
-export function SetMissionToDrone(info) {
+function SetMissionToDrone(info) {
     SendDTSMsg(info, new MsgInfo("PutMission", null));
     SendMessageToSelf("Mission assignment command sent!");
 }
 
-export async function GoToFacility() {
+async function GoToFacility() {
     if (ChatRoomData?.MapData?.Objects?.startsWith("ҴӄӃҶұҳҹ") && ChatRoomData?.Name?.startsWith("DroneFacility")) {
         SendMessageToSelf(`Already in the training facility. No movement needed.`);
         return;
@@ -706,7 +706,7 @@ export async function GoToFacility() {
     SendMessageToSelf(`No available room found`);
 }
 
-export async function ExitFromStack() {
+async function ExitFromStack() {
     var pdi = PlayerDroneInfo();
     if (pdi.isDrone) {
         SendMessageToSelf(`Drone rescue costs 20 credit quota. If you have less than 20, it will go negative. ${styleButton("Run", DoExitFromStack, 20)}`);
@@ -716,7 +716,7 @@ export async function ExitFromStack() {
     }
 }
 
-export async function DoExitFromStack(price) {
+async function DoExitFromStack(price) {
     var pdi = PlayerDroneInfo();
     SendMessageToSelf(styleProgressBar("Calling", "Complete", 120 * 1000, async () => {
         RemoveRestrains(Player);
@@ -730,7 +730,7 @@ export async function DoExitFromStack(price) {
     }));
 }
 
-export async function JoinRoom(RoomName) {
+async function JoinRoom(RoomName) {
     await ChatRoomAttemptLeave();
     await sleep(1000);
     await ServerRoomJoin(RoomName);
@@ -738,7 +738,7 @@ export async function JoinRoom(RoomName) {
     await waitFor(() => { return ChatRoomData != null; });
 }
 
-export function GetMission(pdi, missionStr = null) {
+function GetMission(pdi, missionStr = null) {
     var index = -1;
     if (missionStr != null) {
         index = missionLists[pdi.isDrone ? 0 : 1].findIndex(missionStr);
@@ -766,12 +766,12 @@ export function TakeMission(missionStr = null) {
     SendMessageToSelf(`Mission accepted: ${mission.text}`, "WorkRoom");
 }
 
-export function SetDisplayTalk(info) {
+function SetDisplayTalk(info) {
     SendDTSMsg(info, new MsgInfo("SetDisplayTalk", !info.disPlayTalk));
     SendMessageToSelf("Command sent: target Drone display screen set to " + (info.disPlayTalk ? "Off" : "On"));
 }
 
-export function ShowVoiceCommand(info = null) {
+function ShowVoiceCommand(info = null) {
     if (!info) {
         info = { MemberNumber: "(Target ID)" };
     }
@@ -790,7 +790,7 @@ Note: If the Drone cannot receive voice commands due to hearing limitations (suc
 }
 
 // type: 0 for average charge level, 1 for fully charged, 2 for 20% charge.
-export function DoBatteryHelp(target, type) {
+function DoBatteryHelp(target, type) {
     var char = ChatRoomCharacter.find(c => c.MemberNumber === target.MemberNumber);
     if (!char) {
         SendMessageToSelf("Target lost");
@@ -839,10 +839,10 @@ export function DoBatteryHelp(target, type) {
     }
 }
 
-export function ReqDoPunishment(target) {
+function ReqDoPunishment(target) {
     SendDTSMsg(target, new MsgInfo("DoPunishment", null));
 }
-export function ReqDoOrgasm(target) {
+function ReqDoOrgasm(target) {
     SendDTSMsg(target, new MsgInfo("DoOrgasm", null));
 }
 

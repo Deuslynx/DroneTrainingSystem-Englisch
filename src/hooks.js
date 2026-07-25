@@ -30,7 +30,7 @@ var dtsModApiAttempted = false;
  * Use the shared Bondage Club ModSDK when it is available (for example through
  * LSCG). DTS keeps its legacy hook wrapper as a fallback when running alone.
  */
-export function DTSGetModApi() {
+function DTSGetModApi() {
     if (dtsModApi) return dtsModApi;
     if (dtsModApiAttempted) return null;
 
@@ -53,13 +53,13 @@ export function DTSGetModApi() {
     return dtsModApi;
 }
 
-export function DTSHookTarget(funcName, context) {
+function DTSHookTarget(funcName, context) {
     if (context === Player) return `Player.${funcName}`;
     if (context == null || context === globalThis || context === window) return funcName;
     return null;
 }
 
-export function DTSInstallLegacyHook(funcName, context, beforeFn, afterFn, tag = "") {
+function DTSInstallLegacyHook(funcName, context, beforeFn, afterFn, tag = "") {
     const ctx = context != null ? context : globalThis;
     const hookKey = context === Player ? `Player.${funcName}` : funcName;
     let entry = hookMap.get(hookKey);
@@ -137,7 +137,7 @@ export function InstallHook(funcName, context, beforeFn, afterFn, tag = "") {
     return DTSInstallLegacyHook(funcName, context, beforeFn, afterFn, tag);
 }
 
-export function DoHook(arg, next, funcBefore, funcAfter) {
+function DoHook(arg, next, funcBefore, funcAfter) {
     let result;
     let skipOriginal = false;
     if (typeof func === 'function') {
@@ -228,7 +228,7 @@ export function ChatRoomMessageReceived(result, data) {
 }
 
 //param 0: Self -> Self 1: Others -> Self 2: Self -> Others 3: Others -> Others
-export var ActivityFunc = {
+var ActivityFunc = {
     ItemButtSpank: (param, SourceCharacter, TargetCharacter, FocusGroupName, ActivityName) => {
         if (param == 1) {
             if (charaterInstalledScript_isDrone[SourceCharacter] == undefined || charaterInstalledScript_isDrone[SourceCharacter] == false) {
@@ -320,7 +320,7 @@ export var ActivityFunc = {
     }
 };
 
-export function GroupActivityReceived(SourceCharacter, TargetCharacter, FocusGroupName, ActivityName) {
+function GroupActivityReceived(SourceCharacter, TargetCharacter, FocusGroupName, ActivityName) {
     var param = (SourceCharacter == Player.MemberNumber ? 0 : 1) + (TargetCharacter == Player.MemberNumber ? 0 : 2);
     if (ActivityFunc[FocusGroupName]) {
         ActivityFunc[FocusGroupName](param, SourceCharacter, TargetCharacter, FocusGroupName, ActivityName);
@@ -334,7 +334,7 @@ export function GroupActivityReceived(SourceCharacter, TargetCharacter, FocusGro
     RequireActivityinfo.CheckAllActivityComplete(SourceCharacter, TargetCharacter, param, FocusGroupName, ActivityName);
 }
 
-export function SelfOrgasmed(Resist) {
+function SelfOrgasmed(Resist) {
     if (Resist) {
         MissionInfo.ProgressAdd("OrgasmResist");
     }
@@ -353,20 +353,20 @@ export function SelfOrgasmed(Resist) {
     }
 }
 
-export function PlayerEnterRoom() {
+function PlayerEnterRoom() {
     setShowedEnterHelp(false);
     resetCharaterInstalledScript();
     ShowPlayerEnterHelp();
 }
 
-export function DoHiddenMessage(ChatRoomCharacter, msg, dict) {
+function DoHiddenMessage(ChatRoomCharacter, msg, dict) {
     if (charaterInstalledScript_isDrone[ChatRoomCharacter.MemberNumber] == undefined) {
         charaterInstalledScript_isDrone[ChatRoomCharacter.MemberNumber] = false;
     }
     MsgInfo.DoCmd(ChatRoomCharacter, dict);
 }
 
-export function DoVoiceCommand(ChatRoomCharacter, msg) {
+function DoVoiceCommand(ChatRoomCharacter, msg) {
     var pdi = PlayerDroneInfo();
     var cmd = findIndices(msg, ["Show status", "Deploy charging crank", "Orgasm reward", "Shock punishment", "Set to ", "Display screen message"]);
     // Operator privileges are required to speak via the display screen

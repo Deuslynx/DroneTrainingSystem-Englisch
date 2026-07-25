@@ -80,7 +80,7 @@ export var OneBar = {
     "MemberNumber": 50051
 };
 
-export var BasicDroneBinds = [
+var BasicDroneBinds = [
     // 0
     {
         "Item": "LatexCatsuit", "AssetGroup": "Suit",
@@ -319,7 +319,7 @@ export var BasicDroneBinds = [
     },
 ];
 
-export var BasicDroneeyes = [
+var BasicDroneeyes = [
     [{ "Item": "InteractiveVisor", "AssetGroup": "ItemHead", "TypeRecord": { "typed": 0 } }],
     [{
         "Item": "InteractiveVisor", "AssetGroup": "ItemHead", "TypeRecord": { "typed": 1 },
@@ -327,22 +327,22 @@ export var BasicDroneeyes = [
     }],
     [{ "Item": "InteractiveVisor", "AssetGroup": "ItemHead", "TypeRecord": { "typed": 3 } }],
 ];
-export var BasicDroneears = [
+var BasicDroneears = [
     [{ "Item": "FuturisticEarphones", "AssetGroup": "ItemEars", "TypeRecord": { "typed": 0 } }],
     [{ "Item": "FuturisticEarphones", "AssetGroup": "ItemEars", "TypeRecord": { "typed": 1 } }],
     [{ "Item": "FuturisticEarphones", "AssetGroup": "ItemEars", "TypeRecord": { "typed": 3 } }],
 ];
-export var BasicDronemouth = [
+var BasicDronemouth = [
     [{ "Item": "OTNPlugGag", "AssetGroup": "ItemMouth", "TypeRecord": { typed: 0 } }],
     [{ "Item": "OTNPlugGag", "AssetGroup": "ItemMouth", "TypeRecord": { typed: 1 } }],
     [{ "Item": "OTNPlugGag", "AssetGroup": "ItemMouth", "TypeRecord": { typed: 1 } }]
 ];
-export var BasicDronebody = [
+var BasicDronebody = [
     [{ "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis", "TypeRecord": { "o": 0 } }],
     [{ "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis", "TypeRecord": { "o": 2 } }],
     [{ "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis", "TypeRecord": { "o": 1 } }],
 ];
-export var BasicDronehands = [
+var BasicDronehands = [
     [
         { "Item": "FuturisticCuffs", "AssetGroup": "ItemArms", "TypeRecord": { "typed": 0 } },
         { "Item": "FuturisticMittens", "AssetGroup": "ItemHands", "TypeRecord": { "typed": 1 } }
@@ -356,7 +356,7 @@ export var BasicDronehands = [
         { "Item": "FuturisticMittens", "AssetGroup": "ItemHands", "TypeRecord": { "typed": 0 } }
     ]
 ];
-export var BasicDronelegs = [
+var BasicDronelegs = [
     [
         { "Item": "FuturisticAnkleCuffs", "AssetGroup": "ItemFeet", "TypeRecord": { "typed": 0 } },
         { "Item": "FuturisticLegCuffs", "AssetGroup": "ItemLegs", "TypeRecord": { "typed": 0 } }
@@ -371,7 +371,7 @@ export var BasicDronelegs = [
     ],
 ];
 
-export var BasicDroneSet = {
+var BasicDroneSet = {
     Binds: BasicDroneBinds,
     eyes: BasicDroneeyes,
     ears: BasicDroneears,
@@ -380,16 +380,16 @@ export var BasicDroneSet = {
     hands: BasicDronehands,
     legs: BasicDronelegs,
 };
-export var AllEquipSets = {
+var AllEquipSets = {
     BasicDrone: BasicDroneSet,
 };
 
-export const shockItems = [
+const shockItems = [
     { "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis" },
     { "Item": "ShockClamps", "AssetGroup": "ItemNipples" },
     { "Item": "ShockCollar", "AssetGroup": "ItemNeck" }
 ];
-export const vibeItem = [
+const vibeItem = [
     { "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis" },
     { "Item": "FuturisticVibrator", "AssetGroup": "ItemVulva" },
     { "Item": "VibeHeartClitPiercing", "AssetGroup": "ItemVulvaPiercings" },
@@ -398,7 +398,7 @@ export const vibeItem = [
 ];
 
 // ----- Wear/remove helpers -----
-export function RemoveClothes(sender, refresh = true, removeUnderwear = true, removeCosplay = false) {
+function RemoveClothes(sender, refresh = true, removeUnderwear = true, removeCosplay = false) {
     CharacterNaked(sender);
     if (refresh == true) {
         CharacterLoadEffect(sender);
@@ -431,14 +431,14 @@ export function RemoveRestrainsWithAssetGroup(sender, group, refresh = true) {
         ChatRoomCharacterUpdate(sender);
     }
 }
-export function AllAssetGroupName() {
+function AllAssetGroupName() {
     let result = [];
     for (let obj of AssetGroup) {
         result.push(obj.Name);
     }
     return result;
 }
-export function GetAllInventory(sender) {
+function GetAllInventory(sender) {
     for (let ag of AssetGroup) {
         if (ag.Name.startsWith("Item")) {
             let geted = InventoryGet(sender, ag.Name);
@@ -681,7 +681,7 @@ export async function RefreshBinds(canRefresh = false) {
 }
 
 // ----- Settings persistence -----
-export function DTSMigrateLegacySettings() {
+function DTSMigrateLegacySettings() {
     if (!Player.ExtensionSettings) Player.ExtensionSettings = {};
     if (Player.ExtensionSettings[DTS_SETTINGS_KEY]) return false;
 
@@ -701,7 +701,7 @@ export function DTSSyncSettings() {
     ServerPlayerExtensionSettingsSync(DTS_SETTINGS_KEY);
 }
 
-export class DroneInfo {
+class DroneInfo {
     constructor() {
         this.scriptVersion = Number(script_version.split(".").slice(0, 2).join("."));
         this.MemberNumber = Player.MemberNumber;
@@ -761,7 +761,7 @@ export class DroneInfo {
     }
 }
 
-export function addMissingProperties(target, source) {
+function addMissingProperties(target, source) {
     for (let key in source) {
         if (source.hasOwnProperty(key) && !target.hasOwnProperty(key)) {
             target[key] = source[key];
@@ -793,7 +793,7 @@ export function CheckPlayerDroneInfoExistAndIsDrone() {
 }
 
 // ----- Identity registration -----
-export async function StartDrone() {
+async function StartDrone() {
     var waitTime = 2000;
     var waitTimeShort = 1000;
     SendMessageToSelf(`Received body-to-Drone registration request. Starting Drone conversion sequence...`);
@@ -940,7 +940,7 @@ export async function StartDrone() {
     SendDTSMsg(sender, new MsgInfo("HeartBeatPack", DTSHeartBeatPayload(false, PlayerDroneInfo().isDrone)));
 }
 
-export function SetToDrone(target, isUndo) {
+function SetToDrone(target, isUndo) {
     if (target.MemberNumber == Player.MemberNumber) {
         if (!isUndo) {
             StartDrone();
@@ -957,7 +957,7 @@ export function SetToDroneAccept(targetChar) {
     SendDTSMsg(targetChar, new MsgInfo("RespOwnerRight", false));
 }
 
-export function SetToOwner(target, isUndo) {
+function SetToOwner(target, isUndo) {
     if (target.MemberNumber == Player.MemberNumber) {
         PlayerDroneInfo().isOwner = !isUndo;
         SendMessageToSelf(`Operator status ${isUndo ? "revoked" : "registered"}!`);
@@ -1019,7 +1019,7 @@ export function SetStatusHint(info, type, part) {
     SendMessageToSelf("Set to " + buttons[0] + buttons[1] + buttons[2]);
 }
 
-export function SetStatusSend(info, type, part, level) {
+function SetStatusSend(info, type, part, level) {
     if ((type == 1 && info.bodyStatusMax[bodyPartStrings[part]] < level) && part != 3) {
         SendMessageToSelf("This Drone has not received the upgrade for that part and cannot be set to the specified state!");
         return;

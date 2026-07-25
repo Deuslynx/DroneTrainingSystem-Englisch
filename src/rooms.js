@@ -223,7 +223,7 @@ Drone Dormitory (North-Central)
 */
 
 // ----- Stock room -----
-export const StockRoom = {
+const StockRoom = {
     Areas: [
         { leftUp: { X: 0, Y: 2 }, rightDown: { X: 4, Y: 6 } },
         { leftUp: { X: 35, Y: 2 }, rightDown: { X: 39, Y: 6 } },
@@ -240,7 +240,7 @@ export function StockRoomEnter() {
 export function StockRoomLeave() {
     ClearTagMessage("StockRoom");
 }
-export function StockRoomAction(isTake, isSkipCanInteract = false) {
+function StockRoomAction(isTake, isSkipCanInteract = false) {
     var pdi = PlayerDroneInfo();
     if (!IsInZone(Player.MapData.Pos, StockRoom)) {
         SendMessageToSelf(`Not in the StockRoom area`, "StockRoom");
@@ -294,7 +294,7 @@ export function StockRoomAction(isTake, isSkipCanInteract = false) {
         }
     }
 }
-export function GetStockIndex() {
+function GetStockIndex() {
     var i;
     for (i = 0; i < StockRoom.Areas.length; i++) {
         if (IsInArea(Player.MapData.Pos, StockRoom.Areas[i])) break;
@@ -308,7 +308,7 @@ export function GetStockIndex() {
 }
 
 // ----- Elevator -----
-export const Elevator = {
+const Elevator = {
     Areas: [
         { leftUp: { X: 18, Y: 35 }, rightDown: { X: 20, Y: 37 } },
         { leftUp: { X: 30, Y: 35 }, rightDown: { X: 32, Y: 37 } },
@@ -417,13 +417,13 @@ export function ElevatorLeave() {
 }
 
 // ----- Sleep zone / sleep room -----
-export const SleepEnterZone = {
+const SleepEnterZone = {
     Areas: [{ leftUp: { X: 24, Y: 18 }, rightDown: { X: 27, Y: 25 } }],
     Exclude: [],
     Enter: undefined,
     Leave: undefined
 };
-export const SleepEnterTiles = {
+const SleepEnterTiles = {
     Areas: [
         { X: 27, Y: 18 },
         { X: 27, Y: 20 },
@@ -438,7 +438,7 @@ export function SleepEnterZoneEnter() {
 export function SleepEnterZoneLeave() {
     ClearTagMessage("SleepEnterZone");
 }
-export function SleepEnterZoneDoSleep() {
+function SleepEnterZoneDoSleep() {
     var i = IsInZone(Player.MapData.Pos, SleepEnterTiles);
     if (i === false) {
         SendMessageToSelf("Not on a pad", "SleepEnterZone");
@@ -459,19 +459,19 @@ export function SleepEnterZoneDoSleep() {
         DTSSyncSettings();
     }, index)}`, "SleepEnterZone");
 }
-export const SleepRoom = {
+const SleepRoom = {
     Areas: [{ leftUp: { X: 34, Y: 34 }, rightDown: { X: 39, Y: 39 } }],
     Exclude: [],
 };
 
 // ----- Modify (upgrade) room -----
-export const ModifyRoom = {
+const ModifyRoom = {
     Areas: [{ leftUp: { X: 15, Y: 2 }, rightDown: { X: 18, Y: 7 } }],
     Exclude: [],
     Enter: undefined,
     Leave: undefined
 };
-export const ModifyInnerRoom = {
+const ModifyInnerRoom = {
     Areas: [{ leftUp: { X: 8, Y: 2 }, rightDown: { X: 14, Y: 7 } }],
     Exclude: [],
 };
@@ -484,7 +484,7 @@ export function ModifyRoomLeave() {
     }
 }
 
-export var allModify = {
+var allModify = {
     eyes1: {
         id: "eyes1", name: "Implant contact-lens display",
         desc: "Eye function can be set to a restricted mode.", price: 10,
@@ -610,7 +610,7 @@ export var allModify = {
     }
 };
 
-export var selectModify = "";
+var selectModify = "";
 export function ShowAvailableModify(target = null) {
     var pdi = PlayerDroneInfo();
     if (pdi.isDrone == false && target == null) {
@@ -657,7 +657,7 @@ export function ShowAvailableModify(target = null) {
     SendMessageToSelf(`Available upgrades:${string}`, "ModifyRoom");
 }
 
-export function CanModify(mod, target = null) {
+function CanModify(mod, target = null) {
     var pdi = null;
     if (target == null) {
         pdi = PlayerDroneInfo();
@@ -672,7 +672,7 @@ export function CanModify(mod, target = null) {
     return true;
 }
 
-export const ModifyTile = {
+const ModifyTile = {
     Areas: [{ X: 10, Y: 5 }],
     Exclude: [],
     Enter: undefined
@@ -720,7 +720,7 @@ export function DoModifyByOwner(Modifyid) {
 }
 
 // ----- Shop -----
-export const ShopRoom = {
+const ShopRoom = {
     Areas: [{ leftUp: { X: 20, Y: 2 }, rightDown: { X: 32, Y: 7 } }],
     Exclude: [],
     Enter: undefined,
@@ -733,7 +733,7 @@ export function ShopRoomLeave() {
     ClearTagMessage("ShopRoom");
 }
 
-export const ShopInnerRoom = {
+const ShopInnerRoom = {
     Areas: [
         { leftUp: { X: 25, Y: 2 }, rightDown: { X: 27, Y: 3 } },
         { leftUp: { X: 30, Y: 2 }, rightDown: { X: 32, Y: 3 } },
@@ -771,7 +771,7 @@ export function ShopInnerRoomLeave() {
 }
 
 // ----- Work room -----
-export const WorkRoom = {
+const WorkRoom = {
     Areas: [{ leftUp: { X: 0, Y: 12 }, rightDown: { X: 6, Y: 22 } }],
     Exclude: [],
     Enter: undefined,
@@ -785,7 +785,7 @@ export function WorkRoomLeave() {
     ClearTagMessage("WorkRoomWork");
 }
 
-export const WorkInnerRoom = {
+const WorkInnerRoom = {
     Areas: [
         { leftUp: { X: 0, Y: 12 }, rightDown: { X: 1, Y: 13 } },
         { leftUp: { X: 5, Y: 12 }, rightDown: { X: 6, Y: 13 } },
@@ -799,7 +799,7 @@ export const WorkInnerRoom = {
 export function WorkInnerRoomEnter() {
     SendMessageToSelf(`${styleButton("Take mission", TakeMission)}${styleButton("Do office work", DoWork)}`, "WorkRoom");
 }
-export function DoWork() {
+function DoWork() {
     var p1 = Math.floor(Math.random() * 100);
     var p2 = Math.floor(Math.random() * 100);
     var p3 = Math.floor(Math.random() * 4);
@@ -850,11 +850,11 @@ export function DoWork() {
 }
 
 // ----- Operator lounge / cat / dancer -----
-export const OperRoomCrate = {
+const OperRoomCrate = {
     Areas: [{ X: 13, Y: 20 }],
     Exclude: [],
 };
-export const OperRoom = {
+const OperRoom = {
     Areas: [{ leftUp: { X: 12, Y: 18 }, rightDown: { X: 22, Y: 25 } }],
     Exclude: [{ leftUp: { X: 14, Y: 18 }, rightDown: { X: 18, Y: 19 } }],
     Enter: undefined,
@@ -867,7 +867,7 @@ export function OperRoomLeave() {
     ClearTagMessage("OperRoom");
 }
 
-export const Cat = {
+const Cat = {
     Areas: [{ X: 19, Y: 24 }],
     Exclude: [],
     Enter: undefined,
@@ -877,7 +877,7 @@ export function CatEnter() {
 }
 
 // WIP
-export const DancerRoom = {
+const DancerRoom = {
     Areas: [{ leftUp: { X: 14, Y: 18 }, rightDown: { X: 18, Y: 19 } }],
     Exclude: [],
 };
@@ -910,21 +910,21 @@ export function PrivateRoomEnter() {
         SendMessageToSelf(`Entered private room. ${styleButton("Call Drone to private room", CallDroneToPrivateRoom)}`, "PrivateRoom");
     }
 }
-export function CallDroneToPrivateRoom() {
+function CallDroneToPrivateRoom() {
     var input = (document.getElementById("InputChat"));
     input.value = '/DTS findtargetoprivate []';
     SendMessageToSelf("Enter the target ID inside the brackets and send the command.");
 }
 
 // ----- Training room -----
-export const TrainingRoomBlackTile = {
+const TrainingRoomBlackTile = {
     Areas: [
         { X: 34, Y: 13 },
         { X: 38, Y: 13 },
     ],
     Exclude: [],
 };
-export const TrainingRoom = {
+const TrainingRoom = {
     Areas: [
         { leftUp: { X: 33, Y: 12 }, rightDown: { X: 35, Y: 14 } },
         { leftUp: { X: 37, Y: 12 }, rightDown: { X: 39, Y: 14 } },
@@ -946,7 +946,7 @@ export function TrainingRoomLeave(pverInZone) {
     }
 }
 
-export var trainingMenu = [
+var trainingMenu = [
     async () => {
         var pdi = PlayerDroneInfo();
         var waitTime = 3000;
@@ -1088,7 +1088,7 @@ export var trainingMenu = [
     },
 ];
 
-export async function WaitTrainingProcess(DoAtStart, DoAtFail, maxTrainingProcess) {
+async function WaitTrainingProcess(DoAtStart, DoAtFail, maxTrainingProcess) {
     var toNext = false;
     var retryCount = 0;
     var pdi = PlayerDroneInfo();
@@ -1119,7 +1119,7 @@ export async function WaitTrainingProcess(DoAtStart, DoAtFail, maxTrainingProces
     return true;
 }
 
-export async function StartTraining(nowInZone) {
+async function StartTraining(nowInZone) {
     if (IsInArea(Player.MapData.Pos, TrainingRoomBlackTile.Areas[nowInZone]) == false) {
         SendMessageToSelf("Not on a black tile.", "TrainingRoom");
         return;
@@ -1140,7 +1140,7 @@ export async function StartTraining(nowInZone) {
 }
 
 // ----- Education room -----
-export const EducationRoom = {
+const EducationRoom = {
     Areas: [[{ X: 34, Y: 22 }, { X: 36, Y: 22 }, { X: 38, Y: 22 }]],
     Exclude: [],
     Enter: undefined,
@@ -1153,7 +1153,7 @@ export function EducationRoomLeave(pverInZone) {
     ClearTagMessage("EducationRoom");
 }
 
-export var educationMenu = [
+var educationMenu = [
     async () => {
         var pdi = PlayerDroneInfo();
         var waitTime = 2000;
@@ -1281,7 +1281,7 @@ export var educationMenu = [
     },
 ];
 
-export async function WaitEducationProcess(text1, text2, text3) {
+async function WaitEducationProcess(text1, text2, text3) {
     var toNext = false;
     var choiced = false;
     var waitTime = 2000;
@@ -1295,7 +1295,7 @@ export async function WaitEducationProcess(text1, text2, text3) {
     }
 }
 
-export async function StartEducation(nowInZone) {
+async function StartEducation(nowInZone) {
     ClearTagMessage("EducationRoom");
     var pdi = PlayerDroneInfo();
     var educationIndex = pdi.level;
@@ -1312,7 +1312,7 @@ export async function StartEducation(nowInZone) {
 }
 
 // ----- Charge room -----
-export const ChargeRoom = {
+const ChargeRoom = {
     Areas: [[
         { X: 1, Y: 10 },
         { X: 38, Y: 10 },
@@ -1336,11 +1336,11 @@ export function ChargeRoomLeave() {
         RemoveRestrainByOneAssetGroup(Player, "ItemDevices");
     }
 }
-export function ChargeRoomCharge() {
+function ChargeRoomCharge() {
     WearEquips(Player, [OneBar]);
     SendMessageToSelf(styleProgressBar("Charging", "Charge Complete", 60000, ChargeComplete), "ChargeRoom");
 }
-export function ChargeComplete() {
+function ChargeComplete() {
     var pdi = PlayerDroneInfo();
     pdi.battery = pdi.batteryMax;
     RemoveRestrainByOneAssetGroup(Player, "ItemDevices");
@@ -1377,13 +1377,13 @@ EducationRoom.Leave = EducationRoomLeave;
 ChargeRoom.Enter = ChargeRoomEnter;
 ChargeRoom.Leave = ChargeRoomLeave;
 
-export var AllZoneList = [
+var AllZoneList = [
     StockRoom, Elevator, SleepRoom, ModifyRoom, ModifyTile, ShopRoom, ShopInnerRoom,
     WorkRoom, WorkInnerRoom, OperRoom, Cat, DancerRoom, PrivateRoom, TrainingRoom,
     EducationRoom, ChargeRoom, SleepEnterZone, SleepEnterTiles
 ];
 
-export var map = {
+var map = {
     "Type": "Always",
     "Tiles": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҲҲҲҴҴҲҲҲҴҴҴҴҴҴҴ¬yyyyyҴҴҴҳҳҳҴҴҴyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴҳ«««ҳҴтyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ҴКyyyyтyyyҴҴҴҴҴҴҴҴҴҴтyyyyyyyyyyyyҴҴ«««««ҴҴyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ÇÇyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴҳ«««ҴҴтyyyyтyyyyyyyyyyyyyтyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҳ«ҳ«¬«yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy«¬«ҲҲҴҴҴҲҲҴyyyҴААААҴААААҴААААААҴyyyҴҳҳҳҴҳҳҳªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«««Ҵ«««ªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«¬«Ҵ«¬«¬¬¬¬¬¬¬ҴyyyҴҴҴҴyyyҴ«««Ҵ«««ҲҲҴ¬ҴҴҴҴyyyҴҴҴҴyyyҴҴҴҴҴҴҴҴªªҴ¬¬¬¬ҴyyyҴҴҴҴyyyҴyyyyyyyªªҴ¬¬¬¬ҴyyyҴҴҴЮЮЮЮЮҴҴҴҴҴҳҳҳҳҴyyyҴyyyyyyy¬¬¬¬¬¬¬ÇyyyҴxЮ¬¬¬Юxxxҳ«««ҴyyyÇyyyyyyyҲҲҴ¬ҴҲҲҴyyyҴxЮЮxxxҳ««ҳҳҴyyyҴҳ¬ҳ¬ҳ¬ҳªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴҳҴҳҴҳҴªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴ«Ҵ«Ҵ«Ҵ¬¬¬¬¬¬¬ҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴ«Ҵ«Ҵ«ҴҴҴҴҴҴҴҴҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyҴxxxxxxxxxxxҳ«««Ҵyyyyyyyyҳ«ҳ«¬«yyyyyyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyyyyyy«¬«ҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳҳҳҳҴyyyyyyyyyyyyҴ«¬«yyyyyyy«¬«yyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyÇ«««ҴyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴЮЮЮЮЮҴҴҴҴҴҴҴҴҴҴyҴҴҴҴҴҴҳҳҳҳҳҳææëëëðëëëææҴxxxxxҴҲҲҲҲҳҳҳҳҴҴҴҴҲҲҲҴ««««««ææëëëðëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҴªªªҴ««««««ææëëëëëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҲªªªҴ««««««ææëëëðëëëææÇxxxxxÇªªªҲ«««ҳ¬¬¬ÇªªªҴ««««««ææëëëðëëëææҴxxxxxҴҲҲҲҳҳҳҳҳҳҳҳҴҲҲҲҴ««««««ææëëëëëëëææҴЮЮЮЮЮҴyyұ«ҳ«ҳ«ҳ«ҳyyyyҴ««««««",
     "Objects": "ҴӄӃҶұҳҹddddddddddddddddddddddddddddddddddddddddddddddddddd೥ddddddd೦೧ddd೦೧dddddddƂƂƂƂƂұdddddddddшшшddŀddddшddddшdddҴƂƂƂƂƂdddddddddddddddddddddиddddddddddddddddddƂƂƂƂƂҲdddddddddžſddddƀƁddd೥ྴddd೥ྴdҵƂƂƂƂƂddddddddddшddྴྴdddddddddddddddddddddddddƂƂƂƂƂҳddddddddddddddddddddddddddddҶƂƂƂƂƂdddddddddddddddŀdddddddddddddddddddddddddddddྴdddddddddddྴdddྴddddddddddddྴddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd೦೧ddd೦೧dddddd௪ddddd௪ddddd௪dddddddd೥ddd೥džſdddžſdddddшżdddddżшdшd࠲żdddddddиdшdиdшddddddddddddddːːdːːdddddddːːdddddddddddddddddddddddddddϼdϼdddddddddϼdddddddddddd೦೧ddd೥ddddddࠖࠖdddddࠖࠖdࠖࠖdd˚˚ddddddྴdddྴdžſdddddddddddddŀdŀdddddddddŀdddddddddddddddddddྴddddྶdddddddྶdྶdddddddddྴdddddddddddddddddddїdтdтdтdјdљdіќdddddddddddddd೦೧ddd೦೧dddddddࠖࠖࠖࠖࠖdddddddddddddddddddddžſdddžſddddddшdddddŀddddїјddddddddྴdྴdྴddddddddddddddddˤˤˤdżdddddddddddddddddddddddddddddddddddˆˆˆddddddїўddddddddшdшdшdddddddddddddddddddddddddddddddddddddddddddddddddddddddƂƂddddd̪ddddјњddddddddddddddddddddddddddžſdddddddddddddddddddddddddddddddྴdddddddddddddddྶྐྵdྸdddddddddྴdddddƂƂƂƂƂҷddddddddddddddddddddddddddddҺƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddƂƂƂƂƂҸddddddddddddddddddddddddddddһƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddƂƂƂƂƂҹdddddddddddddddddddddddྸddddҼƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddೋdddddddddೋdddddddddddddddddddddddddddddnsdddddddddddиdddddddddddddྴddddddшшшшшшddddddddddddƀƁddddddddddddddddddddшшшшшшdddddddddddྴdddddྷdddddddddddྐྵddddшшшшшшddddddddddddddddddddddddddddddddddшшшшшшdddddddddddd࠲d࠲d࠲dddddddddddddddddшшшшшшddddddddddddddddddddddddddddddddddшшшшшш"

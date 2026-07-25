@@ -80,13 +80,13 @@ export function IsInArea(Pos, Area) {
     }
     return isIn;
 }
-export function IsAtTile(Pos, Tile) {
+function IsAtTile(Pos, Tile) {
     return (Pos.X == Tile.X && Pos.Y == Tile.Y);
 }
-export function IsInLURD(Pos, LURD) {
+function IsInLURD(Pos, LURD) {
     return (Pos.X >= LURD.leftUp.X && Pos.Y >= LURD.leftUp.Y && Pos.X <= LURD.rightDown.X && Pos.Y <= LURD.rightDown.Y);
 }
-export function IsAtTileArray(Pos, Tiles) {
+function IsAtTileArray(Pos, Tiles) {
     for (var tile of Tiles) {
         if (IsAtTile(Pos, tile)) {
             return true;
@@ -137,9 +137,9 @@ export function DTSCloneSettings(settings) {
 }
 
 // ----- Chat log message rendering -----
-export var clearLastTag = ["status", "items", "actions", "missions"];
+var clearLastTag = ["status", "items", "actions", "missions"];
 
-export function ClearMessageByFunc(func) {
+function ClearMessageByFunc(func) {
     var elements = document.getElementById('TextAreaChatLog').children;
 
     for (let i = elements.length - 1; i >= 0; i--) {
@@ -172,7 +172,7 @@ export function ClearOldMessage() {
         }
     });
 }
-export function ClearLastMessage() {
+function ClearLastMessage() {
     ClearMessageByFunc((child) => {
         return child?.children[1]?.dataset?.clearatnext == "true";
     });
@@ -186,7 +186,7 @@ export function ClearAllMessage() {
     ClearMessageByFunc((child) => { return true; });
 }
 
-export function styleMessage(message, tag = "", cantClear = false, clearAtNext = false) {
+function styleMessage(message, tag = "", cantClear = false, clearAtNext = false) {
     var timestamp = new Date().getTime();
     if (cantClear) timestamp = false;
     const hiddenString = "styleMessage";
