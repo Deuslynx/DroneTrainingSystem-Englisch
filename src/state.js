@@ -3,12 +3,6 @@
 // and write. Kept in one place so every module imports the same live
 // bindings instead of each module owning its own local copy.
 
-export let secAfterStart = 0;
-export function setSecAfterStart(v) { secAfterStart = v; }
-
-export let timeEventInterval = -1;
-export function setTimeEventInterval(v) { timeEventInterval = v; }
-
 export let charaterInstalledScript_isDrone = new Map();
 export function resetCharaterInstalledScript() { charaterInstalledScript_isDrone = new Map(); }
 
@@ -27,9 +21,6 @@ export function setIsRefreshBinding(v) { isRefreshBinding = v; }
 export let lastRefreshBindsTime = new Date();
 export function setLastRefreshBindsTime(v) { lastRefreshBindsTime = v; }
 
-export let lastBattery = null;
-export function setLastBattery(v) { lastBattery = v; }
-
 export let trainingProcess = 0;
 export function setTrainingProcess(v) { trainingProcess = v; }
 export function addTrainingProcess(v = 1) { trainingProcess += v; }
@@ -42,9 +33,3 @@ export function setIsEducationing(v) { isEducationing = v; }
 
 export let pverPos = null;
 export function setPverPos(v) { pverPos = v; }
-
-export let selectModify = "";
-export function setSelectModify(v) { selectModify = v; }
-
-export let _PlayerDroneInfo = null;
-export function set_PlayerDroneInfo(v) { _PlayerDroneInfo = v; }

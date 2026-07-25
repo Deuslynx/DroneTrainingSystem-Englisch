@@ -5,7 +5,7 @@
 
 import {
     bindLevelStrings, bodyLevelStrings, bodyPartStrings, bodyPartDisplayStrings,
-    typeDisplayStrings, ArousalDisplayStrings, changeLog
+    typeDisplayStrings, ArousalDisplayStrings, changeLog, missionLists
 } from "./constants.js";
 import { charaterInstalledScript_isDrone, setPverPos, showedEnterHelp, setShowedEnterHelp, showChangeLog } from "./state.js";
 import {
@@ -15,7 +15,8 @@ import {
 import {
     PlayerDroneInfo, CheckPlayerDroneInfoExistAndIsDrone, DoPunishment, DoOrgasm, DoVibe,
     DoSetBodyOrBindStatus, RefreshBinds, RemoveRestrains, WearEquips, SetToDroneAccept,
-    SetStatusHint, SetIdentityHint, SendBatteryHelp, RefreshBatteryTag, RefreshPlayerEffect
+    SetStatusHint, SetIdentityHint, SendBatteryHelp, RefreshBatteryTag, RefreshPlayerEffect,
+    ResponseBatteryCharge
 } from "./drone.js";
 import { ItemInfo } from "./items.js";
 import { InitMapFaci, PrivateRoom, PrivateRoomCrate, MissionInfo, ShowAvailableModify, DoModifyByOwner } from "./rooms.js";
@@ -324,15 +325,6 @@ export function ResponseRequestStatus(sender, param = null) {
     else if (CheckPlayerDroneInfoExistAndIsDrone()) {
         SendActionText(GetStatusAndVoiceCmdString(), sender);
     }
-}
-export function ResponseBatteryCharge(param) {
-    var pdi = PlayerDroneInfo();
-    pdi.battery += param;
-    if (pdi.battery > pdi.batteryMax) {
-        pdi.battery = pdi.batteryMax;
-    }
-    RefreshBatteryTag();
-    RefreshPlayerEffect();
 }
 export function ResponseSetDisplayTalk(sender, param) {
     PlayerDroneInfo().disPlayTalk = param;
@@ -747,12 +739,6 @@ export async function JoinRoom(RoomName) {
 }
 
 export function GetMission(pdi, missionStr = null) {
-    // Deferred import to avoid a hard top-level cycle with rooms.js, which
-    // itself imports several command helpers.
-    var missionLists = [
-        ["StockRoomMission", "OrgasmMission", "SpankMission", "PetHeadMission", "ChargeMission"],
-        ["StockRoomMission", "OwnerSpankMission", "OwnerPetHeadMission"],
-    ];
     var index = -1;
     if (missionStr != null) {
         index = missionLists[pdi.isDrone ? 0 : 1].findIndex(missionStr);

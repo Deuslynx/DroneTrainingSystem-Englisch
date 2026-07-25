@@ -4,7 +4,7 @@
 // callbacks on window for userscript managers, and boots the whole thing.
 
 import { DTS_LOADER_FLAG, DTS_LEGACY_LOADER_FLAG } from "./constants.js";
-import { setTimeEventInterval, setInitComplete } from "./state.js";
+import { setInitComplete } from "./state.js";
 import { sleep, waitFor, ClearOldMessage, SendMessageToSelf } from "./utils.js";
 import {
     PlayerDroneInfo, RefreshBinds, RefreshPlayerEffect, RefreshBatteryTag,
@@ -55,7 +55,7 @@ function Init() {
             },
         },
     ]);
-    setTimeEventInterval(setInterval(() => {
+    setInterval(() => {
         try {
             if (ChatRoomData) {
                 TimeEvent();
@@ -64,7 +64,7 @@ function Init() {
         catch {
             // matches original: swallow errors from the per-second tick
         }
-    }, 1000));
+    }, 1000);
     PlayerDroneInfo();
     setInitComplete(true);
 }

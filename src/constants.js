@@ -63,13 +63,6 @@ export const bodyPartAssetGroups = [
     ["ItemBoots", "ItemFeet", "ItemLegs"],
 ];
 export const ArousalDisplayStrings = ["Orgasm limit", "Pleasure device"];
-export const vibeModeStrings = {
-    "-1": "Off",
-    "0": "Low",
-    "1": "Medium",
-    "2": "High",
-    "3": "Maximum",
-};
 
 export const missionLists = [
     ["StockRoomMission", "OrgasmMission", "SpankMission", "PetHeadMission", "ChargeMission"],

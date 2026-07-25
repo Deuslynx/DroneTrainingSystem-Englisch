@@ -4,9 +4,9 @@
 // refresh binds, punishment/vibe/orgasm, battery, and the upgrade catalog.
 
 import { 
-    script_version, DTS_SETTINGS_KEY, DTS_LEGACY_SETTINGS_KEYS, bodyPartStrings, 
-    bodyPartDisplayStrings, bindLevelStrings, bodyLevelStrings, typeStrings, 
-    typeDisplayStrings, ArousalDisplayStrings 
+    script_version, DTS_SETTINGS_KEY, DTS_LEGACY_SETTINGS_KEYS, bodyPartStrings,
+    bodyPartDisplayStrings, bindLevelStrings, bodyLevelStrings, levelStrings, typeStrings,
+    typeDisplayStrings, ArousalDisplayStrings
 } from "./constants.js";
 import { 
     sleep, DTSCloneSettings, SendMessageToSelf, SendActionText, styleButton, styleProgressBar 
@@ -1013,7 +1013,6 @@ export function SetStatusHint(info, type, part) {
     if (part == 3) {
         textType = 0;
     }
-    var levelStrings = [bindLevelStrings, bodyLevelStrings];
     for (var i = 0; i < 3; i++) {
         buttons.push(styleButton(levelStrings[textType][i], SetStatusSend, info, type, part, i));
     }

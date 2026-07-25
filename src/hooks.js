@@ -3,7 +3,10 @@
 // that reacts to core Bondage Club functions (CanWalk, IsMounted, blind
 ///deaf levels, chat message routing, voice commands, activity events...).
 
-import { script_version } from "./constants.js";
+import {
+    script_version, typeDisplayStrings, bodyPartDisplayStrings,
+    bindLevelStrings, bodyLevelStrings, ArousalDisplayStrings
+} from "./constants.js";
 import {
     charaterInstalledScript_isDrone, resetCharaterInstalledScript,
     showedEnterHelp, setShowedEnterHelp, isRefreshBinding
@@ -401,12 +404,7 @@ export function DoVoiceCommand(ChatRoomCharacter, msg) {
             break;
         // Set to
         case 4: {
-            var typeDisplayStringsLocal = ["Restraint", "Function"];
-            var bodyPartDisplayStringsLocal = ["Eyes", "Ears", "Mouth", "Body", "Hands", "Legs"];
-            var bindLevelStringsLocal = ["Off", "On", "Maximum"];
-            var bodyLevelStringsLocal = ["Available", "Restricted", "Offline"];
-            var ArousalDisplayStringsLocal = ["Orgasm limit", "Pleasure device"];
-            var params = findIndices(msg, typeDisplayStringsLocal, bodyPartDisplayStringsLocal, bindLevelStringsLocal, bodyLevelStringsLocal, ArousalDisplayStringsLocal);
+            var params = findIndices(msg, typeDisplayStrings, bodyPartDisplayStrings, bindLevelStrings, bodyLevelStrings, ArousalDisplayStrings);
             switch (params[0]) {
                 case 0: {
                     DoSetBodyOrBindStatus(0, params[1], params[2], ChatRoomCharacter);
