@@ -62,6 +62,7 @@
 `;
 	var bindLevelStrings = ["Off", "On", "Maximum"];
 	var bodyLevelStrings = ["Available", "Restricted", "Offline"];
+	var levelStrings = [bindLevelStrings, bodyLevelStrings];
 	var typeStrings = ["bindStatus", "bodyStatus"];
 	var typeDisplayStrings = ["Restraint", "Function"];
 	var bodyPartStrings = ["eyes", "ears", "mouth", "body", "hands", "legs"];
@@ -75,14 +76,14 @@
 		["ItemBoots", "ItemFeet", "ItemLegs"]
 	];
 	var ArousalDisplayStrings = ["Orgasm limit", "Pleasure device"];
+	var missionLists = [
+		["StockRoomMission", "OrgasmMission", "SpankMission", "PetHeadMission", "ChargeMission"],
+		["StockRoomMission", "OwnerSpankMission", "OwnerPetHeadMission"]
+	];
 // #endregion
 // #region state.js
 
 	// src/state.js
-	var timeEventInterval = -1;
-	function setTimeEventInterval(v) {
-		timeEventInterval = v;
-	}
 	var charaterInstalledScript_isDrone = /* @__PURE__ */ new Map();
 	function resetCharaterInstalledScript() {
 		charaterInstalledScript_isDrone = /* @__PURE__ */ new Map();
@@ -2027,7 +2028,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		},
 		BatteryCharge: {
 			Command: (sender2, param) => {
-				ResponseBatteryCharge2(param);
+				ResponseBatteryCharge(param);
 			}
 		},
 		AddArousal: {
@@ -2220,15 +2221,6 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		} else if (CheckPlayerDroneInfoExistAndIsDrone()) {
 			SendActionText(GetStatusAndVoiceCmdString(), sender2);
 		}
-	}
-	function ResponseBatteryCharge2(param) {
-		var pdi = PlayerDroneInfo();
-		pdi.battery += param;
-		if (pdi.battery > pdi.batteryMax) {
-			pdi.battery = pdi.batteryMax;
-		}
-		RefreshBatteryTag();
-		RefreshPlayerEffect();
 	}
 	function ResponseSetDisplayTalk(sender2, param) {
 		PlayerDroneInfo().disPlayTalk = param;
@@ -2625,10 +2617,6 @@ Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 		});
 	}
 	function GetMission(pdi, missionStr = null) {
-		var missionLists = [
-			["StockRoomMission", "OrgasmMission", "SpankMission", "PetHeadMission", "ChargeMission"],
-			["StockRoomMission", "OwnerSpankMission", "OwnerPetHeadMission"]
-		];
 		var index = -1;
 		if (missionStr != null) {
 			index = missionLists[pdi.isDrone ? 0 : 1].findIndex(missionStr);
@@ -3852,7 +3840,6 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 		if (part == 3) {
 			textType = 0;
 		}
-		var levelStrings = [bindLevelStrings, bodyLevelStrings];
 		for (var i = 0; i < 3; i++) {
 			buttons.push(styleButton(levelStrings[textType][i], SetStatusSend, info, type, part, i));
 		}
@@ -4187,12 +4174,7 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 			// Set to
 			case 4:
 				{
-					var typeDisplayStringsLocal = ["Restraint", "Function"];
-					var bodyPartDisplayStringsLocal = ["Eyes", "Ears", "Mouth", "Body", "Hands", "Legs"];
-					var bindLevelStringsLocal = ["Off", "On", "Maximum"];
-					var bodyLevelStringsLocal = ["Available", "Restricted", "Offline"];
-					var ArousalDisplayStringsLocal = ["Orgasm limit", "Pleasure device"];
-					var params = findIndices(msg, typeDisplayStringsLocal, bodyPartDisplayStringsLocal, bindLevelStringsLocal, bodyLevelStringsLocal, ArousalDisplayStringsLocal);
+					var params = findIndices(msg, typeDisplayStrings, bodyPartDisplayStrings, bindLevelStrings, bodyLevelStrings, ArousalDisplayStrings);
 					switch (params[0]) {
 						case 0:
 							{
@@ -4757,14 +4739,14 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 				}
 			}
 		]);
-		setTimeEventInterval(setInterval(() => {
+		setInterval(() => {
 			try {
 				if (ChatRoomData) {
 					TimeEvent();
 				}
 			} catch {
 			}
-		}, 1e3));
+		}, 1e3);
 		PlayerDroneInfo();
 		setInitComplete(true);
 	}
