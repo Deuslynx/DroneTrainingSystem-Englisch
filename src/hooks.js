@@ -16,7 +16,9 @@ import {
     PlayerDroneInfo, CheckPlayerDroneInfoExistAndIsDrone, DoPunishment, 
     DoOrgasm, DoSetBodyOrBindStatus, HintBatteryHelp 
 } from "./drone.js";
-import { MissionInfo, RequireActivityinfo, RequirePoseinfo, PlayerMovedFaci } from "./rooms.js";
+import { PlayerMovedFaci } from "./rooms.js";
+import { MissionInfo } from "./missions.js";
+import { RequireActivityinfo, RequirePoseinfo } from "./requirement_tracking.js";
 import { 
     MsgInfo, MsgCmds, ResponseRequestStatus, GetStatusAndVoiceCmdString, ResponseSetDisplayTalk, 
     ShowStatus, ShowActionButtons, ShowPlayerEnterHelp 

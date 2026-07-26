@@ -19,7 +19,8 @@ import {
     ResponseBatteryCharge
 } from "./drone.js";
 import { ItemInfo } from "./items.js";
-import { InitMapFaci, PrivateRoom, PrivateRoomCrate, MissionInfo, ShowAvailableModify, DoModifyByOwner } from "./rooms.js";
+import { InitMapFaci, PrivateRoom, PrivateRoomCrate, ShowAvailableModify, DoModifyByOwner } from "./rooms.js";
+import { MissionInfo } from "./missions.js";
 
 // v1.5 used the misspelled protocol field "recive". Send and accept both so
 // v1.5 and new clients can still discover each other in the same room.

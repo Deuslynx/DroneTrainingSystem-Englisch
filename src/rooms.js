@@ -1,8 +1,7 @@
 // ----- rooms.js -----
 // The training-facility map: room zone definitions and their Enter/Leave
 // handlers, the training/education mini-games, the upgrade ("Modify")
-// catalog, mission/activity/pose requirement tracking, and the top-level
-// PlayerMovedFaci/InitMapFaci orchestration.
+// catalog, and the top-level PlayerMovedFaci/InitMapFaci orchestration.
 
 import {
     sleep, waitFor, styleButton, styleProgressBar, SendMessageToSelf, ClearTagMessage, 
@@ -14,192 +13,12 @@ import {
 } from "./drone.js";
 import { ItemInfo, allItem } from "./items.js";
 import {
-    trainingProcess, setTrainingProcess, addTrainingProcess, isTraining, setIsTraining, 
+    trainingProcess, setTrainingProcess, addTrainingProcess, isTraining, setIsTraining,
     setIsEducationing, pverPos, setPverPos, initComplete
 } from "./state.js";
 import { TakeMission, SendDTSMsg, MsgInfo } from "./commands.js";
-
-// ----- Mission tracking -----
-export class MissionInfo {
-    constructor(name, text, reward) {
-        this.name = name;
-        this.text = text;
-        this.desc = "";
-        this.reward = reward;
-        this.id = Date.now() + Math.floor(Math.random() * 10000);
-        this.complete = null;
-    }
-
-    static ProgressAdd(name) {
-        var pdi = PlayerDroneInfo();
-        for (var mission of pdi.missions) {
-            if (mission.name == name) {
-                mission.progress += 1;
-                if (mission.progress >= mission.target) {
-                    MissionInfo.MissionComplete(mission);
-                }
-            }
-        }
-    }
-    static MissionComplete(mission, ...parmas) {
-        var pdi = PlayerDroneInfo();
-        SendMessageToSelf(`Mission: ${mission.text} complete, reward ${mission.reward} quota points`);
-        pdi.coin += mission.reward;
-        if (mission.complete != null) {
-            MissionInfo[mission.complete](mission, ...parmas);
-        }
-        pdi.missions = pdi.missions.filter(mi => mission.id != mi.id);
-    }
-    static StockRoomMission() {
-        var from = Math.floor(Math.random() * 60);
-        var to = Math.floor(Math.random() * 60);
-        var mission = new MissionInfo("StockRoom", "Transport cargo", 10);
-        mission.from = from;
-        mission.to = to;
-        mission.complete = "StockRoomMissionComplete";
-        mission.desc = `Transport the goods from ${String.fromCharCode(65 + Math.floor(from / 5))}${from % 5 + 1} to ${String.fromCharCode(65 + Math.floor(to / 5))}${to % 5 + 1}`;
-        return mission;
-    }
-    static StockRoomMissionComplete(mission) {
-        var pdi = PlayerDroneInfo();
-        pdi.items = pdi.items.filter(item => !(item.name == "StockRoom" && item.index == mission.from));
-    }
-    static OrgasmMission() {
-        var mission = new MissionInfo("OrgasmResist", "Orgasm resistance mission", 10);
-        mission.target = 3;
-        mission.progress = 0;
-        mission.desc = `Resist orgasm three times`;
-        return mission;
-    }
-    static SpankMission() {
-        var mission = new MissionInfo("Spank", "Receive-spanking mission", 10);
-        mission.target = 3;
-        mission.progress = 0;
-        mission.desc = `Be spanked by an Operator or Visitor three times`;
-        return mission;
-    }
-    static OwnerSpankMission() {
-        var mission = new MissionInfo("OwnerSpank", "Spanking mission", 10);
-        mission.target = 3;
-        mission.progress = 0;
-        mission.desc = `Spank a Drone three times`;
-        return mission;
-    }
-    static PetHeadMission() {
-        var mission = new MissionInfo("PetHead", "Receive-head-pat mission", 10);
-        mission.target = 3;
-        mission.progress = 0;
-        mission.desc = `Be patted on the head by an Operator or Visitor three times`;
-        return mission;
-    }
-    static OwnerPetHeadMission() {
-        var mission = new MissionInfo("OwnerPetHead", "Head-pat mission", 10);
-        mission.target = 3;
-        mission.progress = 0;
-        mission.desc = `Pat a Drone's head three times`;
-        return mission;
-    }
-    static ChargeMission() {
-        var mission = new MissionInfo("Charge", "Charging-station mission", 10);
-        mission.target = 1;
-        mission.progress = 0;
-        mission.desc = `Use a charging station once`;
-        return mission;
-    }
-    static TrainMission() {
-    }
-    static Education() {
-    }
-}
-
-// ----- Activity/pose requirement tracking (used by training) -----
-export class RequireActivityinfo {
-    constructor(FocusGroupNames, ActivityNames, param, timeLimit, count, calltrainingProcess) {
-        this.FocusGroupNames = FocusGroupNames;
-        this.ActivityNames = ActivityNames;
-        this.param = param;
-        this.timeLimitUntil = Date.now() + timeLimit;
-        this.target = count;
-        this.progress = 0;
-        this.completed = false;
-        this.calltrainingProcess = calltrainingProcess;
-    }
-    static RequireActivity = [];
-    static CheckAllActivityComplete(SourceCharacter, TargetCharacter, param, FocusGroupName, ActivityName) {
-        for (var info of RequireActivityinfo.RequireActivity) {
-            if (info.complete == true) continue;
-            if (param != info.param) continue;
-            if (info.FocusGroupNames.length > 0 && info.FocusGroupNames.findIndex((i) => { return i == FocusGroupName; }) == -1) continue;
-            if (info.ActivityNames.length > 0 && info.ActivityNames.findIndex((i) => { return i == ActivityName; }) == -1) continue;
-            info.progress++;
-            if (info.progress >= info.target) {
-                info.completed = true;
-                if (info.calltrainingProcess) {
-                    addTrainingProcess(1);
-                    info.calltrainingProcess = false;
-                }
-            }
-        }
-        RequireActivityinfo.ClearAllPoseCompleted();
-    }
-    static CheckAllActivityIncomplete() {
-        for (var info of RequireActivityinfo.RequireActivity) {
-            if (Date.now() > info.timeLimitUntil && info.progress < info.target) {
-                SendMessageToSelf("Action not completed within the time limit - executing punishment");
-                DoPunishment(2, 3);
-                info.completed = true;
-            }
-        }
-        RequireActivityinfo.ClearAllPoseCompleted();
-    }
-    static ClearAllPoseCompleted() {
-        RequireActivityinfo.RequireActivity = RequireActivityinfo.RequireActivity.filter((i) => { return (i.completed == false); });
-    }
-
-    static RequireDroneActivity(FocusGroupNameArray, ActivityNameArray, param, timeLimit, count, calltrainingProcess = false) {
-        RequireActivityinfo.RequireActivity.push(new RequireActivityinfo(FocusGroupNameArray, ActivityNameArray, param, timeLimit, count, calltrainingProcess));
-    }
-}
-export class RequirePoseinfo {
-    constructor(poseNameArray, timeLimit, calltrainingProcess) {
-        this.poseNameArray = poseNameArray;
-        this.timeLimitUntil = Date.now() + timeLimit;
-        this.completed = false;
-        this.calltrainingProcess = calltrainingProcess;
-    }
-    static RequirePose = [];
-    static RequireDronePose(poseNameArray, timeLimit, calltrainingProcess = false) {
-        RequirePoseinfo.RequirePose.push(new RequirePoseinfo(poseNameArray, timeLimit, calltrainingProcess));
-    }
-
-    static CheckPose() {
-        for (var reqPose of RequirePoseinfo.RequirePose) {
-            if (reqPose.complete == true) continue;
-            var isPose = false;
-            for (var pose of reqPose.poseNameArray) {
-                if (Player.Pose.findIndex((i) => { return i == pose; }) != -1) {
-                    isPose = true;
-                    break;
-                }
-            }
-            if (isPose) {
-                reqPose.completed = true;
-                if (reqPose.calltrainingProcess) {
-                    addTrainingProcess(1);
-                }
-            }
-            else if (Date.now() > reqPose.timeLimitUntil) {
-                SendMessageToSelf("Action not completed within the time limit - executing punishment");
-                DoPunishment(2, 3);
-                reqPose.completed = true;
-            }
-        }
-        RequirePoseinfo.ClearAllPoseCompleted();
-    }
-    static ClearAllPoseCompleted() {
-        RequirePoseinfo.RequirePose = RequirePoseinfo.RequirePose.filter((i) => { return (i.completed == false); });
-    }
-}
+import { MissionInfo } from "./missions.js";
+import { RequireActivityinfo, RequirePoseinfo } from "./requirement_tracking.js";
 
 /* Areas:
 Entrance (South),

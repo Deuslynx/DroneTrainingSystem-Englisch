@@ -18,13 +18,14 @@ import {
 } from "./hooks.js";
 import { CommandInfo, MsgInfo, SendDTSMsg, DTSHeartBeatPayload } from "./commands.js";
 import {
-    RequireActivityinfo, RequirePoseinfo, CheckSleepUntil, ExpendInit, StockRoomEnter, StockRoomLeave, 
-    ElevatorEnter, ElevatorLeave, SleepEnterZoneEnter, SleepEnterZoneLeave, ModifyRoomEnter, 
+    CheckSleepUntil, ExpendInit, StockRoomEnter, StockRoomLeave,
+    ElevatorEnter, ElevatorLeave, SleepEnterZoneEnter, SleepEnterZoneLeave, ModifyRoomEnter,
     ModifyRoomLeave, ModifyTileEnter, ShopRoomEnter, ShopRoomLeave, ShopInnerRoomEnter, ShopInnerRoomLeave,
     WorkRoomEnter, WorkRoomLeave, WorkInnerRoomEnter, OperRoomEnter, OperRoomLeave, CatEnter,
     PrivateRoomEnter, PrivateRoomLeave, TrainingRoomEnter, TrainingRoomLeave,
     EducationRoomEnter, EducationRoomLeave, ChargeRoomEnter, ChargeRoomLeave
 } from "./rooms.js";
+import { RequireActivityinfo, RequirePoseinfo } from "./requirement_tracking.js";
 
 function Init() {
     InstallHook("ChatRoomMessage", null, null, ChatRoomMessageReceived);
