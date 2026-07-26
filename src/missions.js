@@ -4,6 +4,11 @@
 import { PlayerDroneInfo } from "./drone.js";
 import { SendMessageToSelf } from "./utils.js";
 
+export const missionLists = [
+    ["StockRoomMission", "OrgasmMission", "SpankMission", "PetHeadMission", "ChargeMission", "TrainMission", "EducationMission"],
+    ["StockRoomMission", "OwnerSpankMission", "OwnerPetHeadMission"],
+];
+
 export class MissionInfo {
     constructor(name, text, reward) {
         this.name = name;
@@ -91,7 +96,17 @@ export class MissionInfo {
         return mission;
     }
     static TrainMission() {
+        var mission = new MissionInfo("Train", "Training mission", 15);
+        mission.target = 1;
+        mission.progress = 0;
+        mission.desc = `Complete one training course`;
+        return mission;
     }
-    static Education() {
+    static EducationMission() {
+        var mission = new MissionInfo("Educate", "Education mission", 15);
+        mission.target = 1;
+        mission.progress = 0;
+        mission.desc = `Complete one education course`;
+        return mission;
     }
 }

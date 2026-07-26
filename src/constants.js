@@ -63,8 +63,3 @@ export const bodyPartAssetGroups = [
     ["ItemBoots", "ItemFeet", "ItemLegs"],
 ];
 export const ArousalDisplayStrings = ["Orgasm limit", "Pleasure device"];
-
-export const missionLists = [
-    ["StockRoomMission", "OrgasmMission", "SpankMission", "PetHeadMission", "ChargeMission"],
-    ["StockRoomMission", "OwnerSpankMission", "OwnerPetHeadMission"],
-];

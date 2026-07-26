@@ -871,6 +871,7 @@ var trainingMenu = [
         SendMessageToSelf("Training 3 complete. Basic training fully complete!", "TrainingRoom");
         await sleep(waitTime);
         SendMessageToSelf("In real use, no progress bar is shown when a command is received. Follow the command on your own or receive a punishment.", "TrainingRoom");
+        MissionInfo.ProgressAdd("Train");
         pdi.modifys["training1"] = true;
     },
     async () => {
@@ -939,6 +940,7 @@ var trainingMenu = [
             return;
         }
         SendMessageToSelf("Training 2 complete. Advanced training fully complete!", "TrainingRoom");
+        MissionInfo.ProgressAdd("Train");
         pdi.modifys["training2"] = true;
     },
 ];
@@ -1076,6 +1078,7 @@ var educationMenu = [
         if (pdi.battery < pdi.batteryMax / 2) {
             pdi.battery = pdi.batteryMax / 2;
         }
+        MissionInfo.ProgressAdd("Educate");
         pdi.modifys["education1"] = true;
     },
     async () => {
@@ -1136,6 +1139,7 @@ var educationMenu = [
         if (pdi.battery < pdi.batteryMax / 2) {
             pdi.battery = pdi.batteryMax / 2;
         }
+        MissionInfo.ProgressAdd("Educate");
         pdi.modifys["education2"] = true;
     },
 ];

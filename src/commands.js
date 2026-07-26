@@ -5,7 +5,7 @@
 
 import {
     bindLevelStrings, bodyLevelStrings, bodyPartStrings, bodyPartDisplayStrings,
-    typeDisplayStrings, ArousalDisplayStrings, changeLog, missionLists
+    typeDisplayStrings, ArousalDisplayStrings, changeLog
 } from "./constants.js";
 import { charaterInstalledScript_isDrone, setPverPos, showedEnterHelp, setShowedEnterHelp, showChangeLog } from "./state.js";
 import {
@@ -20,7 +20,7 @@ import {
 } from "./drone.js";
 import { ItemInfo } from "./items.js";
 import { InitMapFaci, PrivateRoom, PrivateRoomCrate, ShowAvailableModify, DoModifyByOwner } from "./rooms.js";
-import { MissionInfo } from "./missions.js";
+import { MissionInfo, missionLists } from "./missions.js";
 
 // v1.5 used the misspelled protocol field "recive". Send and accept both so
 // v1.5 and new clients can still discover each other in the same room.
