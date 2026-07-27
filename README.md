@@ -28,8 +28,7 @@ If everything is working properly you should be able to see black areas with gre
 If you just want to have a look around the facility for now, then register as an Operator (you can deregister later). Becoming a Drone is meant to be a permanent decision (even though there are ways around that).
 
 > **Info**<br>
-> If something isn't working the next time, please visit here again... something may have changed since the project is still in development.<br>
-> If you use 
+> If something isn't working the next time, please visit here again... something may have changed since the project is still in development.
 
 ## Current Features
 - Elevator (map entrance or south side of the facility):  Accessible after registering as either a drone or an operator.

@@ -1,4 +1,5 @@
 Extensions:
+- Drone Paths for Upgrades (choosing to become a Maid Drone, Pet Drone, etc...)
 - drone cleaning work mission
 - add option to remove mission (for quota x points)
 - operator -> drone charging mission
@@ -10,3 +11,6 @@ Fixes/Adjustments:
 - remove Drone messages and training for Operators
 - fix OOC messages when display monitor is ON
 - adjust drone suit for male characters
+
+Possible Bugs:
+- Drone audio: Turn Drone audio off -> Turn on -> Drone cant read any ** even though *'DroneName'*
