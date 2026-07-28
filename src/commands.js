@@ -27,7 +27,7 @@ import { MissionInfo, missionLists } from "./missions.js";
 export function DTSHeartBeatPayload(requestResponse, isDrone) {
     return {
         receive: requestResponse,
-        recive: requestResponse,
+        recive: requestResponse,    // compatibility with zanucds version
         isDrone: isDrone
     };
 }
@@ -110,6 +110,20 @@ export const MsgCmds = {
             }
         }
     },
+    // compatibility with zanucds version
+    RecivedStatus: {
+        Command: (sender, param) => {
+            ShowStatus(param);
+        }
+    },
+    // compatibility with zanucds version
+    RecivedStatusModify: {
+        Command: (sender, param) => {
+            if (ShowAvailableModify != undefined) {
+                ShowAvailableModify(param);
+            }
+        }
+    },
     DoModifyByOwner: {
         Command: (sender, param) => {
             if (DoModifyByOwner != undefined) {
@@ -186,7 +200,7 @@ const CommandsAction = {
             if (isNaN(mn) == false) {
                 var char = ChatRoomCharacter.find(c => c.MemberNumber === mn);
                 if (char) {
-                    DoFindTatget(char);
+                    DoFindTarget(char);
                 }
                 else {
                     SendMessageToSelf("Target not found!");
@@ -203,7 +217,7 @@ const CommandsAction = {
             if (isNaN(mn) == false) {
                 var char = ChatRoomCharacter.find(c => c.MemberNumber === mn);
                 if (char) {
-                    DoFindTatget(char, "ReceivedStatusModify");
+                    DoFindTarget(char, "ReceivedStatusModify");
                 }
                 else {
                     SendMessageToSelf("Target not found!");
@@ -298,10 +312,20 @@ export class MsgInfo {
         this.type = type;
         this.param = param;
     }
-    static DoCmd(sender, msgInfo) {
-        MsgCmds[msgInfo.type].Command(sender, msgInfo.param);
+    static DoCmd(sender2, msgInfo) {
+        if (!(msgInfo.type in MsgCmds)) {
+            console.warn(`Received unknown command for MsgCmds: ${msgInfo.type}`);
+            SendMessageToSelf(`Received unknown command: ${msgInfo.type}`);
+            return;
+        }
+        MsgCmds[msgInfo.type].Command(sender2, msgInfo.param);
     }
     static DoBeepCmd(MemberNumber, msgInfo, options) {
+        if (!(msgInfo.type in BeepCmds)) {
+            console.warn(`Received unknown command for BeepCmds: ${msgInfo.type}`);
+            SendMessageToSelf(`Received unknown command: ${msgInfo.type}`);
+            return;
+        }
         BeepCmds[msgInfo.type].Command(MemberNumber, msgInfo.param, options);
     }
 }
@@ -311,6 +335,11 @@ export class CommandInfo {
         this.commandText = commandText;
     }
     static DoCmd(commandInfo) {
+        if (!(commandInfo.command in CommandsAction)) {
+            console.warn(`Received unknown command for CommandsAction: ${commandInfo.command}`);
+            SendMessageToSelf(`Received unknown command: ${commandInfo.command}`);
+            return;
+        }
         CommandsAction[commandInfo.command].Command(commandInfo.commandText);
     }
 }
@@ -557,23 +586,23 @@ function ShowStringsToOther(index, info) {
     switch (index) {
         case 0: // Drone to Drone
             return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Send mission help request:${styleButton("Run", SendMissionHelp, info)}
 Share battery:${styleButton("Run", DoBatteryHelp, info, 0)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
         case 1: // Drone to its own Operator
             return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Send mission help request:${styleButton("Run", SendMissionHelp, info)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
         case 2: // Drones relative to non-operators or visitors
             return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Send mission help request:${styleButton("Run", SendMissionHelp, info)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
         case 3: // Operator to Drone
             return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Show voice commands:${styleButton("Run", ShowVoiceCommand, info)}
 Shock punishment:${styleButton("Run", ReqDoPunishment, info)}
 Orgasm reward:${styleButton("Run", ReqDoOrgasm, info)}
@@ -587,7 +616,7 @@ Discard this Drone:${styleButton("Run", () => { SendMessageToSelf("In developmen
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
         case 4: // Tourists' views on drones
             return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Show voice commands:${styleButton("Run", ShowVoiceCommand, info)}
 Shock punishment:${styleButton("Run", ReqDoPunishment, info)}
 Orgasm reward:${styleButton("Run", ReqDoOrgasm, info)}
@@ -597,7 +626,7 @@ Set display screen:${styleButton("Run", SetDisplayTalk, info)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
         case 5: // Operator or Visitor to Operator or Visitor
             return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
         default:
             return "";
@@ -654,7 +683,7 @@ function FindPlayerHint() {
     input.value = '/DTS findtarget []';
     SendMessageToSelf("Enter the target ID inside the brackets and send the command or touch the target collar (including yourself)");
 }
-function DoFindTatget(target, param = null) {
+function DoFindTarget(target, param = null) {
     SendDTSMsg(target, new MsgInfo("RequestStatus", param));
 }
 
