@@ -76,10 +76,6 @@
 		["ItemBoots", "ItemFeet", "ItemLegs"]
 	];
 	var ArousalDisplayStrings = ["Orgasm limit", "Pleasure device"];
-	var missionLists = [
-		["StockRoomMission", "OrgasmMission", "SpankMission", "PetHeadMission", "ChargeMission"],
-		["StockRoomMission", "OwnerSpankMission", "OwnerPetHeadMission"]
-	];
 // #endregion
 // #region state.js
 
@@ -128,9 +124,13 @@
 		pverPos = v;
 	}
 // #endregion
-// #region rooms.js
+// #region missions.js
 
-	// src/rooms.js
+	// src/missions.js
+	var missionLists = [
+		["StockRoomMission", "OrgasmMission", "SpankMission", "PetHeadMission", "ChargeMission", "TrainMission", "EducationMission"],
+		["StockRoomMission", "OwnerSpankMission", "OwnerPetHeadMission"]
+	];
 	var MissionInfo = class _MissionInfo {
 		constructor(name, text, reward) {
 			this.name = name;
@@ -217,10 +217,24 @@
 			return mission;
 		}
 		static TrainMission() {
+			var mission = new _MissionInfo("Train", "Training mission", 15);
+			mission.target = 1;
+			mission.progress = 0;
+			mission.desc = `Complete one training course`;
+			return mission;
 		}
-		static Education() {
+		static EducationMission() {
+			var mission = new _MissionInfo("Educate", "Education mission", 15);
+			mission.target = 1;
+			mission.progress = 0;
+			mission.desc = `Complete one education course`;
+			return mission;
 		}
 	};
+// #endregion
+// #region requirement_tracking.js
+
+	// src/requirement_tracking.js
 	var _RequireActivityinfo = class _RequireActivityinfo {
 		constructor(FocusGroupNames, ActivityNames, param, timeLimit, count, calltrainingProcess) {
 			this.FocusGroupNames = FocusGroupNames;
@@ -317,6 +331,10 @@
 	};
 	__publicField(_RequirePoseinfo, "RequirePose", []);
 	var RequirePoseinfo = _RequirePoseinfo;
+// #endregion
+// #region rooms.js
+
+	// src/rooms.js
 	var StockRoom = {
 		Areas: [
 			{ leftUp: { X: 0, Y: 2 }, rightDown: { X: 4, Y: 6 } },
@@ -1132,7 +1150,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			SendMessageToSelf(`Entered training room. Stand on the black tile and ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
 		} else {
 			SendMessageToSelf(`In this room Drones receive their training. Training enforces certain behaviors when completed.`, "TrainingRoom");
-			SendMessageToSelf(`Non-Drones may only experience the basic training as a trial: ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
+			SendMessageToSelf(`Non-Drones may only experience the basic training as a trial. Stand on the black Tile and ${styleButton("Start training", StartTraining, nowInZone)}`, "TrainingRoom");
 		}
 	}
 	function TrainingRoomLeave(pverInZone) {
@@ -1213,6 +1231,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			SendMessageToSelf("Training 3 complete. Basic training fully complete!", "TrainingRoom");
 			await sleep(waitTime);
 			SendMessageToSelf("In real use, no progress bar is shown when a command is received. Follow the command on your own or receive a punishment.", "TrainingRoom");
+			MissionInfo.ProgressAdd("Train");
 			pdi.modifys["training1"] = true;
 		},
 		async () => {
@@ -1281,6 +1300,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 				return;
 			}
 			SendMessageToSelf("Training 2 complete. Advanced training fully complete!", "TrainingRoom");
+			MissionInfo.ProgressAdd("Train");
 			pdi.modifys["training2"] = true;
 		}
 	];
@@ -1415,6 +1435,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			if (pdi.battery < pdi.batteryMax / 2) {
 				pdi.battery = pdi.batteryMax / 2;
 			}
+			MissionInfo.ProgressAdd("Educate");
 			pdi.modifys["education1"] = true;
 		},
 		async () => {
@@ -1475,6 +1496,7 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			if (pdi.battery < pdi.batteryMax / 2) {
 				pdi.battery = pdi.batteryMax / 2;
 			}
+			MissionInfo.ProgressAdd("Educate");
 			pdi.modifys["education2"] = true;
 		}
 	];
@@ -1600,17 +1622,19 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 	];
 	var map = {
 		"Type": "Always",
-		"Tiles": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҲҲҲҴҴҲҲҲҴҴҴҴҴҴҴ¬yyyyyҴҴҴҳҳҳҴҴҴyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴҳ«««ҳҴтyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ҴКyyyyтyyyҴҴҴҴҴҴҴҴҴҴтyyyyyyyyyyyyҴҴ«««««ҴҴyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ÇÇyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴҳ«««ҴҴтyyyyтyyyyyyyyyyyyyтyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҳ«ҳ«¬«yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy«¬«ҲҲҴҴҴҲҲҴyyyҴААААҴААААҴААААААҴyyyҴҳҳҳҴҳҳҳªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«««Ҵ«««ªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«¬«Ҵ«¬«¬¬¬¬¬¬¬ҴyyyҴҴҴҴyyyҴ«««Ҵ«««ҲҲҴ¬ҴҴҴҴyyyҴҴҴҴyyyҴҴҴҴҴҴҴҴªªҴ¬¬¬¬ҴyyyҴҴҴҴyyyҴyyyyyyyªªҴ¬¬¬¬ҴyyyҴҴҴЮЮЮЮЮҴҴҴҴҴҳҳҳҳҴyyyҴyyyyyyy¬¬¬¬¬¬¬ÇyyyҴxЮ¬¬¬Юxxxҳ«««ҴyyyÇyyyyyyyҲҲҴ¬ҴҲҲҴyyyҴxЮЮxxxҳ««ҳҳҴyyyҴҳ¬ҳ¬ҳ¬ҳªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴҳҴҳҴҳҴªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴ«Ҵ«Ҵ«Ҵ¬¬¬¬¬¬¬ҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴ«Ҵ«Ҵ«ҴҴҴҴҴҴҴҴҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyҴxxxxxxxxxxxҳ«««Ҵyyyyyyyyҳ«ҳ«¬«yyyyyyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyyyyyy«¬«ҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳҳҳҳҴyyyyyyyyyyyyҴ«¬«yyyyyyy«¬«yyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyÇ«««ҴyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴЮЮЮЮЮҴҴҴҴҴҴҴҴҴҴyҴҴҴҴҴҴҳҳҳҳҳҳææëëëðëëëææҴxxxxxҴҲҲҲҲҳҳҳҳҴҴҴҴҲҲҲҴ««««««ææëëëðëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҴªªªҴ««««««ææëëëëëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҲªªªҴ««««««ææëëëðëëëææÇxxxxxÇªªªҲ«««ҳ¬¬¬ÇªªªҴ««««««ææëëëðëëëææҴxxxxxҴҲҲҲҳҳҳҳҳҳҳҳҴҲҲҲҴ««««««ææëëëëëëëææҴЮЮЮЮЮҴyyұ«ҳ«ҳ«ҳ«ҳyyyyҴ««««««",
-		"Objects": "ҴӄӃҶұҳҹddddddddddddddddddddddddddddddddddddddddddddddddddd೥ddddddd೦೧ddd೦೧dddddddƂƂƂƂƂұdddddddddшшшddŀddddшddddшdddҴƂƂƂƂƂdddddddddddddddddddddиddddddddddddddddddƂƂƂƂƂҲdddddddddžſddddƀƁddd೥ྴddd೥ྴdҵƂƂƂƂƂddddddddddшddྴྴdddddddddddddddddddddddddƂƂƂƂƂҳddddddddddddddddddddddddddddҶƂƂƂƂƂdddddddddddddddŀdddddddddddddddddddddddddddddྴdddddddddddྴdddྴddddddddddddྴddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd೦೧ddd೦೧dddddd௪ddddd௪ddddd௪dddddddd೥ddd೥džſdddžſdddddшżdddddżшdшd࠲żdddddddиdшdиdшddddddddddddddːːdːːdddddddːːdddddddddddddddddddddddddddϼdϼdddddddddϼdddddddddddd೦೧ddd೥ddddddࠖࠖdddddࠖࠖdࠖࠖdd˚˚ddddddྴdddྴdžſdddddddddddddŀdŀdddddddddŀdddddddddddddddddddྴddddྶdddddddྶdྶdddddddddྴdddddddddddddddddddїdтdтdтdјdљdіќdddddddddddddd೦೧ddd೦೧dddddddࠖࠖࠖࠖࠖdddddddddddddddddddddžſdddžſddddddшdddddŀddddїјddddddddྴdྴdྴddddddddddddddddˤˤˤdżdddddddddddddddddddddddddddddddddddˆˆˆddddddїўddddddddшdшdшdddddddddddddddddddddddddddddddddddddddddddddddddddddddƂƂddddd̪ddddјњddddddddddddddddddddddddddžſdddddddddddddddddddddddddddddddྴdddddddddddddddྶྐྵdྸdddddddddྴdddddƂƂƂƂƂҷddddddddddddddddddddddddddddҺƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddƂƂƂƂƂҸddddddddddddddddddddddddddddһƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddƂƂƂƂƂҹdddddddddddddddddddddddྸddddҼƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddೋdddddddddೋdddddddddddddddddddddddddddddnsdddddddddddиdddddddddddddྴddddddшшшшшшddddddddddddƀƁddddddddddddddddddddшшшшшшdddddddddddྴdddddྷdddddddddddྐྵddddшшшшшшddddddddddddddddddddddddddddddddddшшшшшшdddddddddddd࠲d࠲d࠲dddddddddddddddddшшшшшшddddddddddddddddddddddddddddddddddшшшшшш"
+		"Tiles": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҲҲҲҴҴҲҲҲҴҴҴҴҴҴҴ¬yyyyyҴҴҴҳҳҳҴҴҴyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴҳ«««ҳҴтyyyyтyyyҴҴªªªҴҴªªªтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ҴКyyyyтyyyҴҴҴҴҴҴҴҴҴҴтyyyyyyyyyyyyҴҴ«««««ҴҴyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴ«ҳ«ҳ«ÇÇyyyyтyyyyyyyyyyyyyтyyyyyyyyyyyyҴҴҳ«««ҴҴтyyyyтyyyyyyyyyyyyyтyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyҳ«ҳ«¬«yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy«¬«ҲҲҴҴҴҲҲҴyyyҴААААҴААААҴААААААҴyyyҴҳҳҳҴҳҳҳªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«««Ҵ«««ªªҴҴҴªªҴyyyҴҴҴҴyyyҴ«¬«Ҵ«¬«¬¬¬¬¬¬¬ҴyyyҴҴҴҴyyyҴ«««Ҵ«««ҲҲҴ¬ҴҴҴҴyyyҴҴҴҴyyyҴҴҴҴҴҴҴҴªªҴ¬¬¬¬ҴyyyҴҴҴҴyyyҴyyyyyyyªªҴ¬¬¬¬ҴyyyҴҴҴЮЮЮЮЮҴҴҴҴҴҳҳҳҳҴyyyҴyyyyyyy¬¬¬¬¬¬¬ÇyyyҴxЮ¬¬¬Юxxxҳ«««ҴyyyÇyyyyyyyҲҲҴ¬ҴҲҲҴyyyҴxЮЮxxxҳ««ҳҳҴyyyҴҳ¬ҳ¬ҳ¬ҳªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴҳҴҳҴҳҴªªҴ¬ҴªªҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴ«Ҵ«Ҵ«Ҵ¬¬¬¬¬¬¬ҴyyyҴxxxxxxxxxxxҳ«««ҴyyyҴҴ«Ҵ«Ҵ«ҴҴҴҴҴҴҴҴҴyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyҴҴҴҴҴҴҴҴҳ«ҳyyyyyyyyҴxxxxxxxxxxxҳ«««Ҵyyyyyyyyҳ«ҳ«¬«yyyyyyyyҴxxxxxxxxxxxҳ««ҳҳҴyyyyyyyy«¬«ҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴҴyyyyҴҴҴҴҴҴҴyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyyyyyҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳҳҳҳҴyyyyyyyyyyyyҴ«¬«yyyyyyy«¬«yyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴҳ«ҳyyyyyyyҳ«ҳyyyyyyyyyҳ«««ҴyyyyyyyyyyyyҴyyyyyyyyyyyyyyyyyyyyyyÇ«««ҴyyyyyyҴҴҴҴҴҴҴҴҴҴҴҴЮЮЮЮЮҴҴҴҴҴҴҴҴҴҴyҴҴҴҴҴҴҳҳҳҳҳҳææëëëðëëëææҴxxxxxҴҲҲҲҲҳҳҳҳҴҴҴҴҲҲҲҴ««««««ææëëëðëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҴªªªҴ««««««ææëëëëëëëææҴxxxxxҴªªªҲ«««ҳ¬¬¬ҲªªªҴ««««««ææëëëðëëëææÇxxxxxÇªªªҲ«««ҳ¬¬¬ÇªªªҴ««««««ææëëëðëëëææҴxxxxxҴҲҲҲҳҳҳҳҳҳҳҳҴҲҲҲҴ««««««ææëëëëëëëææҴЮЮЮЮЮҴyyұ«ҳ«ҳ«ҳ«ҳyyyyҴ««««««",
+		"Objects": "ҴӄӃҶұҳҹddddddddddddddddddddddddddddddddddddddddddddddddddd೥ddddddd೦೧ddd೦೧dddddddƂƂƂƂƂұdddddddddшшшddŀddddшddddшdddҴƂƂƂƂƂdddddddddddddddddddddиddddddddddddddddddƂƂƂƂƂҲdddddddddžſddddƀƁddd೥ྴddd೥ྴdҵƂƂƂƂƂddddddddddшddྴྴdddddddddddddddddddddddddƂƂƂƂƂҳddddddddddddddddddddddddddddҶƂƂƂƂƂdddddddddddddddŀdddddddddddddddddddddddddddddྴdddddddddddྴdddྴddddddddddddྴddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd೦೧ddd೦೧dddddd௪ddddd௪ddddd௪dddddddd೥ddd೥džſdddžſdddddшżdddddżшdшd࠲żdddddddиdшdиdшddddddddddddddːːdːːdddddddːːdddddddddddddddddddddddddddϼdϼdddddddddϼdddddddddddd೦೧ddd೥ddddddࠖࠖdddddࠖࠖdࠖࠖdd˚˚ddddddྴdddྴdžſdddddddddddddŀdŀdddddddddŀdddddddddddddddddddྴddddྶdddddddྶdྶdddddddddྴdddddddddddddddddddїdтdтdтdјdљdіќdddddddddddddd೦೧ddd೦೧dddddddࠖࠖࠖࠖࠖdddddddddddddddddddddžſdddžſddddddшdddddŀddddїјddddddddྴdྴdྴddddddddddddddddˤˤˤdżdddddddddddddddddddddddddddddddddddˆˆˆddddddїўddddddddшdшdшdddddddddddddddddddddddddddddddddddddddddddddddddddddƂƂddddd̪ddddјњddddddddddddddddddddddddddžſdddddddddddddddddddddddddddddddྴdddddddddddddddྶྐྵdྸdddddddddྴdddddƂƂƂƂƂҷddddddddddddddddddddddddddddҺƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddƂƂƂƂƂҸddddddddddddddddddddddddddddһƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddƂƂƂƂƂҹdddddddddddddddddddddddྸddddҼƂƂƂƂƂddddddddddddddddddddddddddddddddddddddddೋdddddddddೋdddddddddddddddddddddddddddddnsdddddddddddиdddddddddddddྴddddddшшшшшшddddddddddddƀƁddddddddddddddddddddшшшшшшdddddddddddྴdddddྷdddddddddddྐྵddddшшшшшшddddddddddddddddddddddddddddddddddшшшшшшdddddddddddd࠲d࠲d࠲dddddddddddddddddшшшшшшddddddddddddddddddddddddddddddddddшшшшшш"
 	};
 	async function ExpendInit() {
 		await waitFor(() => initComplete == true);
 	}
 	async function InitMapFaci() {
 		ChatRoomData.Name = "DroneFacility 2.0";
-		ChatRoomData.desc = `In development... testing and gathering ideas for the mod.
-All info on github: tinyurl.com/DroneTrainingSystem
-If something isn't clear just ask RoomTester or someone who has the mod already~`;
+		ChatRoomData.desc = `Addon needed - All info on github: 
+tinyurl.com/DroneTrainingSystem
+
+In development... testing and gathering ideas for the mod~
+If something isn't clear just ask RoomTester/Miss Lynx or someone who has the mod already`;
 		ChatRoomData.Limit = 20;
 		ChatRoomData.Access = ["All"];
 		ChatRoomData.Visibility = ["All"];
@@ -1957,6 +1981,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 		return {
 			receive: requestResponse,
 			recive: requestResponse,
+			// compatibility with zanucds version
 			isDrone
 		};
 	}
@@ -2030,6 +2055,20 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 			}
 		},
 		ReceivedStatusModify: {
+			Command: (sender2, param) => {
+				if (ShowAvailableModify != void 0) {
+					ShowAvailableModify(param);
+				}
+			}
+		},
+		// compatibility with zanucds version
+		RecivedStatus: {
+			Command: (sender2, param) => {
+				ShowStatus(param);
+			}
+		},
+		// compatibility with zanucds version
+		RecivedStatusModify: {
 			Command: (sender2, param) => {
 				if (ShowAvailableModify != void 0) {
 					ShowAvailableModify(param);
@@ -2111,7 +2150,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 				if (isNaN(mn) == false) {
 					var char = ChatRoomCharacter.find((c) => c.MemberNumber === mn);
 					if (char) {
-						DoFindTatget(char);
+						DoFindTarget(char);
 					} else {
 						SendMessageToSelf("Target not found!");
 					}
@@ -2126,7 +2165,7 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 				if (isNaN(mn) == false) {
 					var char = ChatRoomCharacter.find((c) => c.MemberNumber === mn);
 					if (char) {
-						DoFindTatget(char, "ReceivedStatusModify");
+						DoFindTarget(char, "ReceivedStatusModify");
 					} else {
 						SendMessageToSelf("Target not found!");
 					}
@@ -2213,9 +2252,19 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 			this.param = param;
 		}
 		static DoCmd(sender2, msgInfo) {
+			if (!(msgInfo.type in MsgCmds)) {
+				console.warn(`Received unknown command for MsgCmds: ${msgInfo.type}`);
+				SendMessageToSelf(`Received unknown command: ${msgInfo.type}`);
+				return;
+			}
 			MsgCmds[msgInfo.type].Command(sender2, msgInfo.param);
 		}
 		static DoBeepCmd(MemberNumber, msgInfo, options) {
+			if (!(msgInfo.type in BeepCmds)) {
+				console.warn(`Received unknown command for BeepCmds: ${msgInfo.type}`);
+				SendMessageToSelf(`Received unknown command: ${msgInfo.type}`);
+				return;
+			}
 			BeepCmds[msgInfo.type].Command(MemberNumber, msgInfo.param, options);
 		}
 	};
@@ -2225,6 +2274,11 @@ If something isn't clear just ask RoomTester or someone who has the mod already~
 			this.commandText = commandText;
 		}
 		static DoCmd(commandInfo) {
+			if (!(commandInfo.command in CommandsAction)) {
+				console.warn(`Received unknown command for CommandsAction: ${commandInfo.command}`);
+				SendMessageToSelf(`Received unknown command: ${commandInfo.command}`);
+				return;
+			}
 			CommandsAction[commandInfo.command].Command(commandInfo.commandText);
 		}
 	};
@@ -2459,23 +2513,23 @@ Show this panel again:${styleButton("Run", ShowActionButtons)}`;
 		switch (index) {
 			case 0:
 				return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Send mission help request:${styleButton("Run", SendMissionHelp, info)}
 Share battery:${styleButton("Run", DoBatteryHelp, info, 0)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 			case 1:
 				return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Send mission help request:${styleButton("Run", SendMissionHelp, info)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 			case 2:
 				return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Send mission help request:${styleButton("Run", SendMissionHelp, info)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 			case 3:
 				return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Show voice commands:${styleButton("Run", ShowVoiceCommand, info)}
 Shock punishment:${styleButton("Run", ReqDoPunishment, info)}
 Orgasm reward:${styleButton("Run", ReqDoOrgasm, info)}
@@ -2491,7 +2545,7 @@ Discard this Drone:${styleButton("Run", () => {
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 			case 4:
 				return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Show voice commands:${styleButton("Run", ShowVoiceCommand, info)}
 Shock punishment:${styleButton("Run", ReqDoPunishment, info)}
 Orgasm reward:${styleButton("Run", ReqDoOrgasm, info)}
@@ -2501,7 +2555,7 @@ Set display screen:${styleButton("Run", SetDisplayTalk, info)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 			case 5:
 				return `Available actions for this unit:
-Show unit status:${styleButton("Run", DoFindTatget, info)}
+Show unit status:${styleButton("Run", DoFindTarget, info)}
 Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 			default:
 				return "";
@@ -2556,7 +2610,7 @@ Show this panel again:${styleButton("Run", ShowActionButtons, info)}`;
 		input.value = "/DTS findtarget []";
 		SendMessageToSelf("Enter the target ID inside the brackets and send the command or touch the target collar (including yourself)");
 	}
-	function DoFindTatget(target2, param = null) {
+	function DoFindTarget(target2, param = null) {
 		SendDTSMsg(target2, new MsgInfo("RequestStatus", param));
 	}
 	function SendMissionHelp(info) {
