@@ -112,7 +112,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 0 },
         "Name": "Drone posture-control device",
-        "Description": "Implanted into the body's shoulders, back, and abdomen; high-torque servos control Drone posture to prevent movement errors",
+        "Description": "Implanted into the body's shoulders, back, and abdomen. High-torque servos control Drone posture to prevent movement errors.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -127,7 +127,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 0 },
         "Name": "Drone posture-control device",
-        "Description": "Implanted into the body's shoulders, back, and abdomen; high-torque servos control Drone posture to prevent movement errors",
+        "Description": "Implanted into the body's shoulders, back, and abdomen. High-torque servos control Drone posture to prevent movement errors.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -143,7 +143,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "vibrating": 0 },
         "Name": "Drone main power supply and power interface",
-        "Description": "The Drone main power supply supports basic activity; the external power interface can receive external charging or orgasm-based charging",
+        "Description": "The Drone main power supply which supports basic activity. The external power interface can receive external charging or orgasm-based charging.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -159,7 +159,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "vibrating": 0 },
         "Name": "Drone internal-cycle control device",
-        "Description": "Implanted in the nipples; uses physical vibration to induce arousal for hormone regulation",
+        "Description": "Implanted in the clitoris. Uses physical vibration to induce arousal for hormone regulation.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -174,7 +174,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "vibrating": 0 },
         "Name": "Drone internal-cycle control device",
-        "Description": "Implanted in the anus; uses physical vibration to induce arousal for hormone regulation",
+        "Description": "Implanted in the anus. Uses physical vibration to induce arousal for hormone regulation.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -189,7 +189,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "vibrating": 0 },
         "Name": "Drone internal-cycle control device",
-        "Description": "Implanted in the clitoris; uses physical vibration to induce arousal for hormone regulation",
+        "Description": "Implanted in the nipples. Uses physical vibration to induce arousal for hormone regulation.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -204,7 +204,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 0 },
         "Name": "Drone punishment device",
-        "Description": "Implanted in the nipples; uses electric current to punish Drone errors",
+        "Description": "Implanted in the nipples. Uses electric current to punish Drone errors.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -220,7 +220,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "c": 3, "i": 0, "o": 0, "s": 0 },
         "Name": "Drone internal-cycle control hub",
-        "Description": "Implanted in the lower abdomen; controls all internal-cycle devices and includes orgasm-function restriction",
+        "Description": "Implanted in the lower abdomen. Controls all internal-cycle devices and includes orgasm-function restriction.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -235,7 +235,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 0 },
         "Name": "Drone physiological monitor",
-        "Description": "Implanted in the chest; monitors temperature, heart rate, and arousal for physiological regulation",
+        "Description": "Implanted in the chest. Monitors temperature, heart rate, and arousal for physiological regulation.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -251,7 +251,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { typed: 2 },
         "Name": "Drone motion-control device",
-        "Description": "Connected to the ankles; prevents unauthorized movement and can assist movement when needed",
+        "Description": "Connected to the ankles. Prevents unauthorized movement and can assist movement when needed.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -266,7 +266,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { typed: 2 },
         "Name": "Drone motion-control device",
-        "Description": "Connected to the legs; prevents unauthorized movement and can assist movement when needed",
+        "Description": "Connected to the legs. Prevents unauthorized movement and can assist movement when needed.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -281,7 +281,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 1 },
         "Name": "Drone motion-control device",
-        "Description": "Connected to the hands; prevents unauthorized movement and can assist movement when needed",
+        "Description": "Connected to the hands. Prevents unauthorized movement and can assist movement when needed.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -296,7 +296,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 0 },
         "Name": "Drone motion-control device",
-        "Description": "Connected to the feet; prevents unauthorized movement and can assist movement when needed",
+        "Description": "Connected to the feet. Prevents unauthorized movement and can assist movement when needed.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -311,7 +311,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 0 },
         "Name": "Drone motion-control device",
-        "Description": "Connected to the arms; prevents unauthorized movement and can assist movement when needed",
+        "Description": "Connected to the arms. Prevents unauthorized movement and can assist movement when needed.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -348,7 +348,7 @@ var BasicDroneBinds = [
             "EyeSpiralShine": 0
         },
         "Name": "Drone individual-identification device",
-        "Description": "Implanted on the face; disables the body's original facial identification and uses a barcode instead",
+        "Description": "Implanted on the face. Disables the body's original facial identification and uses a barcode instead.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -364,7 +364,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { typed: 1 },
         "Name": "Drone digestive-system external interface",
-        "Description": "Connected to the mouth and digestive system; allows Drone nutrition blocks and can be used sexually",
+        "Description": "Connected to the mouth and digestive system. Allows Drone nutrition blocks and can be used sexually.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -379,7 +379,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 0 },
         "Name": "Drone visual-system external interface",
-        "Description": "Connected to the face and visual system; receives system instructions directly and can block excess visual information",
+        "Description": "Connected to the face and visual system. Receives system instructions directly and can block excess visual information.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -394,7 +394,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "f": 2, "g": 1, "s": 0, "m": 2, "l": 1 },
         "Name": "Drone respiratory-system external interface",
-        "Description": "Connected to the nasal cavity and respiratory system; limits breathing to medicated Drone gas and blocks mouth breathing",
+        "Description": "Connected to the nasal cavity and respiratory system. Blocks mouth breathing, limits nasal breathing and induces medicated Drone gas.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -409,7 +409,7 @@ var BasicDroneBinds = [
         "Property": "Normal",
         "TypeRecord": { "typed": 0 },
         "Name": "Drone auditory-system external interface",
-        "Description": "Connected to the ears and auditory system; continuously plays training courses and can block excess audio",
+        "Description": "Connected to the ears and auditory system. Continuously plays training loops and can block excess audio.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -424,7 +424,7 @@ var BasicDroneBinds = [
         "Type": null,
         "Property": "Normal",
         "Name": "Drone punishment device",
-        "Description": "Implanted at the neck; uses electric current to punish Drone errors",
+        "Description": "Implanted at the neck. Uses electric current to punish Drone errors.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -438,7 +438,7 @@ var BasicDroneBinds = [
         "Type": null,
         "Property": "Normal",
         "Name": "Drone display",
-        "Description": "Implanted at the neck; displays Drone output and shows remaining battery when idle",
+        "Description": "Implanted at the neck. Displays Drone output and shows remaining battery when idle.",
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
@@ -450,7 +450,7 @@ var BasicDroneBinds = [
             "#8F8F8F", "#000000", "#131313", "#FF5AC8", "#FF5AC8",
             "#8F8F8F", "#000000", "#131313", "#FF5AC8", "#FF5AC8"
         ],
-    },
+    }
 ];
 
 var BasicDroneeyes = [
@@ -459,12 +459,12 @@ var BasicDroneeyes = [
         "Item": "InteractiveVisor", "AssetGroup": "ItemHead", "TypeRecord": { "typed": 1 },
         "OverridePriority": { "Base": 12, "EyeRegularShine": 0, "Shine": 12, "Text": 12, "EyeRegular": 0 },
     }],
-    [{ "Item": "InteractiveVisor", "AssetGroup": "ItemHead", "TypeRecord": { "typed": 3 } }],
+    [{ "Item": "InteractiveVisor", "AssetGroup": "ItemHead", "TypeRecord": { "typed": 3 } }]
 ];
 var BasicDroneears = [
     [{ "Item": "FuturisticEarphones", "AssetGroup": "ItemEars", "TypeRecord": { "typed": 0 } }],
     [{ "Item": "FuturisticEarphones", "AssetGroup": "ItemEars", "TypeRecord": { "typed": 1 } }],
-    [{ "Item": "FuturisticEarphones", "AssetGroup": "ItemEars", "TypeRecord": { "typed": 3 } }],
+    [{ "Item": "FuturisticEarphones", "AssetGroup": "ItemEars", "TypeRecord": { "typed": 3 } }]
 ];
 var BasicDronemouth = [
     [{ "Item": "OTNPlugGag", "AssetGroup": "ItemMouth", "TypeRecord": { typed: 0 } }],
