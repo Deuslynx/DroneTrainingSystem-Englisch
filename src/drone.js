@@ -83,230 +83,364 @@ export var OneBar = {
 var BasicDroneBinds = [
     // 0
     {
-        "Item": "LatexCatsuit", "AssetGroup": "Suit",
+        "Item": "LatexCatsuit",
+        "AssetGroup": "Suit",
         "TypeRecord": { "typed": 0 },
         "Color": ["#202020", "Default", "Default", "Default"],
-        "Text": "", "Text2": "", "Text3": ""
+        "Text": "",
+        "Text2": "",
+        "Text3": ""
     },
     {
-        "Item": "LatexCatsuit", "AssetGroup": "SuitLower",
+        "Item": "LatexCatsuit",
+        "AssetGroup": "SuitLower",
         "TypeRecord": { "typed": 0 },
         "Color": ["#202020", "Default", "Default", "Default"],
-        "Text": "", "Text2": "", "Text3": ""
+        "Text": "",
+        "Text2": "",
+        "Text3": ""
     },
-
     // 2
     {
-        "Item": "FuturisticHarness", "AssetGroup": "ItemTorso",
+        "Item": "FuturisticHarness",
+        "AssetGroup": "ItemTorso",
         "Color": ["#666666", "#7A7A7A", "#393939", "#FFFFFF"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
         "Name": "Drone posture-control device",
         "Description": "Implanted into the body's shoulders, back, and abdomen; high-torque servos control Drone posture to prevent movement errors",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "HighSecurityHarness", "AssetGroup": "ItemTorso2",
+        "Item": "HighSecurityHarness",
+        "AssetGroup": "ItemTorso2",
         "Color": ["#444444", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
         "Name": "Drone posture-control device",
         "Description": "Implanted into the body's shoulders, back, and abdomen; high-torque servos control Drone posture to prevent movement errors",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
-
     //4
     {
-        "Item": "FuturisticVibrator", "AssetGroup": "ItemVulva",
+        "Item": "FuturisticVibrator",
+        "AssetGroup": "ItemVulva",
         "Color": ["#454545", "#555555", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "vibrating": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "vibrating": 0 },
         "Name": "Drone main power supply and power interface",
         "Description": "The Drone main power supply supports basic activity; the external power interface can receive external charging or orgasm-based charging",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
-
     // 5
     {
-        "Item": "VibeHeartClitPiercing", "AssetGroup": "ItemVulvaPiercings",
+        "Item": "VibeHeartClitPiercing",
+        "AssetGroup": "ItemVulvaPiercings",
         "Color": ["#595959", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "vibrating": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "vibrating": 0 },
         "Name": "Drone internal-cycle control device",
         "Description": "Implanted in the nipples; uses physical vibration to induce arousal for hormone regulation",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "LockingVibePlug", "AssetGroup": "ItemButt",
+        "Item": "LockingVibePlug",
+        "AssetGroup": "ItemButt",
         "Color": ["Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "vibrating": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "vibrating": 0 },
         "Name": "Drone internal-cycle control device",
         "Description": "Implanted in the anus; uses physical vibration to induce arousal for hormone regulation",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "VibeHeartPiercings", "AssetGroup": "ItemNipplesPiercings",
+        "Item": "VibeHeartPiercings",
+        "AssetGroup": "ItemNipplesPiercings",
         "Color": ["#6C6C6C", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "vibrating": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "vibrating": 0 },
         "Name": "Drone internal-cycle control device",
         "Description": "Implanted in the clitoris; uses physical vibration to induce arousal for hormone regulation",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "ShockClamps", "AssetGroup": "ItemNipples",
+        "Item": "ShockClamps",
+        "AssetGroup": "ItemNipples",
         "Color": ["#Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
         "Name": "Drone punishment device",
         "Description": "Implanted in the nipples; uses electric current to punish Drone errors",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
-
     // 9
     {
-        "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis",
+        "Item": "SciFiPleasurePanties",
+        "AssetGroup": "ItemPelvis",
         "Color": ["#454545", "#202020", "#878787", "#202020", "#878787", "#878787", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "c": 3, "i": 0, "o": 0, "s": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "c": 3, "i": 0, "o": 0, "s": 0 },
         "Name": "Drone internal-cycle control hub",
         "Description": "Implanted in the lower abdomen; controls all internal-cycle devices and includes orgasm-function restriction",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "FuturisticBra", "AssetGroup": "ItemBreast",
+        "Item": "FuturisticBra",
+        "AssetGroup": "ItemBreast",
         "Color": ["#4A4A4A", "#FFFFFF", "#FFFFFF", "#4B4B4B", "#363636"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
         "Name": "Drone physiological monitor",
         "Description": "Implanted in the chest; monitors temperature, heart rate, and arousal for physiological regulation",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
-
     // 11
     {
-        "Item": "FuturisticAnkleCuffs", "AssetGroup": "ItemFeet",
+        "Item": "FuturisticAnkleCuffs",
+        "AssetGroup": "ItemFeet",
         "Color": ["Default", "#494949", "#303030", "#FFFFFF"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { typed: 2 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { typed: 2 },
         "Name": "Drone motion-control device",
         "Description": "Connected to the ankles; prevents unauthorized movement and can assist movement when needed",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "FuturisticLegCuffs", "AssetGroup": "ItemLegs",
+        "Item": "FuturisticLegCuffs",
+        "AssetGroup": "ItemLegs",
         "Color": ["#Default", "#4A4A4A", "#383838", "#FFFFFF"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { typed: 2 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { typed: 2 },
         "Name": "Drone motion-control device",
         "Description": "Connected to the legs; prevents unauthorized movement and can assist movement when needed",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "FuturisticMittens", "AssetGroup": "ItemHands",
+        "Item": "FuturisticMittens",
+        "AssetGroup": "ItemHands",
         "Color": ["#777777", "#6E6E6E", "#3D3D3D", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 1 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 1 },
         "Name": "Drone motion-control device",
         "Description": "Connected to the hands; prevents unauthorized movement and can assist movement when needed",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "FuturisticHeels2", "AssetGroup": "ItemBoots",
+        "Item": "FuturisticHeels2",
+        "AssetGroup": "ItemBoots",
         "Color": ["#212121", "#4A4A4A", "#383838", "#3D3D3D", "#404040", "#3D3D3D", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
         "Name": "Drone motion-control device",
         "Description": "Connected to the feet; prevents unauthorized movement and can assist movement when needed",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "FuturisticCuffs", "AssetGroup": "ItemArms",
+        "Item": "FuturisticCuffs",
+        "AssetGroup": "ItemArms",
         "Color": ["#4F4F4F", "#353535", "#FFFFFF"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
         "Name": "Drone motion-control device",
         "Description": "Connected to the arms; prevents unauthorized movement and can assist movement when needed",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
-
     //16
     {
-        "Item": "DroneMask", "AssetGroup": "ItemHood",
+        "Item": "DroneMask",
+        "AssetGroup": "ItemHood",
         "Color": ["#222222", "#CCCCCC", "#7F7F7F", "#00F4FD", "#E700CA"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal",
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
         "TypeRecord": { "m": 0, "e": 0, "p": 1, "g": 2, "s": 1, "h": 0, "j": 5, "b": 0 },
         "OverridePriority": {
-            "EyeSmile": 0, "EyeSmileShine": 0, "Base": 12, "Shine": 12, "Barcode": 12, "Text": 12,
-            "EyeSpiral": 0, "EyeSculpted": 0, "EyeRegular": 0, "EyeHoles": 0, "EyeRegularGlow": 0,
-            "EyeSculptedGlow": 0, "EyeSmileGlow": 0, "EyeSpiralGlow": 0, "EyeConcaveShine": 0,
-            "EyeRegularShine": 0, "EyeHolesShine": 0, "EyeSculptedShine": 0, "EyeSpiralShine": 0
+            "EyeSmile": 0,
+            "EyeSmileShine": 0,
+            "Base": 12,
+            "Shine": 12,
+            "Barcode": 12,
+            "Text": 12,
+            "EyeSpiral": 0,
+            "EyeSculpted": 0,
+            "EyeRegular": 0,
+            "EyeHoles": 0,
+            "EyeRegularGlow": 0,
+            "EyeSculptedGlow": 0,
+            "EyeSmileGlow": 0,
+            "EyeSpiralGlow": 0,
+            "EyeConcaveShine": 0,
+            "EyeRegularShine": 0,
+            "EyeHolesShine": 0,
+            "EyeSculptedShine": 0,
+            "EyeSpiralShine": 0
         },
         "Name": "Drone individual-identification device",
         "Description": "Implanted on the face; disables the body's original facial identification and uses a barcode instead",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
-
     // 17
     {
-        "Item": "OTNPlugGag", "AssetGroup": "ItemMouth",
+        "Item": "OTNPlugGag",
+        "AssetGroup": "ItemMouth",
         "Color": ["#665D5D", "#514D57", "Default", "#979595"],
-        "Lock": "HighSecurityPadlock", "Private": false,
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
         "ItemProperty": { "OverridePriority": { "Base": 0, "Straps": 0, "StrapsLong": 0 } },
-        "Type": null, "Property": "Normal", "TypeRecord": { typed: 1 },
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { typed: 1 },
         "Name": "Drone digestive-system external interface",
         "Description": "Connected to the mouth and digestive system; allows Drone nutrition blocks and can be used sexually",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "InteractiveVisor", "AssetGroup": "ItemHead",
+        "Item": "InteractiveVisor",
+        "AssetGroup": "ItemHead",
         "Color": ["#333333", "#222222", "#CCCCCC", "#222222", "#CCCCCC", "#FF5AC8"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
         "Name": "Drone visual-system external interface",
         "Description": "Connected to the face and visual system; receives system instructions directly and can block excess visual information",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "LatexRespirator", "AssetGroup": "ItemMouth2",
+        "Item": "LatexRespirator",
+        "AssetGroup": "ItemMouth2",
         "Color": ["#333333", "#222222", "#CCCCCC", "#222222", "#CCCCCC", "#FF5AC8"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal",
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
         "TypeRecord": { "f": 2, "g": 1, "s": 0, "m": 2, "l": 1 },
         "Name": "Drone respiratory-system external interface",
         "Description": "Connected to the nasal cavity and respiratory system; limits breathing to medicated Drone gas and blocks mouth breathing",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "FuturisticEarphones", "AssetGroup": "ItemEars",
+        "Item": "FuturisticEarphones",
+        "AssetGroup": "ItemEars",
         "Color": ["#898989", "#2A2A2A", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal", "TypeRecord": { "typed": 0 },
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
         "Name": "Drone auditory-system external interface",
         "Description": "Connected to the ears and auditory system; continuously plays training courses and can block excess audio",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
-
     // 21
     {
-        "Item": "ShockCollar", "AssetGroup": "ItemNeck",
+        "Item": "ShockCollar",
+        "AssetGroup": "ItemNeck",
         "Color": ["Default", "Default"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal",
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
         "Name": "Drone punishment device",
         "Description": "Implanted at the neck; uses electric current to punish Drone errors",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     {
-        "Item": "ElectronicTag", "AssetGroup": "ItemNeckAccessories",
+        "Item": "ElectronicTag",
+        "AssetGroup": "ItemNeckAccessories",
         "Color": ["#595959", "Default", "#000000"],
-        "Lock": "HighSecurityPadlock", "Private": false, "ItemProperty": {},
-        "Type": null, "Property": "Normal",
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
         "Name": "Drone display",
         "Description": "Implanted at the neck; displays Drone output and shows remaining battery when idle",
-        "MemberName": "Drone master-control core", "MemberNumber": 50051
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
     },
     // 23
     {
