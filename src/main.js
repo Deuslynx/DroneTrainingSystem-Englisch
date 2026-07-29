@@ -3,7 +3,7 @@
 // starts the per-second/10-second timers, exposes the facility Enter/Leave
 // callbacks on window for userscript managers, and boots the whole thing.
 
-import { DTS_LOADER_FLAG, DTS_LEGACY_LOADER_FLAG } from "./constants.js";
+import { DTS_LOADER_FLAG, DTS_LEGACY_LOADER_FLAG, script_version } from "./constants.js";
 import { setInitComplete } from "./state.js";
 import { sleep, waitFor, ClearOldMessage, SendMessageToSelf } from "./utils.js";
 import {
@@ -63,7 +63,8 @@ function Init() {
             // swallow errors from the per-second tick
         }
     }, 1000);
-    PlayerDroneInfo();
+    var pdi = PlayerDroneInfo();
+    pdi.scriptVersion = Number(script_version.split(".").slice(0, 2).join("."));
     setInitComplete(true);
 }
 
