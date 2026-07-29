@@ -6,6 +6,7 @@ Extensions:
 - add stop sleeping (for quota x points)
 - slowed leave time under some conditions (or having to solve some solo task before being allowed to leave)
 - extend words changed when display screen is set to ON
+- puzzle password game
 
 Fixes/Adjustments:
 - remove Drone messages and training for Operators
