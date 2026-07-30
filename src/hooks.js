@@ -532,14 +532,14 @@ export function ChatRoomSendChatMessageBefore(msg) {
     }
     if (pdi.disPlayTalk) {
         if (pdi.battery <= 0 || pdi.bodyStatus.mouth == 2) {
-            SendActionText("The indicator light on 'Drone'" + Player.MemberNumber + "flashes. It attempted to speak but failed.");
+            SendActionText(`The indicator light on Drone${Player.MemberNumber} flashes. It attempted to speak but failed.`);
         }
         else {
             if (pdi.modifys["education1"]) {
-                msg.replace(/I|Me|We|Our/g, "This unit");
-                msg.replace(Player.Name, `Drone ${Player.MemberNumber}`);
+                msg.replace(/I|Me|We|Our/g, "This Drone");
+                msg.replace(Player.Name, `Drone${Player.MemberNumber}`);
             }
-            SendActionText(`Drone ${Player.MemberNumber}'s display shows:\n` + msg);
+            SendActionText(`Drone's display shows:\n` + msg);
             pdi.battery -= pdi.chatBatteryCost;
             return true;
         }
