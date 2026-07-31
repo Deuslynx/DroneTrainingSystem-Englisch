@@ -1,7 +1,7 @@
 // ----- constants.js -----
 // Storage keys, loader flags, static display strings and the changelog text.
 
-export const script_version = "1.6.20260729";
+export const script_version = "1.7.20260729";
 
 export const DTS_SETTINGS_KEY = "DTSbyDeusLynx";
 export const DTS_LEGACY_SETTINGS_KEYS = ["DTSbyZajucd"];
@@ -10,6 +10,10 @@ export const DTS_LEGACY_LOADER_FLAG = "DTSbyZajucd";
 
 export const changeLog =
     `Update Log
+——————V1.7—————— latest Zajucd adjustments
+1. Fixed an issue where the Operator's battery power was also being consumed.
+2. Added text variations for the Display screen messages to make them feel more interactive and robotic.
+3. Added several new drone models. Models can be swapped at the Modification Workshop after reaching Level 2.
 ——————V1.6—————— DeusLynx extension starting here
 1. Translated everything into English for better development.
 2. Fixed LSCG and Version compatibility.
