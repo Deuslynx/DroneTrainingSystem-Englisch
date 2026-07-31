@@ -444,6 +444,53 @@ var allModify = {
         effect: (pdi) => { pdi.chatBatteryCost = 15; }, 
         front: ["level1", "displayTalkCost1"]
     },
+
+    BasicDrone: {
+        id: "BasicDrone",
+        name: "Convert into BasicDrone model",
+        desc: "The BasicDrone model has no special functions.",
+        price: 30,
+        canRepeat: true,
+        coolDown: {Name:"TypeChange",Time: 7 * 24 * 3600 * 1000},
+        effect: (pdi) => { pdi.type = "BasicDrone" },
+        front: ["level2"]
+    },
+    MaidDrone: {
+        id: "MaidDrone",
+        name: "Convert into MaidDrone model",
+        desc: "A MaidDrone is tasked with maintaining the facility.",
+        price: 30,
+        canRepeat: true,
+        coolDown: { Name: "TypeChange", Time: 7 * 24 * 3600 * 1000 },
+        effect: (pdi) => { pdi.type = "MaidDrone" },
+        front: ["level2"]
+    },
+    PonyDrone: {
+        id: "PonyDrone",
+        name: "Convert into PonyDrone model",
+        desc: "A PonyDrone will be penalized if they remain in the same location for more than ten seconds.",
+        price: 30,
+        canRepeat: true,
+        coolDown: { Name: "TypeChange", Time: 7 * 24 * 3600 * 1000 },
+        effect: (pdi) => { pdi.type = "PonyDrone" },
+        front: ["level2"]
+    },
+    DogDrone: {
+        id: "DogDrone",
+        name: "Convert into DogDrone model",
+        desc: "All messages from the DogDrone will be replaced with 'Woof'.",
+        price: 30,
+        canRepeat: true,
+        coolDown: { Name: "TypeChange", Time: 7 * 24 * 3600 * 1000 },
+        effect: (pdi) => { pdi.type = "DogDrone" },
+        front: ["level2"]
+    },
+
+    /*
+    KittyDrone
+    AngelDrone
+    */
+
     dontShow: {
         id: "dontShow", name: "Not displayed; for annotation purposes only.",
         desc: "The following can be obtained in the training room: training1, training2, training3, education1, education2, education3.",
