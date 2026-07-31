@@ -104,6 +104,7 @@ function DoPerSec() {
 
 var lastBattery = null;
 function SendBatteryWarning() {
+    if (CheckPlayerDroneInfoExistAndIsDrone() == false) return;
     var pdi = PlayerDroneInfo();
     if (lastBattery == null) {
         lastBattery = pdi.battery;
@@ -142,7 +143,9 @@ function DoPer10Sec() {
 }
 function DoPerMin() {
     var pdi = PlayerDroneInfo();
-    pdi.battery -= pdi.miniteBatteryCost;
+    if (CheckPlayerDroneInfoExistAndIsDrone()) {
+        pdi.battery -= pdi.miniteBatteryCost;
+    }
     ClearOldMessage();
 }
 function DoPer10Min() {
