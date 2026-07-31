@@ -87,6 +87,10 @@ export async function WearEquips(target, EquipList, refresh = true, craft = true
         if (ID != "None") {
             sender.Appearance.splice(ID, 1);
         }
+        //If the item name is "UnEquip", only the equipment in the corresponding slot is unequipped.
+        if (res.Item == "UnEquip") {
+            continue;
+        }
         let colors = [];
         if (res.Color != undefined) {
             if (Array.isArray(res.Color)) {
@@ -123,6 +127,30 @@ export async function WearEquips(target, EquipList, refresh = true, craft = true
                     str += ",";
                 }
                 res.Color = str;
+            }
+            var hairColor = "#dddddd";
+            try {
+                var hairC = InventoryGet(sender, "HairFront").Color;
+                if (Array.isArray(hairC)) {
+                    hairColor = hairC[0];
+                }
+                else {
+                    hairColor = hairC;
+                }
+            }
+            catch {
+            }
+            if (res.Color != undefined) {
+                if (Array.isArray(res.Color)) {
+                    for (var c of res.Color) {
+                        if (c == "HairFront") {
+                            c = c.replace("HairFront", hairColor)
+                        }
+                    }
+                }
+                else {
+                    res.Color = res.Color.replace("HairFront", hairColor)
+                }
             }
             InventoryCraft(sender, sender, localAssetGroup, res, false, true, false);
             await sleep(100);
@@ -218,8 +246,9 @@ export function DoSetBodyOrBindStatus(type, part, level, sender) {
 
 // ----- Battery -----
 export function RefreshBatteryTag() {
-    if (CheckPlayerDroneInfoExistAndIsDrone() == false) return;
     var pdi = PlayerDroneInfo();
+    if (pdi.battery < 0) pdi.battery = 0;
+    if (CheckPlayerDroneInfoExistAndIsDrone() == false) return;
     var tag = InventoryGet(Player, "ItemNeckAccessories");
     if (tag?.Property?.Text != undefined) {
         var percent = Math.floor((pdi.battery * 100 / pdi.batteryMax));
@@ -268,9 +297,42 @@ export async function RefreshBinds(canRefresh = false) {
         var binds = Object.assign([], AllEquipSets[type].Binds);
         var toWear = [];
         if (!binds) var binds = Object.assign([], AllEquipSets["BasicDrone"].Binds);
+        
+        // Replace primary equipment with gear corresponding to the binding level.
+        for (var part of bodyPartStrings) {
+            var settings = Object.assign({}, AllEquipSets[type][part]);
+            if (!settings) continue;
+            var level = pdi.bindStatus[part];
+            var usingSeeting = Object.assign([], settings[level]);;
+            for (var b of usingSeeting) {
+                var bind = Object.assign({}, b);
+                var found = binds.find((v) => { return v.AssetGroup == bind.AssetGroup });
+                if (found == undefined) {
+                    binds.push(bind);
+                }
+                else {
+                    Object.assign(found, bind);
+                }
+            }
+        }
         for (var bind of binds) {
             var geted = InventoryGet(Player, bind.AssetGroup);
-            if (geted == null || geted.Asset.Name != bind.Item || geted.Craft == undefined) {
+            var isGetedInvRight = true;
+
+            if (bind.Item != "UnEquip") {
+                if (geted == null ||
+                    geted.Asset.Name != bind.Item ||
+                    geted.Craft == undefined) {
+                    isGetedInvRight = false;
+                }
+            }
+            else {
+                if (geted != null) {
+                    isGetedInvRight = false;
+                }
+            }
+
+            if (isGetedInvRight == false) {
                 toWear.push(bind);
                 refresh = true;
             }
@@ -284,13 +346,18 @@ export async function RefreshBinds(canRefresh = false) {
             var level = pdi.bindStatus[part];
             var usingSeeting = Object.assign([], settings[level]);
             for (var bind of usingSeeting) {
-                var geted = InventoryGet(Player, bind.AssetGroup);
-                var tr = Object.assign({}, geted.Property.TypeRecord);
-                for (var typed in bind.TypeRecord) {
-                    tr[typed] = bind.TypeRecord[typed];
+                try {
+                    if (bind.Item == "UnEquip") continue;
+                    var geted = InventoryGet(Player, bind.AssetGroup);
+                    var tr = Object.assign({}, geted.Property.TypeRecord)
+                    for (var typed in bind.TypeRecord) {
+                        tr[typed] = bind.TypeRecord[typed];
+                    }
+                    ExtendedItemSetOptionByRecord(Player, geted, tr);
+                    await sleep(100);
                 }
-                ExtendedItemSetOptionByRecord(Player, geted, tr);
-                await sleep(100);
+                catch {
+                }
             }
         }
         if (refresh || canRefresh) {
@@ -298,7 +365,6 @@ export async function RefreshBinds(canRefresh = false) {
         }
     }
     catch {
-        // intentionally swallowed, matches original behavior
     }
     setIsRefreshBinding(false);
 }
