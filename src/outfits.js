@@ -1,6 +1,18 @@
 // ----- drone.js -----
-// Drone equipment definitions
+// Drone restraints and equipment definitions
 
+export const shockItems = [
+    { "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis" },
+    { "Item": "ShockClamps", "AssetGroup": "ItemNipples" },
+    { "Item": "ShockCollar", "AssetGroup": "ItemNeck" }
+];
+export const vibeItem = [
+    { "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis" },
+    { "Item": "FuturisticVibrator", "AssetGroup": "ItemVulva" },
+    { "Item": "VibeHeartClitPiercing", "AssetGroup": "ItemVulvaPiercings" },
+    { "Item": "LockingVibePlug", "AssetGroup": "ItemButt" },
+    { "Item": "VibeHeartPiercings", "AssetGroup": "ItemNipplesPiercings" }
+];
 
 // ----- Drone Restraints -----
 //{
@@ -17,29 +29,55 @@
 //        "MemberNumber": 50051
 //},
 
-const shockItems = [
-    { "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis" },
-    { "Item": "ShockClamps", "AssetGroup": "ItemNipples" },
-    { "Item": "ShockCollar", "AssetGroup": "ItemNeck" }
-];
-const vibeItem = [
-    { "Item": "SciFiPleasurePanties", "AssetGroup": "ItemPelvis" },
-    { "Item": "FuturisticVibrator", "AssetGroup": "ItemVulva" },
-    { "Item": "VibeHeartClitPiercing", "AssetGroup": "ItemVulvaPiercings" },
-    { "Item": "LockingVibePlug", "AssetGroup": "ItemButt" },
-    { "Item": "VibeHeartPiercings", "AssetGroup": "ItemNipplesPiercings" }
-];
-
-var AllEquipSets = {
-    BasicDrone: BasicDroneSet,
-    MaidDrone: MaidDroneSet,
-    PonyDrone: PonyDroneSet,
-    PuppyDrone: PuppyDroneSet,
-    //KittyDrone: KittyDroneSet,
+export var Crate = {
+    "Item": "FuturisticCrate",
+    "AssetGroup": "ItemDevices",
+    "Color": [
+        "#222222", "Default", "#444444", "Default", "Default", "#FF1199",
+        "Default", "#444444", "#555555", "#3B7F2C", "Default", "Default",
+        "#BBBBFF", "Default"
+    ],
+    "Lock": "HighSecurityPadlock",
+    "Private": false,
+    "ItemProperty": {},
+    "Type": null,
+    "Property": "Normal",
+    "TypeRecord": { "w": 1, "l": 0, "a": 0, "d": 0, "t": 0, "h": 0 },
+    "MemberName": "Drone master-control core",
+    "MemberNumber": 50051
+};
+export var CrateBind = {
+    "Item": "FuturisticCrate",
+    "AssetGroup": "ItemDevices",
+    "Color": [
+        "#222222", "Default", "#444444", "Default", "Default", "#FF1199",
+        "Default", "#444444", "#555555", "#3B7F2C", "Default", "Default",
+        "#BBBBFF", "Default"
+    ],
+    "Lock": "HighSecurityPadlock",
+    "Private": false,
+    "ItemProperty": {},
+    "Type": null,
+    "Property": "Normal",
+    "TypeRecord": { "w": 1, "l": 3, "a": 3, "d": 0, "t": 0, "h": 0 },
+    "MemberName": "Drone master-control core",
+    "MemberNumber": 50051
+};
+export var OneBar = {
+    "Item": "OneBarPrison",
+    "AssetGroup": "ItemDevices",
+    "Color": ["Default"],
+    "Lock": "HighSecurityPadlock",
+    "Private": false,
+    "ItemProperty": {},
+    "Type": null,
+    "Property": "Normal",
+    "MemberName": "Drone master-control core",
+    "MemberNumber": 50051
 };
 
 //#region BasicDrone
-var BasicDroneBinds = [
+export var BasicDroneBinds = [
     // 0
     {
         "Item": "LatexCatsuit",
@@ -1983,3 +2021,32 @@ var KittyDroneSet = {
 };
 //#endregion
 */
+/*
+//#region AngelDrone
+var AngelDroneBinds = [];
+var AngelDroneeyes = [];
+var AngelDroneears = [];
+var AngelDronemouth = [];
+var AngelDronebody = [];
+var AngelDronehands = [];
+var AngelDronelegs = [];
+var AngelDroneSet = {
+    Binds: AngelDroneBinds,
+    eyes: AngelDroneeyes,
+    ears: AngelDroneears,
+    mouth: AngelDronemouth,
+    body: AngelDronebody,
+    hands: AngelDronehands,
+    legs: AngelDronelegs,
+};
+//#endregion
+*/
+
+export var AllEquipSets = {
+    BasicDrone: BasicDroneSet,
+    MaidDrone: MaidDroneSet,
+    PonyDrone: PonyDroneSet,
+    PuppyDrone: PuppyDroneSet,
+    //KittyDrone: KittyDroneSet,
+    //AngelDrone: AngelDroneSet,
+};

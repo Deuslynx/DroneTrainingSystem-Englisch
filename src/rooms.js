@@ -8,9 +8,9 @@ import {
     IsInZone, IsInArea, RandomPosOfArea, MovePlayer,
 } from "./utils.js";
 import {
-    PlayerDroneInfo, DoOrgasm, DoPunishment, WearEquips, RemoveRestrainByOneAssetGroup, 
-    Crate, CrateBind, OneBar, DTSSyncSettings
+    PlayerDroneInfo, DoOrgasm, DoPunishment, WearEquips, RemoveRestrainByOneAssetGroup, DTSSyncSettings
 } from "./drone.js";
+import { Crate, CrateBind, OneBar } from "./outfits.js";
 import { ItemInfo, allItem } from "./items.js";
 import {
     trainingProcess, setTrainingProcess, addTrainingProcess, isTraining, setIsTraining,
