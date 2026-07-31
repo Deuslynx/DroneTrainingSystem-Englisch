@@ -109,10 +109,26 @@ export var BasicDroneBinds = [
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
+    /*
     {
         "Item": "HighSecurityHarness",
         "AssetGroup": "ItemTorso2",
         "Color": ["#444444", "Default"],
+        "Lock": "HighSecurityPadlock",
+        "Private": false,
+        "ItemProperty": {},
+        "Type": null,
+        "Property": "Normal",
+        "TypeRecord": { "typed": 0 },
+        "Name": "Drone posture-control device",
+        "Description": "Implanted into the body's shoulders, back, and abdomen. High-torque servos control Drone posture to prevent movement errors.",
+        "MemberName": "Drone master-control core",
+        "MemberNumber": 50051
+    },*/
+    {
+        "Item": "FuturisticHarness",
+        "AssetGroup": "ItemTorso",
+        "Color": ["#666666", "#7A7A7A", "#393939", "#FFFFFF"],
         "Lock": "HighSecurityPadlock",
         "Private": false,
         "ItemProperty": {},
@@ -470,7 +486,11 @@ var BasicDronebody = [
 ];
 var BasicDronehands = [
     [
-        { "Item": "FuturisticCuffs", "AssetGroup": "ItemArms", "TypeRecord": { "typed": 0 } },
+        //{ "Item": "FuturisticCuffs", "AssetGroup": "ItemArms", "TypeRecord": { "typed": 0 } },
+        { 
+            "Item": "FuturisticArmbinder", "AssetGroup": "ItemArms", "TypeRecord": { "typed": 0 },
+            "Color": ['#202020', '#555555', '#777777', 'Default', 'Default'],
+        },
         { "Item": "FuturisticMittens", "AssetGroup": "ItemHands", "TypeRecord": { "typed": 1 } }
     ],
     [
@@ -506,7 +526,7 @@ var BasicDroneSet = {
     legs: BasicDronelegs,
 };
 //#endregion
-// TODO: might need change in array indices
+// TODO: might need change manually-annotated array indices
 //#region MaidDrone
 var MaidDroneBinds = [
     { "AssetGroup": "Cloth",  "Item": "MaidDress4", "Color": ["Default", "Default", "Default", "Default", "Default", "Default",],},
@@ -529,7 +549,8 @@ var MaidDroneBinds = [
 
     //2
     {
-        "Item": "FuturisticHarness", "AssetGroup": "ItemTorso",
+        "Item": "FuturisticHarness", 
+        "AssetGroup": "ItemTorso",
         "Color": ["#666666", "#7A7A7A", "#393939", "#FFFFFF"],
         "Lock": "HighSecurityPadlock",
         "Private": false,
@@ -542,7 +563,7 @@ var MaidDroneBinds = [
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
-    {
+    {   // TODO: is this supposed to be the same or a HighSecurityHarness?
         "Item": "FuturisticHarness",
         "AssetGroup": "ItemTorso",
         "Color": ["#666666", "#7A7A7A", "#393939", "#FFFFFF"],
@@ -1079,7 +1100,7 @@ var PonyDroneBinds = [
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
-    {// TODO: is this supposed to be the same or a HighSecurityHarness?
+    {   // TODO: is this supposed to be the same or a HighSecurityHarness?
         "Item": "FuturisticHarness",
         "AssetGroup": "ItemTorso",
         "Color": ["#666666", "#7A7A7A", "#393939", "#FFFFFF"],
@@ -1536,7 +1557,7 @@ var PuppyDroneBinds = [
         "MemberName": "Drone master-control core",
         "MemberNumber": 50051
     },
-    {
+    {   // TODO: is this supposed to be the same or a HighSecurityHarness?
         "Item": "FuturisticHarness",
         "AssetGroup": "ItemTorso",
         "Color": ["#666666", "#7A7A7A", "#393939", "#FFFFFF"],
