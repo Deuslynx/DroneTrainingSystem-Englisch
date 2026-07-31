@@ -536,8 +536,10 @@ export function ChatRoomSendChatMessageBefore(msg) {
         }
         else {
             if (pdi.modifys["education1"]) {
-                msg.replace(/I|Me|We|Our/g, "This Drone");
-                msg.replace(Player.Name, `Drone${Player.MemberNumber}`);
+                msg = msg.replace(/\b(?:I|me|my|mine|myself|we|us|our|ours|ourselves)\b/gi, "This Drone");
+                msg = msg.replace(/\b(?:Ah|oh|mm|eh|hey|awoo|meow|huh|mmm)\b/g, "_");
+                msg = msg.replace(/[!！？。，,~]/g, "_");
+                msg = msg.replace(Player.Name, `Drone${Player.MemberNumber}`);
             }
             SendActionText(`Drone's display shows:\n` + msg);
             pdi.battery -= pdi.chatBatteryCost;
