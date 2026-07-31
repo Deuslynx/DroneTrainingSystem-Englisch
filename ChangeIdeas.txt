@@ -1,15 +1,12 @@
 Extensions:
-- Drone Paths for Upgrades (choosing to become a Maid Drone, Pet Drone, etc...)
-- drone cleaning work mission
+- Drone cleaning work mission (For MaidDrone only?)
 - add option to remove mission (for quota x points)
 - operator -> drone charging mission
 - add stop sleeping (for quota x points)
 - slowed leave time under some conditions (or having to solve some solo task before being allowed to leave)
-- extend words changed when display screen is set to ON
-- puzzle password game
+- puzzle password game mission
 
 Fixes/Adjustments:
-- remove Drone messages and training for Operators
 - fix OOC messages when display monitor is ON
 - adjust drone suit for male characters
 
