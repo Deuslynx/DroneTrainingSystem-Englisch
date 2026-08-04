@@ -3,7 +3,7 @@
 // starts timers, exposes the facility callbacks on window for userscript managers 
 // and boots the whole thing.
 
-import { DTS_LOADER_FLAG, DTS_LEGACY_LOADER_FLAG, script_version } from "./constants.js";
+import { DTS_LOADER_FLAG, DTS_LEGACY_LOADER_FLAG } from "./constants.js";
 import { setInitComplete, isTraining, isEducationing } from "./state.js";
 import { sleep, waitFor, ClearOldMessage, SendMessageToSelf, ClearTagMessage, IsInZone } from "./utils.js";
 import {
@@ -64,8 +64,6 @@ function Init() {
         }
     }, 1000);
     var pdi = PlayerDroneInfo();
-    pdi.scriptVersion = Number(script_version.split(".").slice(0, 2).join("."));
-    ApplySettingsUpdates(pdi);
     setInitComplete(true);
 }
 
