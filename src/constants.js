@@ -1,7 +1,7 @@
 // ----- constants.js -----
 // Storage keys, loader flags, static display strings and the changelog text.
 
-export const script_version = "1.7.20260729";
+export const script_version = "1.7.20260804";
 
 export const DTS_SETTINGS_KEY = "DTSbyDeusLynx";
 export const DTS_LEGACY_SETTINGS_KEYS = ["DTSbyZajucd"];
@@ -14,11 +14,13 @@ export const changeLog =
 1. Fixed an issue where the Operator's battery power was also being consumed.
 2. Added text variations for the Display screen messages to make them feel more interactive and robotic.
 3. Added several new drone models. Models can be swapped at the Modification Workshop after reaching Level 2.
+4. Added cooldown (7d) for model changes; Added standstill punishment for PonyDrone
+5. Fixed error when entering non map rooms.
 ——————V1.6—————— DeusLynx extension starting here
 1. Translated everything into English for better development.
 2. Fixed LSCG and Version compatibility.
 3. Changed some spelling and messages.
-3. Added Train and Education Mission.
+4. Added Train and Education Mission.
 ——————V1.5—————— zajucd's version until this point
 ... Base Game developed by zajucd
 `;

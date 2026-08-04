@@ -1,7 +1,7 @@
 // ----- rooms.js -----
 // The training-facility map: room zone definitions and their Enter/Leave
-// handlers, the training/education mini-games, the upgrade ("Modify")
-// catalog, and the top-level PlayerMovedFaci/InitMapFaci orchestration.
+// handlers, the training/education mini-games, the upgrade catalog, and 
+// the top-level PlayerMovedFaci/InitMapFaci orchestration.
 
 import {
     sleep, waitFor, styleButton, styleProgressBar, SendMessageToSelf, ClearTagMessage, 
@@ -451,7 +451,7 @@ var allModify = {
         desc: "The BasicDrone model has no special functions.",
         price: 30,
         canRepeat: true,
-        coolDown: {Name:"TypeChange",Time: 7 * 24 * 3600 * 1000},
+        coolDown: { Name:"TypeChange", Time: 7 * 24 * 3600 * 1000 },
         effect: (pdi) => { pdi.type = "BasicDrone" },
         front: ["level2"]
     },
@@ -475,14 +475,14 @@ var allModify = {
         effect: (pdi) => { pdi.type = "PonyDrone" },
         front: ["level2"]
     },
-    DogDrone: {
-        id: "DogDrone",
-        name: "Convert into DogDrone model",
-        desc: "All messages from the DogDrone will be replaced with 'Woof'.",
+    PuppyDrone: {
+        id: "PuppyDrone",
+        name: "Convert into PuppyDrone model",
+        desc: "All messages from the PuppyDrone will be replaced with 'Woof'.",
         price: 30,
         canRepeat: true,
         coolDown: { Name: "TypeChange", Time: 7 * 24 * 3600 * 1000 },
-        effect: (pdi) => { pdi.type = "DogDrone" },
+        effect: (pdi) => { pdi.type = "PuppyDrone" },
         front: ["level2"]
     },
 
@@ -554,9 +554,13 @@ function CanModify(mod, target = null) {
     else {
         pdi = target;
     }
-    if (pdi.modifys[mod.id] != undefined) return false;
+    if (!mod.canRepeat && pdi.modifys[mod.id] != undefined) return false;
     for (var front of mod.front) {
         if (!pdi.modifys[front]) return false;
+    }
+    if (mod.coolDown) {
+        var last = pdi.coolDowns[mod.coolDown.Name];
+        if (last != undefined && Date.now() - last < mod.coolDown.Time) return false;
     }
     return true;
 }
@@ -598,6 +602,9 @@ export function ModifyTileEnter(nowInZone, paid = false) {
         var mod = Object.assign({}, allModify[select]);
         mod.effect(pdi);
         pdi.modifys[select] = true;
+        if (mod.coolDown) {
+            pdi.coolDowns[mod.coolDown.Name] = Date.now();
+        }
         SendMessageToSelf(`Upgrade complete. Opening pod door`, "ModifyRoom");
         RemoveRestrainByOneAssetGroup(Player, Crate.AssetGroup);
     }, select)}`);
@@ -1323,7 +1330,7 @@ If something isn't clear just ask RoomTester/Miss Lynx or someone who has the mo
 }
 export async function PlayerMovedFaci() {
     // Validate whether the map is correct
-    if (ChatRoomData.MapData.Objects.startsWith("ҴӄӃҶұҳҹ") == false) return;
+    if (!ChatRoomData.MapData.Objects?.startsWith("ҴӄӃҶұҳҹ")) return;
     var pdi = PlayerDroneInfo();
     Player.MapData.PrivateState.HasKeyBronze = true;
     Player.MapData.PrivateState.HasKeyGold = pdi.isOwner;
@@ -1355,7 +1362,8 @@ export async function PlayerMovedFaci() {
 }
 
 export async function CheckSleepUntil() {
-    if (ChatRoomData.MapData.Objects.startsWith("ҴӄӃҶұҳҹ") == false) return;
+    // TODO: check if startsWith
+    if (!ChatRoomData.MapData.Objects?.startsWith("ҴӄӃҶұҳҹ")) return;
     var pdi = PlayerDroneInfo();
     if (pdi.sleepUntil == null) return;
     if (pdi.sleepUntil < Date.now()) {

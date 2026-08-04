@@ -14,9 +14,6 @@ import {
 import { 
     setShowChangeLog, isRefreshBinding, setIsRefreshBinding, lastRefreshBindsTime, setLastRefreshBindsTime 
 } from "./state.js";
-// SendDTSMsg/MsgInfo/DTSHeartBeatPayload are only ever invoked from inside
-// function bodies below (never at module top-level), so this static import
-// is safe despite commands.js importing back from drone.js.
 import { SendDTSMsg, MsgInfo, DTSHeartBeatPayload } from "./commands.js";
 import { Crate, CrateBind, OneBar, shockItems, vibeItem, AllEquipSets, BasicDroneBinds } from "./outfits.js";
 
@@ -54,6 +51,7 @@ export function RemoveRestrainsWithAssetGroup(sender, group, refresh = true) {
         ChatRoomCharacterUpdate(sender);
     }
 }
+/*
 function AllAssetGroupName() {
     let result = [];
     for (let obj of AssetGroup) {
@@ -76,7 +74,7 @@ function GetAllInventory(sender) {
         }
     }
 }
-
+*/
 export async function WearEquips(target, EquipList, refresh = true, craft = true, difficulty = 1000) {
     var sender = ChatRoomGetCharacter(target.MemberNumber);
     if (sender == undefined) return;
@@ -228,9 +226,9 @@ export async function DoOrgasm(showText = true) {
 
 export function DoSetBodyOrBindStatus(type, part, level, sender) {
     if (type == -1 || part == -1 || level == -1) return;
-    var Drone = PlayerDroneInfo();
-    if (Drone[typeStrings[type]] != undefined && Drone[typeStrings[type]][bodyPartStrings[part]] != undefined) {
-        Drone[typeStrings[type]][bodyPartStrings[part]] = level;
+    var pdi = PlayerDroneInfo();
+    if (pdi[typeStrings[type]] != undefined && pdi[typeStrings[type]][bodyPartStrings[part]] != undefined) {
+        pdi[typeStrings[type]][bodyPartStrings[part]] = level;
         if (part == 3) {
             SendMessageToSelf(`${ArousalDisplayStrings[type]} was set by ${sender.Name} to ${[bindLevelStrings, bodyLevelStrings][0][level]}`);
             if (type == 1) {
@@ -393,6 +391,7 @@ export function DTSSyncSettings() {
 class DroneInfo {
     constructor() {
         this.scriptVersion = Number(script_version.split(".").slice(0, 2).join("."));
+        this.scriptVersionFull = script_version;
         this.MemberNumber = Player.MemberNumber;
         this.isDrone = false;
         this.isOwner = false;
@@ -419,6 +418,7 @@ class DroneInfo {
         this.bodyStatusMax = { eyes: 0, ears: 0, mouth: 0, body: 0, hands: 0, legs: 0 };
         this.bindStatus = { eyes: 0, ears: 0, mouth: 0, body: 0, hands: 0, legs: 0 };
         this.disPlayTalk = false;
+        //this.OOCmessages = true;
 
         this.facilityMapEntered = false;
 
@@ -429,6 +429,7 @@ class DroneInfo {
         this.missionsMax = 3;
 
         this.modifys = new Map();
+        this.coolDowns = {};
 
         this.lastLoginDate = 0;
         this.todaysMission = 0;
@@ -459,17 +460,30 @@ function addMissingProperties(target, source) {
     return target;
 }
 
+function IsLowerVersion(a, b) {
+    var partsA = a.split(".").map(Number);
+    var partsB = b.split(".").map(Number);
+    for (var i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+        var x = partsA[i] || 0;
+        var y = partsB[i] || 0;
+        if (x < y) return true;
+        if (x > y) return false;
+    }
+    return false;
+}
+
 export function PlayerDroneInfo() {
     DTSMigrateLegacySettings();
     if (!Player.ExtensionSettings[DTS_SETTINGS_KEY]) {
         Player.ExtensionSettings[DTS_SETTINGS_KEY] = new DroneInfo();
         DTSSyncSettings();
     }
-    else if (!Number.isFinite(Number(Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion)) ||
-        Number(Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion) < new DroneInfo().scriptVersion) {
+    else if (typeof Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersionFull !== "string" ||
+        IsLowerVersion(Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersionFull, script_version)) {
         addMissingProperties(Player.ExtensionSettings[DTS_SETTINGS_KEY], new DroneInfo());
         setShowChangeLog(true);
         Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion = new DroneInfo().scriptVersion;
+        Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersionFull = script_version;
         DTSSyncSettings();
     }
     return Player.ExtensionSettings[DTS_SETTINGS_KEY];

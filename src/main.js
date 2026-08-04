@@ -1,14 +1,14 @@
 // ----- main.js -----
 // Entry point: installs all game hooks, registers the /DTS chat command,
-// starts the per-second/10-second timers, exposes the facility Enter/Leave
-// callbacks on window for userscript managers, and boots the whole thing.
+// starts timers, exposes the facility callbacks on window for userscript managers 
+// and boots the whole thing.
 
 import { DTS_LOADER_FLAG, DTS_LEGACY_LOADER_FLAG, script_version } from "./constants.js";
-import { setInitComplete } from "./state.js";
-import { sleep, waitFor, ClearOldMessage, SendMessageToSelf } from "./utils.js";
+import { setInitComplete, isTraining, isEducationing } from "./state.js";
+import { sleep, waitFor, ClearOldMessage, SendMessageToSelf, ClearTagMessage, IsInZone } from "./utils.js";
 import {
     PlayerDroneInfo, RefreshBinds, RefreshPlayerEffect, RefreshBatteryTag,
-    CheckPlayerDroneInfoExistAndIsDrone, DTSSyncSettings
+    CheckPlayerDroneInfoExistAndIsDrone, DTSSyncSettings, DoPunishment
 } from "./drone.js";
 import {
     InstallHook, ChatRoomMessageReceived, ChatRoomMapViewUpdatePlayerFlagAfter, CanWalkAfter, 
@@ -23,7 +23,7 @@ import {
     ModifyRoomLeave, ModifyTileEnter, ShopRoomEnter, ShopRoomLeave, ShopInnerRoomEnter, ShopInnerRoomLeave,
     WorkRoomEnter, WorkRoomLeave, WorkInnerRoomEnter, OperRoomEnter, OperRoomLeave, CatEnter,
     PrivateRoomEnter, PrivateRoomLeave, TrainingRoomEnter, TrainingRoomLeave,
-    EducationRoomEnter, EducationRoomLeave, ChargeRoomEnter, ChargeRoomLeave
+    EducationRoomEnter, EducationRoomLeave, ChargeRoomEnter, ChargeRoomLeave, PrivateRoom
 } from "./rooms.js";
 import { RequireActivityinfo, RequirePoseinfo } from "./requirement_tracking.js";
 
@@ -65,6 +65,7 @@ function Init() {
     }, 1000);
     var pdi = PlayerDroneInfo();
     pdi.scriptVersion = Number(script_version.split(".").slice(0, 2).join("."));
+    ApplySettingsUpdates(pdi);
     setInitComplete(true);
 }
 
@@ -140,7 +141,46 @@ function DoPer10Sec() {
         }
     }
     CheckSleepUntil();
+    CheckPonyStationaryPunishment();
 }
+
+// Punishes a PonyDrone that hasn't moved between two 10-second ticks, unless
+// it's training/educating, in a private room, or physically unable to walk.
+// Stops after PONY_STATIONARY_PUNISH_LIMIT consecutive punishments so an
+// idle/AFK drone doesn't get spammed forever; resets once it moves again.
+var ponyLastPos = null;
+var ponyStationaryPunishCount = 0;
+const PONY_STATIONARY_PUNISH_LIMIT = 6;
+function CheckPonyStationaryPunishment() {
+    if (CheckPlayerDroneInfoExistAndIsDrone() == false) return;
+    var pdi = PlayerDroneInfo();
+    if (pdi.type != "PonyDrone") return;
+    if (isTraining || isEducationing) return;
+    if (ChatRoomMapViewIsActive() == false) {
+        ponyLastPos = null;
+        ponyStationaryPunishCount = 0;
+        ClearTagMessage("MovePunishment");
+        return;
+    }
+    if (IsInZone(Player.MapData.Pos, PrivateRoom)) return;
+    if (CanWalk(Player) == false) return;
+
+    var pos = Player.MapData.Pos;
+    if (ponyLastPos != null && pos.X == ponyLastPos.X && pos.Y == ponyLastPos.Y) {
+        if (ponyStationaryPunishCount < PONY_STATIONARY_PUNISH_LIMIT) {
+            ponyStationaryPunishCount += 1;
+            ClearTagMessage("MovePunishment");
+            SendMessageToSelf(`PonyDrone has not moved in 10 seconds. Executing punishment (${ponyStationaryPunishCount}/${PONY_STATIONARY_PUNISH_LIMIT})...`, "MovePunishment");
+            DoPunishment(2, 3);
+        }
+    }
+    else {
+        ponyStationaryPunishCount = 0;
+        ClearTagMessage("MovePunishment");
+    }
+    ponyLastPos = Object.assign({}, pos);
+}
+
 function DoPerMin() {
     var pdi = PlayerDroneInfo();
     if (CheckPlayerDroneInfoExistAndIsDrone()) {
