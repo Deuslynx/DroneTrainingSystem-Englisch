@@ -19,7 +19,7 @@
 	var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
 	// src/constants.js
-	var script_version = "1.7.20260729";
+	var script_version = "1.7.20260804";
 	var DTS_SETTINGS_KEY = "DTSbyDeusLynx";
 	var DTS_LEGACY_SETTINGS_KEYS = ["DTSbyZajucd"];
 	var DTS_LOADER_FLAG = "DTSbyDeusLynx";
@@ -29,11 +29,13 @@
 1. Fixed an issue where the Operator's battery power was also being consumed.
 2. Added text variations for the Display screen messages to make them feel more interactive and robotic.
 3. Added several new drone models. Models can be swapped at the Modification Workshop after reaching Level 2.
+4. Added cooldown (7d) for model changes; Added standstill punishment for PonyDrone
+5. Fixed error when entering non map rooms.
 ——————V1.6—————— DeusLynx extension starting here
 1. Translated everything into English for better development.
 2. Fixed LSCG and Version compatibility.
 3. Changed some spelling and messages.
-3. Added Train and Education Mission.
+4. Added Train and Education Mission.
 ——————V1.5—————— zajucd's version until this point
 ... Base Game developed by zajucd
 `;
@@ -2885,15 +2887,15 @@
 			},
 			front: ["level2"]
 		},
-		DogDrone: {
-			id: "DogDrone",
-			name: "Convert into DogDrone model",
-			desc: "All messages from the DogDrone will be replaced with 'Woof'.",
+		PuppyDrone: {
+			id: "PuppyDrone",
+			name: "Convert into PuppyDrone model",
+			desc: "All messages from the PuppyDrone will be replaced with 'Woof'.",
 			price: 30,
 			canRepeat: true,
 			coolDown: { Name: "TypeChange", Time: 7 * 24 * 3600 * 1e3 },
 			effect: (pdi) => {
-				pdi.type = "DogDrone";
+				pdi.type = "PuppyDrone";
 			},
 			front: ["level2"]
 		},
@@ -2966,9 +2968,13 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 		} else {
 			pdi = target2;
 		}
-		if (pdi.modifys[mod.id] != void 0) return false;
+		if (!mod.canRepeat && pdi.modifys[mod.id] != void 0) return false;
 		for (var front of mod.front) {
 			if (!pdi.modifys[front]) return false;
+		}
+		if (mod.coolDown) {
+			var last = pdi.coolDowns[mod.coolDown.Name];
+			if (last != void 0 && Date.now() - last < mod.coolDown.Time) return false;
 		}
 		return true;
 	}
@@ -3009,6 +3015,9 @@ For this Drone: ${styleButton("Apply upgrade", () => {
 			var mod = Object.assign({}, allModify[select2]);
 			mod.effect(pdi2);
 			pdi2.modifys[select2] = true;
+			if (mod.coolDown) {
+				pdi2.coolDowns[mod.coolDown.Name] = Date.now();
+			}
 			SendMessageToSelf(`Upgrade complete. Opening pod door`, "ModifyRoom");
 			RemoveRestrainByOneAssetGroup(Player, Crate.AssetGroup);
 		}, select)}`);
@@ -3745,7 +3754,7 @@ If something isn't clear just ask RoomTester/Miss Lynx or someone who has the mo
 		MovePlayer({ X: 1, Y: 37 });
 	}
 	async function PlayerMovedFaci() {
-		if (ChatRoomData.MapData.Objects.startsWith("ҴӄӃҶұҳҹ") == false) return;
+		if (!ChatRoomData.MapData.Objects?.startsWith("ҴӄӃҶұҳҹ")) return;
 		var pdi = PlayerDroneInfo();
 		Player.MapData.PrivateState.HasKeyBronze = true;
 		Player.MapData.PrivateState.HasKeyGold = pdi.isOwner;
@@ -3773,7 +3782,7 @@ If something isn't clear just ask RoomTester/Miss Lynx or someone who has the mo
 		setPverPos(Object.assign({}, Player.MapData.Pos));
 	}
 	async function CheckSleepUntil() {
-		if (ChatRoomData.MapData.Objects.startsWith("ҴӄӃҶұҳҹ") == false) return;
+		if (!ChatRoomData.MapData.Objects?.startsWith("ҴӄӃҶұҳҹ")) return;
 		var pdi = PlayerDroneInfo();
 		if (pdi.sleepUntil == null) return;
 		if (pdi.sleepUntil < Date.now()) {
@@ -5083,9 +5092,9 @@ Note: If the Drone cannot receive voice commands due to hearing limitations (suc
 	}
 	function DoSetBodyOrBindStatus(type, part, level, sender2) {
 		if (type == -1 || part == -1 || level == -1) return;
-		var Drone = PlayerDroneInfo();
-		if (Drone[typeStrings[type]] != void 0 && Drone[typeStrings[type]][bodyPartStrings[part]] != void 0) {
-			Drone[typeStrings[type]][bodyPartStrings[part]] = level;
+		var pdi = PlayerDroneInfo();
+		if (pdi[typeStrings[type]] != void 0 && pdi[typeStrings[type]][bodyPartStrings[part]] != void 0) {
+			pdi[typeStrings[type]][bodyPartStrings[part]] = level;
 			if (part == 3) {
 				SendMessageToSelf(`${ArousalDisplayStrings[type]} was set by ${sender2.Name} to ${[bindLevelStrings, bodyLevelStrings][0][level]}`);
 				if (type == 1) {
@@ -5226,6 +5235,7 @@ Note: If the Drone cannot receive voice commands due to hearing limitations (suc
 	var DroneInfo = class _DroneInfo {
 		constructor() {
 			this.scriptVersion = Number(script_version.split(".").slice(0, 2).join("."));
+			this.scriptVersionFull = script_version;
 			this.MemberNumber = Player.MemberNumber;
 			this.isDrone = false;
 			this.isOwner = false;
@@ -5252,6 +5262,7 @@ Note: If the Drone cannot receive voice commands due to hearing limitations (suc
 			this.missions = [];
 			this.missionsMax = 3;
 			this.modifys = /* @__PURE__ */ new Map();
+			this.coolDowns = {};
 			this.lastLoginDate = 0;
 			this.todaysMission = 0;
 			this.todaysWork = 0;
@@ -5278,15 +5289,27 @@ Note: If the Drone cannot receive voice commands due to hearing limitations (suc
 		}
 		return target2;
 	}
+	function IsLowerVersion(a, b) {
+		var partsA = a.split(".").map(Number);
+		var partsB = b.split(".").map(Number);
+		for (var i = 0; i < Math.max(partsA.length, partsB.length); i++) {
+			var x = partsA[i] || 0;
+			var y = partsB[i] || 0;
+			if (x < y) return true;
+			if (x > y) return false;
+		}
+		return false;
+	}
 	function PlayerDroneInfo() {
 		DTSMigrateLegacySettings();
 		if (!Player.ExtensionSettings[DTS_SETTINGS_KEY]) {
 			Player.ExtensionSettings[DTS_SETTINGS_KEY] = new DroneInfo();
 			DTSSyncSettings();
-		} else if (!Number.isFinite(Number(Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion)) || Number(Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion) < new DroneInfo().scriptVersion) {
+		} else if (typeof Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersionFull !== "string" || IsLowerVersion(Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersionFull, script_version)) {
 			addMissingProperties(Player.ExtensionSettings[DTS_SETTINGS_KEY], new DroneInfo());
 			setShowChangeLog(true);
 			Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersion = new DroneInfo().scriptVersion;
+			Player.ExtensionSettings[DTS_SETTINGS_KEY].scriptVersionFull = script_version;
 			DTSSyncSettings();
 		}
 		return Player.ExtensionSettings[DTS_SETTINGS_KEY];
@@ -6449,7 +6472,6 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 			}
 		}, 1e3);
 		var pdi = PlayerDroneInfo();
-		pdi.scriptVersion = Number(script_version.split(".").slice(0, 2).join("."));
 		setInitComplete(true);
 	}
 	var secAfterStart = 0;
@@ -6515,6 +6537,37 @@ ${styleProgressBar("@@@#%", "$#@@%", waitTime)}`);
 			}
 		}
 		CheckSleepUntil();
+		CheckPonyStationaryPunishment();
+	}
+	var ponyLastPos = null;
+	var ponyStationaryPunishCount = 0;
+	var PONY_STATIONARY_PUNISH_LIMIT = 6;
+	function CheckPonyStationaryPunishment() {
+		if (CheckPlayerDroneInfoExistAndIsDrone() == false) return;
+		var pdi = PlayerDroneInfo();
+		if (pdi.type != "PonyDrone") return;
+		if (isTraining || isEducationing) return;
+		if (ChatRoomMapViewIsActive() == false) {
+			ponyLastPos = null;
+			ponyStationaryPunishCount = 0;
+			ClearTagMessage("MovePunishment");
+			return;
+		}
+		if (IsInZone(Player.MapData.Pos, PrivateRoom)) return;
+		if (CanWalk(Player) == false) return;
+		var pos = Player.MapData.Pos;
+		if (ponyLastPos != null && pos.X == ponyLastPos.X && pos.Y == ponyLastPos.Y) {
+			if (ponyStationaryPunishCount < PONY_STATIONARY_PUNISH_LIMIT) {
+				ponyStationaryPunishCount += 1;
+				ClearTagMessage("MovePunishment");
+				SendMessageToSelf(`PonyDrone has not moved in 10 seconds. Executing punishment (${ponyStationaryPunishCount}/${PONY_STATIONARY_PUNISH_LIMIT})...`, "MovePunishment");
+				DoPunishment(2, 3);
+			}
+		} else {
+			ponyStationaryPunishCount = 0;
+			ClearTagMessage("MovePunishment");
+		}
+		ponyLastPos = Object.assign({}, pos);
 	}
 	function DoPerMin() {
 		var pdi = PlayerDroneInfo();
